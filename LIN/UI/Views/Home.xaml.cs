@@ -166,7 +166,7 @@ public partial class Home : ContentPage
         content.Clear();
 
         // Mensaje
-        //      lbInfo.Text = message ?? $"Se encontraron {lista.Count} invitaciones.";
+        //lbInfo.Text = message ?? $"Se encontraron {lista.Count} invitaciones.";
 
         // Agrega los controles
         foreach (var control in lista)

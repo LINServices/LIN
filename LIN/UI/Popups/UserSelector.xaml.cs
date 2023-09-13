@@ -47,7 +47,7 @@ public partial class UserSelector : Popup
         }
 
         // Encuentra el usuario
-        var user = await LIN.Access.Inventory.Controllers.Profile.SearhByPattern(pattern, Session.Instance.Informacion.ID);
+        var user = await LIN.Access.Inventory.Controllers.Profile.SearhByPattern(pattern, Session.Instance.AccountToken);
 
 
         // Analisis de respuesta
