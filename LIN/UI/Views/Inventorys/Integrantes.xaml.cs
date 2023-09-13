@@ -130,14 +130,14 @@ public partial class Integrantes : ContentPage
 
 
     /// <summary>
-    /// Obtiene informacion desde el servidor
+    /// Obtiene información desde el servidor
     /// </summary>
     private async Task<Responses> RetrieveData()
     {
 
         var response = await Inventories.GetIntegrants(Inventory.ID, Session.Instance.Informacion.ID);
 
-        // Analisis de respuesta
+        // Análisis de respuesta
         if (response.Response != Responses.Success)
             return response.Response;
 

@@ -195,7 +195,7 @@ public partial class Index : ContentPage
         // Items
         var response = await Access.Inventory.Controllers.Product.ReadAll(Inventario.ID, Session.Instance.Token);
 
-        // Analisis de respuesta
+        // Análisis de respuesta
         if (response.Response != Responses.Success)
             return false;
 
