@@ -43,7 +43,10 @@ public partial class ViewItem : ContentPage
         var response = await Access.Inventory.Controllers.Inflows.Read(Modelo.ID);
 
         //[Error] // Consulta Modelo.Profile
-        var taskUser = LIN.Access.Auth.Controllers.Account.Read(Modelo.ProfileID);
+        var taskProf = await LIN.Access.Inventory.Controllers.Profile.ReadOne(Modelo.ProfileID);
+
+        var taskUser = LIN.Access.Auth.Controllers.Account.Read(taskProf.Model.AccountID);
+
         displayCategory.Text = Modelo.Type.ToString();
 
         if (response.Response != Responses.Success)

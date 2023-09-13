@@ -28,8 +28,9 @@ public partial class ViewItem : ContentPage
     {
 
         var response = await Access.Inventory.Controllers.Outflows.Read(Modelo.ID);
-        var taskUser = LIN.Access.Auth.Controllers.Account.Read(Modelo.ProfileID);
+        var taskProf = await LIN.Access.Inventory.Controllers.Profile.ReadOne(Modelo.ProfileID);
 
+        var taskUser = LIN.Access.Auth.Controllers.Account.Read(taskProf.Model.AccountID);
         displayCategory.Text = Modelo.Type.ToString();
         indicador.Hide();
         if (response.Response != Responses.Success)
@@ -43,7 +44,7 @@ public partial class ViewItem : ContentPage
             Detalles.Add(x);
         }
 
-       
+
 
         lbbFecha.Text = $"{Modelo.Date:HH:mm  dd/MM/yyyy}";
 
@@ -61,24 +62,24 @@ public partial class ViewItem : ContentPage
             Export(null, null);
 
 
- LoadInversion();
+        LoadInversion();
 
     }
 
 
-    
+
     private void LoadInversion()
     {
 
-      
+
         switch (Modelo.Type)
         {
             case OutflowsTypes.Venta:
                 lbInversionLabel.Text = "Ganancias";
                 decimal ganancia = 0;
                 foreach (var e in Transfers)
-                    ganancia += (e.PrecioVenta - e.PrecioCompra) * Modelo.Details.Where(T=>T.ProductoDetail == e.IDDetail).FirstOrDefault()?.Cantidad ?? 0;
-                
+                    ganancia += (e.PrecioVenta - e.PrecioCompra) * Modelo.Details.Where(T => T.ProductoDetail == e.IDDetail).FirstOrDefault()?.Cantidad ?? 0;
+
                 lbInvercion.Text = $"{ganancia}$";
                 break;
 
@@ -95,7 +96,7 @@ public partial class ViewItem : ContentPage
                 lbInversionLabel.Text = "Perdida";
                 decimal perdida = 0;
                 foreach (var e in Transfers)
-                    perdida += (e.PrecioCompra * Modelo.Details.Where(T => T.ProductoDetail == e.IDDetail).FirstOrDefault()?.Cantidad ?? 0) ;
+                    perdida += (e.PrecioCompra * Modelo.Details.Where(T => T.ProductoDetail == e.IDDetail).FirstOrDefault()?.Cantidad ?? 0);
 
                 lbInvercion.Text = $"{perdida}$";
                 break;
