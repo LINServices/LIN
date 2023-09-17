@@ -23,11 +23,15 @@
 
                     <Border
                         Grid.Row="0"
-                        Padding="6"
+                        StrokeThickness="0"
                         HeightRequest="70"
                         StrokeShape="RoundRectangle 35"
                         WidthRequest="70">
-                        <Image x:Name="perfil" Source="perfil.png" />
+                        <Image
+                            x:Name="perfil"
+                            HeightRequest="70"
+                            Source="perfil.png"
+                            WidthRequest="70" />
                     </Border>
 
                     <Border
@@ -60,8 +64,8 @@
                         <Image
                             x:Name="displayInsignia"
                             Margin="3,2,0,0"
-                            IsVisible="false"
                             HeightRequest="11"
+                            IsVisible="false"
                             Source="verificado.png"
                             VerticalOptions="Center"
                             WidthRequest="11" />

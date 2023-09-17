@@ -7,8 +7,9 @@
     xmlns:One="clr-namespace:LIN.UI.Controls"
     xmlns:One2="clr-namespace:LIN.UI.Controls.Markups"
     x:Name="this"
-    BackgroundColor="{StaticResource Background}"
-    BackgroundImageSource="{OnPlatform Android='bf.jpg'}"
+    BackgroundColor="{AppThemeBinding Light={StaticResource Background},
+                                      Dark={StaticResource Black}}"
+    BackgroundImageSource="{OnPlatform Android={AppThemeBinding Light='bf.jpg'}}"
     NavigationPage.HasNavigationBar="False">
 
 
@@ -25,10 +26,10 @@
                 WidthRequest="30">
                 <Image
                     x:Name="perfil"
-                    HeightRequest="20"
+                    HeightRequest="30"
                     Source="invitacion.png"
                     VerticalOptions="Center"
-                    WidthRequest="20" />
+                    WidthRequest="30" />
             </Border>
 
             <Label

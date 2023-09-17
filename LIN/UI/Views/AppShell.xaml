@@ -29,10 +29,10 @@
                         WidthRequest="30">
                         <Image
                             x:Name="perfil"
-                            HeightRequest="20"
+                            HeightRequest="30"
                             Source="invitacion.png"
                             VerticalOptions="Center"
-                            WidthRequest="20" />
+                            WidthRequest="30" />
                     </Border>
 
                     <Label

@@ -135,7 +135,7 @@ public partial class Integrantes : ContentPage
     private async Task<Responses> RetrieveData()
     {
 
-        var response = await Inventories.GetIntegrants(Inventory.ID, Session.Instance.Informacion.ID);
+        var response = await Inventories.GetIntegrants(Inventory.ID, Session.Instance.Informacion.ID, Session.Instance.AccountToken);
 
         // Análisis de respuesta
         if (response.Response != Responses.Success)

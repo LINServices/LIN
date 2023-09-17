@@ -45,7 +45,7 @@ public partial class ViewItem : ContentPage
         //[Error] // Consulta Modelo.Profile
         var taskProf = await LIN.Access.Inventory.Controllers.Profile.ReadOne(Modelo.ProfileID);
 
-        var taskUser = LIN.Access.Auth.Controllers.Account.Read(taskProf.Model.AccountID);
+        var taskUser = LIN.Access.Auth.Controllers.Account.Read(taskProf.Model.AccountID, Session.Instance.AccountToken);
 
         displayCategory.Text = Modelo.Type.ToString();
 
