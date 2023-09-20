@@ -11,8 +11,6 @@
     <ScrollView>
 
 
-
-
         <VerticalStackLayout Padding="10">
 
             <!--  Perfil  -->

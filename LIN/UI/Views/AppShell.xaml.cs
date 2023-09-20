@@ -1,4 +1,7 @@
-﻿namespace LIN.UI.Views;
+﻿using SILF.Script.Enums;
+using SILF.Script.Interfaces;
+
+namespace LIN.UI.Views;
 
 
 public partial class AppShell : Shell
@@ -189,23 +192,26 @@ public partial class AppShell : Shell
     {
         Dispatcher.DispatchAsync(new Action(() =>
         {
-            // Nuevo builder App
-            var builder = new SILF.Script.Builder(e);
 
-            // Lleva una nueva carga de funciones
-            builder.Replace(ScriptRuntime.Scripts.Actions);
+            
 
-            // Construlle la app
-            builder.Build();
+            var app = new SILF.Script.App(e, new a());
 
-            // Obtiene una estancia de app
-            var app = builder.CreateApp();
+            app.AddDefaultFunctions(ScriptRuntime.Scripts.Actions);
 
-            // Ejecuta los comandos
             app.Run();
+
         }));
     }
 
 
 
+}
+
+class a : IConsole
+{
+    public void InsertLine(string result, LogLevel logLevel)
+    {
+       
+    }
 }

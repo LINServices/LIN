@@ -83,7 +83,7 @@ public partial class Add : ContentPage
         var task = Access.Inventory.Controllers.Contact.Create(modelo);
 
 
-        // Miestras se completa la tarea
+        // Muestras se completa la tarea
         int seconds = 0;
         while (task.Status != TaskStatus.RanToCompletion)
         {
@@ -103,7 +103,7 @@ public partial class Add : ContentPage
 
 
 
-        // Organizacion de la interfaz
+        // Organización de la interfaz
         indicador.Hide();
         lbInfo.Hide();
         lbInfo.TextColor = Colors.Crimson;

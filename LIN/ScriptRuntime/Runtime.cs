@@ -1,4 +1,8 @@
 ﻿using LIN.Access.Inventory.Controllers;
+using SILF.Script;
+using SILF.Script.Elements;
+using SILF.Script.Elements.Functions;
+using SILF.Script.Interfaces;
 
 namespace LIN.ScriptRuntime;
 
@@ -6,10 +10,38 @@ namespace LIN.ScriptRuntime;
 internal class Scripts
 {
 
+    public class SILFFunction : IFunction
+    {
+        public Tipo? Type { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public List<Parameter> Parameters { get; set; } = new();
+
+
+        Action<List<ParameterValue>> Action;
+
+        public SILFFunction(Action<List<ParameterValue>> action)
+        {
+            this.Action = action;
+        }
+
+
+
+        public FuncContext Run(Instance instance, List<ParameterValue> values)
+        {
+            Action.Invoke(values);
+            return new();
+        }
+
+
+    }
+
+
     /// <summary>
     /// Funciones
     /// </summary>
-    public static Dictionary<string, Action<string>> Actions { get; set; } = new Dictionary<string, Action<string>>();
+    public static List<IFunction> Actions { get; set; } = new();
+
+
 
 
 
@@ -20,18 +52,31 @@ internal class Scripts
     {
 
         // Llamada
-        Actions.Add("call", (param) =>
+        Actions.Add(new SILFFunction((values) =>
         {
             if (PhoneDialer.Default.IsSupported)
-                PhoneDialer.Default.Open(param);
+            {
+                string number = values[0].Value.ToString();
+                PhoneDialer.Default.Open(number);
+            }
+
+        })
+        // Propiedades
+        {
+            Name = "call",
+            Parameters = new()
+                {
+                    new("phone", new("string"))
+                }
         });
 
 
         // Abrir Producto
-        Actions.Add("openPr", async (param) =>
+        Actions.Add(new SILFFunction(async (values) =>
         {
+
             // Convierte el valor
-            bool can = int.TryParse(param, out int id);
+            bool can = int.TryParse(values[0].Value.ToString(), out int id);
 
             if (!can)
                 return;
@@ -41,12 +86,22 @@ internal class Scripts
             var form = new UI.Views.Products.ViewItem(model.Model);
 
             form.Show();
+
+        })
+        // Propiedades
+        {
+            Name = "openPr",
+            Parameters = new()
+                {
+                    new("id", new("number"))
+                }
         });
 
 
         // Abrir Contactos
-        Actions.Add("openCt", async (param) =>
+        Actions.Add(new SILFFunction(async (values) =>
         {
+            var param = values[0].Value.ToString();
 
             // Convierte el valor
             bool can = int.TryParse(param, out int id);
@@ -61,12 +116,22 @@ internal class Scripts
 
             await pop.Show();
 
+        })
+        // Propiedades
+        {
+            Name = "openCt",
+            Parameters = new()
+                {
+                    new("id", new("number"))
+                }
         });
 
 
-        // Abrir Exportar PDF (Entradas)
-        Actions.Add("exportInflow", async (param) =>
+
+        // Exportar entradas
+        Actions.Add(new SILFFunction(async (values) =>
         {
+            var param = values[0].Value.ToString();
 
             // Convierte el valor
             bool can = int.TryParse(param, out int id);
@@ -79,12 +144,22 @@ internal class Scripts
 
             form.Show();
 
+        })
+        // Propiedades
+        {
+            Name = "exportInflow",
+            Parameters = new()
+                {
+                    new("id", new("number"))
+                }
         });
 
 
-        // Abrir Exportar PDF (Salidas)
-        Actions.Add("exportOutflow", async (param) =>
+
+        // Exportar salidas
+        Actions.Add(new SILFFunction(async (values) =>
         {
+            var param = values[0].Value.ToString();
 
             // Convierte el valor
             bool can = int.TryParse(param, out int id);
@@ -98,12 +173,21 @@ internal class Scripts
 
             form.Show();
 
+        })
+        // Propiedades
+        {
+            Name = "exportOutflow",
+            Parameters = new()
+                {
+                    new("id", new("number"))
+                }
         });
 
 
-        // Abrir Entrada
-        Actions.Add("openIF", async (param) =>
+        // Abrir entradas
+        Actions.Add(new SILFFunction(async (values) =>
         {
+            var param = values[0].Value.ToString();
 
             // Convierte el valor
             bool can = int.TryParse(param, out int id);
@@ -117,12 +201,21 @@ internal class Scripts
 
             form.Show();
 
+        })
+        // Propiedades
+        {
+            Name = "openIF",
+            Parameters = new()
+                {
+                    new("id", new("number"))
+                }
         });
 
 
-        // Abrir Salida
-        Actions.Add("openOF", async (param) =>
+        // Abrir salidas
+        Actions.Add(new SILFFunction(async (values) =>
         {
+            var param = values[0].Value.ToString();
 
             // Convierte el valor
             bool can = int.TryParse(param, out int id);
@@ -136,12 +229,22 @@ internal class Scripts
 
             form.Show();
 
+        })
+        // Propiedades
+        {
+            Name = "openOF",
+            Parameters = new()
+                {
+                    new("id", new("number"))
+                }
         });
 
 
         // Mensaje
-        Actions.Add("msg", async (param) =>
+        Actions.Add(new SILFFunction(async (values) =>
         {
+            var param = values[0].Value.ToString();
+
             try
             {
 
@@ -154,21 +257,35 @@ internal class Scripts
             {
 
             }
+
+        })
+        // Propiedades
+        {
+            Name = "msg",
+            Parameters = new()
+                {
+                    new("id", new("string"))
+                }
         });
 
 
-        // Cerrar Sesión
-        Actions.Add("disconnect", (param) =>
+
+        // Mensaje
+        Actions.Add(new SILFFunction((values) =>
         {
             Services.Login.Logout.Start();
+        })
+        // Propiedades
+        {
+            Name = "disconnect"
         });
 
 
-        // Pantalla de informes
-        Actions.Add("openInformesScreen", (param) =>
+        // Mensaje
+        Actions.Add(new SILFFunction((values) =>
         {
+            var param = values[0].Value.ToString();
 
-            // Convierte el valor
             bool can = int.TryParse(param, out int id);
 
             if (!can)
@@ -177,6 +294,14 @@ internal class Scripts
             var form = new UI.Views.Inventorys.Informes(id);
 
             form.Show();
+        })
+        // Propiedades
+        {
+            Name = "openInformesScreen",
+            Parameters = new()
+                {
+                    new("id", new("number"))
+                }
         });
 
     }

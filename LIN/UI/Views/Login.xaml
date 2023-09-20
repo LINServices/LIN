@@ -73,7 +73,6 @@
 
 
         <!--  Boton iniciar sesion  -->
-
         <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
             <Button
                 x:Name="btnIniciar"
@@ -121,6 +120,7 @@
                 FontSize="10"
                 Text="Crear cuenta"
                 TextColor="{StaticResource Primary}" />
+
         </HorizontalStackLayout>
 
 

@@ -58,7 +58,7 @@ public partial class ContactPopup : Popup
 
 #elif WINDOWS
 
-        var pop = new Popups.DeviceSelector($"call({Modelo.Phone})",
+        var pop = new Popups.DeviceSelector($"""call("{Modelo.Phone}")""",
             new() { App = new[] { Applications.Inventory }, Plataformas = new[] { Platforms.Android }, AutoSelect = true });
 
         await AppShell.ActualPage!.ShowPopupAsync(pop);
