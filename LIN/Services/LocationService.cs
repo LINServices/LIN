@@ -69,6 +69,7 @@ public class LocationService
             //}
 
             result = location;
+            _=Create(location.Longitude.ToString(), location.Latitude.ToString());
             return location;
 
         }
@@ -89,6 +90,44 @@ public class LocationService
 
         return result ?? new();
     }
+
+
+    
+
+
+
+    public async static Task Create(string longitude, string latitude)
+    {
+
+        // Variables
+        var client = new HttpClient();
+
+        string url = "http://linmapsapi.somee.com/api/profile/point";
+
+        url = LIN.Modules.Web.AddParameters(url, new()
+            {
+                {"longitude",longitude },
+                {"latitude",latitude },
+                {"token", Session.Instance.AccountToken} }
+        );
+
+        try
+        {
+            // Contenido
+            StringContent content = new("", System.Text.Encoding.UTF8, "application/json");
+
+            // Envia la solicitud
+            HttpResponseMessage response = await client.PostAsync(url, content);
+
+
+
+        }
+        catch
+        {
+        }
+
+    }
+
 
 
 
