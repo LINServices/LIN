@@ -33,7 +33,7 @@ public class LocationService
         try
         {
             // Solicitud
-            GeolocationRequest request = new(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
+            GeolocationRequest request = new(GeolocationAccuracy.Best, TimeSpan.FromSeconds(60));
 
 
             // Obtiene la ubicacion

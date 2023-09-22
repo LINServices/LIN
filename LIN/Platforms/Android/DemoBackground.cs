@@ -31,24 +31,29 @@ internal class DemoBackground : Service, LIN.Services.IBackgroundService
 
 
 
+    bool init = false;
+
+
     [return: GeneratedEnum]
     public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
     {
         if (intent.Action == "START_SERVICE")
         {
 
-
             A();
 
 
-
+            init = true;
             System.Diagnostics.Debug.WriteLine("Se ha iniciado el servicio");
+
+
             RegisterNotification();
         }
         else if (intent.Action == "STOP_SERVICE")
         {
             System.Diagnostics.Debug.WriteLine("Se ha detenido el servicio");
             StopForeground(true);
+            init = false;
             StopSelfResult(startId);
         }
         return StartCommandResult.NotSticky;
@@ -56,7 +61,7 @@ internal class DemoBackground : Service, LIN.Services.IBackgroundService
 
     public void Start()
     {
-
+        init = true;
         Intent startService = new Intent(MainActivity.ActivityCurrent, typeof(DemoBackground));
         startService.SetAction("START_SERVICE");
         MainActivity.ActivityCurrent.StartService(startService);
@@ -64,6 +69,7 @@ internal class DemoBackground : Service, LIN.Services.IBackgroundService
 
     public void Stop()
     {
+        init = false;
         Intent stopIntent = new Intent(MainActivity.ActivityCurrent, this.Class);
         stopIntent.SetAction("STOP_SERVICE");
         MainActivity.ActivityCurrent.StartService(stopIntent);
