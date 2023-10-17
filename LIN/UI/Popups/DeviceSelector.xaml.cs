@@ -296,8 +296,7 @@ public partial class DeviceSelector : Popup
         // Filtrado por plataforma
         foreach (var model in lista)
         {
-            if (filtro.App.Contains(model.App))
-                filtrado.Add(model);
+            filtrado.Add(model);
         }
 
         return filtrado;

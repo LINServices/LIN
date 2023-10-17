@@ -58,14 +58,7 @@ public partial class DeviceControl : Grid
         displayName.Text = Modelo.Name;
         ToolTipProperties.SetText(displayName, Modelo.DeviceKey);
 
-        displayApp.Text = Modelo.App switch
-        {
-            Applications.Inventory => "LIN Inventory",
-            Applications.CloudConsole => "LIN Cloud Console",
-            Applications.Admin => "LIN Admin",
-            Applications.Employee => "LIN Internals",
-            _ => "Aplicación desconocida"
-        };
+        displayApp.Text = "Aplicación";
 
 
         if (Modelo.Platform == Platforms.Windows)

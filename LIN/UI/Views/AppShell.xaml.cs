@@ -151,7 +151,6 @@ public partial class AppShell : Shell
             Manufacter = DeviceInfo.Current.Manufacturer,
             OsVersion = DeviceInfo.Current.VersionString,
             Platform = MauiProgram.GetPlatform(),
-            App = Applications.Inventory,
             DeviceKey = MauiProgram.DeviceSesionKey,
             Token = Session.Instance.AccountToken,
         };
