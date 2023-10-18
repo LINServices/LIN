@@ -1,6 +1,6 @@
 
 using LIN.Access.Inventory.Controllers;
-
+using LIN.Types.Contacts.Models;
 using LIN.UI.Popups;
 
 namespace LIN.UI.Views.Products;
@@ -65,7 +65,7 @@ public partial class Add : ContentPage
         }
 
         // Proveedor
-        if (contacto.Modelo.ID <= 0)
+        if (contacto.Modelo.Id <= 0)
         {
 
             ShowInfo("Por favor, selecciona un proveedor.");
@@ -103,7 +103,7 @@ public partial class Add : ContentPage
     {
         // Nuevo popup
         var pop = new ContactSelector(false);
-        var model = (List<ContactDataModel>?)await this.ShowPopupAsync(pop);
+        var model = (List<ContactModel>?)await this.ShowPopupAsync(pop);
 
         if (model == null || model.Count <= 0)
             return;
@@ -172,7 +172,7 @@ public partial class Add : ContentPage
             {
                 Plantilla = Plantilla.Plantilla,
                 Inventory = InventoryID,
-                Provider = contacto.Modelo.ID,
+                Provider = contacto.Modelo.Id,
                 Estado = ProductBaseStatements.Normal,
                 PrecioCompra = precioCompra,
                 PrecioVenta = precioVenta,
@@ -189,7 +189,7 @@ public partial class Add : ContentPage
                 Inventory = InventoryID,
                 Code = txtCode.Text,
                 Description = txtDescripcion.Text,
-                Provider = contacto.Modelo.ID,
+                Provider = contacto.Modelo.Id,
                 Estado = ProductBaseStatements.Normal,
                 PrecioCompra = precioCompra,
                 PrecioVenta = precioVenta,

@@ -1,3 +1,5 @@
+using LIN.Types.Contacts.Models;
+
 namespace LIN.UI.Popups;
 
 
@@ -8,13 +10,13 @@ public partial class ContactSelector : Popup
     /// <summary>
     /// Lista de modelos seleccionados
     /// </summary>
-    private List<ContactDataModel> SelectedItems = new();
+    private List<ContactModel> SelectedItems = new();
 
 
     /// <summary>
     /// Lista de modelos
     /// </summary>
-    private List<ContactDataModel> Modelos = new();
+    private List<ContactModel> Modelos = new();
 
 
 
@@ -96,14 +98,14 @@ public partial class ContactSelector : Popup
         var id = Session.Instance.Informacion.ID;
 
         // Respuesta
-        var response = await Access.Inventory.Controllers.Contact.ReadAll(id);
+        var response = await Access.Inventory.Controllers.Contact.ReadAll(LIN.Access.Inventory.Session.Instance.ContactsToken);
 
         // Evalua
         if (response.Response != Responses.Success)
             return false;
 
         // Organiza los modelos
-        Modelos = response.Models.Where(T=>T.State == ContactStatus.Normal).OrderBy(x => x.Name).ToList();
+        Modelos = response.Models;
 
         return true;
     }
@@ -176,7 +178,7 @@ public partial class ContactSelector : Popup
 
 
 
-    private List<Controls.ContactForPick> BuildControls(List<ContactDataModel> modelos)
+    private List<Controls.ContactForPick> BuildControls(List<ContactModel> modelos)
     {
         List<Controls.ContactForPick> controles = new();
         foreach (var modelo in modelos)
@@ -186,7 +188,7 @@ public partial class ContactSelector : Popup
     }
 
 
-    private Controls.ContactForPick BuildControl(ContactDataModel modelo)
+    private Controls.ContactForPick BuildControl(ContactModel modelo)
     {
         var control = new Controls.ContactForPick(modelo)
         {
@@ -207,13 +209,13 @@ public partial class ContactSelector : Popup
         var obj = (Controls.ContactForPick?)sender;
 
 
-        bool isSelect = SelectedItems.Where(T => T.ID == obj.Modelo.ID).Any();
+        bool isSelect = SelectedItems.Where(T => T.Id == obj.Modelo.Id).Any();
 
 
         if (isSelect)
         {
             obj.UnSelect();
-            SelectedItems.RemoveAll(T => T.ID == obj.Modelo.ID);
+            SelectedItems.RemoveAll(T => T.Id == obj.Modelo.Id);
             return;
         }
 

@@ -1,3 +1,5 @@
+using LIN.Types.Contacts.Models;
+
 namespace LIN.UI.Controls;
 
 public partial class ContactForPick : Grid
@@ -18,14 +20,14 @@ public partial class ContactForPick : Grid
     /// <summary>
     /// Modelo
     /// </summary>
-    public ContactDataModel Modelo { get; set; }
+    public ContactModel Modelo { get; set; }
 
 
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public ContactForPick(ContactDataModel modelo)
+    public ContactForPick(ContactModel modelo)
     {
         InitializeComponent();
         this.Modelo = modelo;
@@ -40,33 +42,33 @@ public partial class ContactForPick : Grid
     public void LoadModelVisible()
     {
 
-        // Si el modelo fue eliminado
-        if (Modelo.State == ContactStatus.Deleted)
-        {
-            this.Hide();
-            return;
-        }
+        //// Si el modelo fue eliminado
+        //if (Modelo.State == ContactStatus.Deleted)
+        //{
+        //    this.Hide();
+        //    return;
+        //}
 
         // Datos
-        lbName.Text = Modelo.Name;
-        lbMail.Text = Modelo.Mail;
-        lbTelefono.Text = Modelo.Phone;
+        lbName.Text = Modelo.Nombre;
+        lbMail.Text = Modelo.Mails[0].Email;
+        lbTelefono.Text = Modelo.Phones[0].Number;
 
         // Si no hay imagen que mostrar
-        if (Modelo.Picture.Length == 0)
-        {
-            img.Hide();
-            lbPic.Show();
-            lbPic.Text = lbName.Text[0].ToString().ToUpper();
-            bgImg.BackgroundColor = Services.RandomColor.GetRandomColor();
-        }
-        else
-        {
-            lbPic.Hide();
-            img.Show();
-            bgImg.BackgroundColor = Microsoft.Maui.Graphics.Colors.Transparent;
-            img.Source = ImageEncoder.Decode(Modelo.Picture);
-        }
+        //if (Modelo.Picture.Length == 0)
+        //{
+        //    img.Hide();
+        //    lbPic.Show();
+        //    lbPic.Text = lbName.Text[0].ToString().ToUpper();
+        //    bgImg.BackgroundColor = Services.RandomColor.GetRandomColor();
+        //}
+        //else
+        //{
+        //    lbPic.Hide();
+        //    img.Show();
+        //    bgImg.BackgroundColor = Microsoft.Maui.Graphics.Colors.Transparent;
+        //    img.Source = ImageEncoder.Decode(Modelo.Picture);
+        //}
 
     }
 

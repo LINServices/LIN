@@ -1,3 +1,5 @@
+using LIN.Types.Contacts.Models;
+
 namespace LIN.UI.Popups;
 
 
@@ -5,14 +7,14 @@ public partial class ContactEdit : Popup
 {
 
     // Modelo
-    public ContactDataModel Modelo { get; set; }
+    public ContactModel Modelo { get; set; }
 
 
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public ContactEdit(ContactDataModel product)
+    public ContactEdit(ContactModel product)
     {
         InitializeComponent();
         this.CanBeDismissedByTappingOutsideOfPopup = false;
@@ -29,10 +31,10 @@ public partial class ContactEdit : Popup
     {
 
         // Metadatos
-        txtName.Text = Modelo.Name;
-        txtMail.Text = Modelo.Mail;
-        txtPhone.Text = Modelo.Phone;
-        txtDireccion.Text = Modelo.Direction;
+        txtName.Text = Modelo.Nombre;
+        txtMail.Text = Modelo.Mails[0].Email;
+        txtPhone.Text = Modelo.Phones[0].Number;
+        //txtDireccion.Text = Modelo.Direction;
 
     }
 
@@ -48,24 +50,24 @@ public partial class ContactEdit : Popup
     private async void BtnSelectClick(object sender, EventArgs e)
     {
 
-        if (Modelo.Name == txtName.Text &&
-            Modelo.Mail == txtMail.Text &&
-            Modelo.Direction == txtDireccion.Text &&
-            Modelo.Phone == txtPhone.Text)
-        {
-            Close();
-            return;
-        }
+        //if (Modelo.Name == txtName.Text &&
+        //    Modelo.Mail == txtMail.Text &&
+        //    Modelo.Direction == txtDireccion.Text &&
+        //    Modelo.Phone == txtPhone.Text)
+        //{
+        //    Close();
+        //    return;
+        //}
 
 
-        // Nuevos datos
-        {
-            Modelo.Name = txtName.Text ?? "";
-            Modelo.Direction = txtDireccion.Text ?? "";
-            Modelo.Phone = txtPhone.Text ?? "";
-            Modelo.Mail = txtMail.Text ?? "";
-            Modelo.Picture = Modelo.Picture;
-        }
+        //// Nuevos datos
+        //{
+        //    Modelo.Name = txtName.Text ?? "";
+        //    Modelo.Direction = txtDireccion.Text ?? "";
+        //    Modelo.Phone = txtPhone.Text ?? "";
+        //    Modelo.Mail = txtMail.Text ?? "";
+        //    Modelo.Picture = Modelo.Picture;
+        //}
 
 
 
@@ -78,7 +80,7 @@ public partial class ContactEdit : Popup
 
         if (response.Response == Responses.Success)
         {
-            AppShell.Hub.SendContactModel(Session.Instance.Informacion.ID, Modelo.ID);
+            AppShell.Hub.SendContactModel(Session.Instance.Informacion.ID, Modelo.Id);
             ContactObserver.Update(Modelo);
         }
 

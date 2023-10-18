@@ -1,4 +1,6 @@
-﻿namespace LIN.React.Observers;
+﻿using LIN.Types.Contacts.Models;
+
+namespace LIN.React.Observers;
 
 
 public sealed class ContactObserver
@@ -41,7 +43,7 @@ public sealed class ContactObserver
     public static bool Update(IContactViewer context)
     {
 
-        var notificates = _data.Where(x => x.Modelo.ID == context.Modelo.ID).ToList();
+        var notificates = _data.Where(x => x.Modelo.Id == context.Modelo.Id).ToList();
         if (!notificates.Any())
             return false;
         foreach (var certificate in notificates)
@@ -55,17 +57,17 @@ public sealed class ContactObserver
     /// <summary>
     /// Envia los cambios
     /// </summary>
-    public static bool Update(ContactDataModel modelo)
+    public static bool Update(ContactModel modelo)
     {
 
-        var notificates = _data.Where(x => x.Modelo.ID == modelo.ID).ToList();
+        var notificates = _data.Where(x => x.Modelo.Id == modelo.Id).ToList();
 
         if (!notificates.Any())
             return false;
 
         foreach (var certificate in notificates)
         {
-            certificate.Modelo.FillWith(modelo);
+            //certificate.Modelo.FillWith(modelo);
             certificate.RenderNewData();
         }
 

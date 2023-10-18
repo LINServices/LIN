@@ -1,5 +1,7 @@
 
 
+using LIN.Types.Contacts.Models;
+
 namespace LIN.UI.Views.Contacts;
 
 
@@ -9,7 +11,7 @@ public partial class Index : ContentPage
     /// <summary>
     /// Lista de modelos
     /// </summary>
-    private List<ContactDataModel> Modelos { get; set; } = new();
+    private List<ContactModel> Modelos { get; set; } = new();
 
 
     /// <summary>
@@ -63,7 +65,7 @@ public partial class Index : ContentPage
         BuildControls(Modelos);
 
         // Carga los controles que estan normal
-        RenderControls(Controles.Where(T => T.Modelo.State == ContactStatus.Normal));
+        RenderControls(Controles);
 
         // Calcula las metricas
         Calculate();
@@ -106,7 +108,7 @@ public partial class Index : ContentPage
     {
 
         // respuesta desde la API
-        var contactos = await Access.Inventory.Controllers.Contact.ReadAll(Session.Instance.Informacion.ID);
+        var contactos = await Access.Inventory.Controllers.Contact.ReadAll(Session.Instance.ContactsToken);
 
         // Validacion
         if (contactos.Response != Responses.Success)
@@ -114,7 +116,7 @@ public partial class Index : ContentPage
 
         // Modelos
         Modelos.Clear();
-        Modelos.AddRange(contactos.Models.OrderBy(model => model.Name).ToList());
+        Modelos.AddRange(contactos.Models.OrderBy(model => model.Nombre).ToList());
 
         // Correcto
         return Responses.Success;
@@ -135,7 +137,7 @@ public partial class Index : ContentPage
     /// </summary>
     private void RenderNormals()
     {
-        var elementos = Controles.Where(T => T.Modelo.State == ContactStatus.Normal);
+        var elementos = Controles;
         RenderControls(elementos);
         ShowQuantityInfo(elementos.Count());
     }
@@ -147,7 +149,7 @@ public partial class Index : ContentPage
     /// </summary>
     private void RenderTrash()
     {
-        var elementos = Controles.Where(T => T.Modelo.State == ContactStatus.OnTrash);
+        var elementos = Controles;
         RenderControls(elementos);
         ShowInfo($"{elementos.Count()} contactos en la papelera");
     }
@@ -199,7 +201,7 @@ public partial class Index : ContentPage
     /// <summary>
     /// Construlle los controles apartir de una lista de modelos
     /// </summary>
-    private void BuildControls(List<ContactDataModel> lista)
+    private void BuildControls(List<ContactModel> lista)
     {
 
         // Limpia los controles
@@ -222,7 +224,7 @@ public partial class Index : ContentPage
     /// <summary>
     /// construlle un control
     /// </summary>
-    private Controls.Contact? BuildOneControl(ContactDataModel modelo)
+    private Controls.Contact? BuildOneControl(ContactModel modelo)
     {
         if (modelo != null)
         {
@@ -286,7 +288,7 @@ public partial class Index : ContentPage
     /// <summary>
     /// Agrega un nuevo modelo (Cache y vista)
     /// </summary>
-    public void AppendModel(ContactDataModel modelo)
+    public void AppendModel(ContactModel modelo)
     {
 
         // Modelo nulo
@@ -294,12 +296,12 @@ public partial class Index : ContentPage
             return;
 
         // Cuenta si existen elementos
-        var existings = Modelos.Where(element => element.ID == modelo.ID).ToList();
+        var existings = Modelos.Where(element => element.Id == modelo.Id).ToList();
 
         if (existings.Count > 0)
         {
 
-            var existControls = Controles.Where(T => T.Modelo.ID == modelo.ID);
+            var existControls = Controles.Where(T => T.Modelo.Id == modelo.Id);
 
             foreach (var ex in existControls)
                 ex.Hide();
@@ -321,7 +323,7 @@ public partial class Index : ContentPage
         RenderOneControl(control!);
 
         // Nuevo mensaje
-        ShowInfo($"Se agrego a '{modelo.Name}' a la lista.");
+        ShowInfo($"Se agrego a '{modelo.Nombre}' a la lista.");
 
         // Recarga las metricas
         Calculate();
@@ -399,10 +401,10 @@ public partial class Index : ContentPage
             return;
         }
 
-        var count = Controles.Where(T => T.Modelo.State == ContactStatus.OnTrash).Count();
+        var count = Controles.Count();
         displayPapelera.Contenido = $"{count} elementos";
         cardCantidad.Contenido = $"{Modelos.Count}";
-        cardCantidad.ChartText = $"{Modelos.Where(T => T.State == ContactStatus.OnTrash).Count()} en papelera";
+        //cardCantidad.ChartText = $"{Modelos.Where(T => T.State == ContactStatus.OnTrash).Count()} en papelera";
     }
 
 
@@ -432,10 +434,7 @@ public partial class Index : ContentPage
 
         // Encuentra los elementos por medio del patron
         var items = (from A in Controles
-                     where A.Modelo.Name.ToLower().Contains(pattern) ||
-                        A.Modelo.Direction.ToLower().Contains(pattern) ||
-                        A.Modelo.Phone.ToLower().Contains(pattern) ||
-                        A.Modelo.Mail.ToLower().Contains(pattern)
+                     where A.Modelo.Nombre.ToLower().Contains(pattern)
                      select A).ToList();
 
         // Si no hay elementos
@@ -462,7 +461,7 @@ public partial class Index : ContentPage
     /// <summary>
     /// Cuando se recibe informacion del HUB
     /// </summary>
-    private void HubConnection_On(object? sender, ContactDataModel e)
+    private void HubConnection_On(object? sender, ContactModel e)
     {
         try
         {

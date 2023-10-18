@@ -58,16 +58,17 @@
 	
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\..\SILF\SILF\SILF.Script\SILF.Script.csproj" />
 	  <ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj" />
 	  <ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.Inventory\LIN.Access.Inventory.csproj" />
 	  <ProjectReference Include="..\..\..\Tipos\LIN.Modules\LIN.Modules.csproj" />
 	  <ProjectReference Include="..\..\..\Tipos\LIN.Types.Auth\LIN.Types.Auth.csproj" />
+	  <ProjectReference Include="..\..\..\Tipos\LIN.Types.Contacts\LIN.Types.Contacts.csproj" />
 	  <ProjectReference Include="..\..\..\Tipos\LIN.Types.Inventory\LIN.Types.Inventory.csproj" />
 	  <ProjectReference Include="..\..\..\Tipos\LIN.Types\LIN.Types.csproj" />
 	  <ProjectReference Include="..\LIN.Controls\LIN.Controls.csproj" />
 	  <ProjectReference Include="..\LIN.LocalDataBase\LIN.LocalDataBase.csproj" />
 	  <ProjectReference Include="..\LIN.Reactive\LIN.React.csproj" />
-	  <ProjectReference Include="C:\Users\giral\Desktop\SILF\SILF.Script\SILF.Script.csproj" />
 	</ItemGroup>
 
 </Project>

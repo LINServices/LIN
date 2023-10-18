@@ -1,9 +1,11 @@
+using LIN.Types.Contacts.Models;
+
 namespace LIN.UI.Views.Contacts;
 
 public partial class Add : ContentPage
 {
 
- 
+
     /// <summary>
     /// Evento de Agregar
     /// </summary>
@@ -68,19 +70,31 @@ public partial class Add : ContentPage
 
 
         // Model
-        var modelo = new ContactDataModel()
+        var modelo = new ContactModel()
         {
-            Mail = txtMail.Text ?? "Sin definir",
-            Name = txtName.Text ?? "Unnamed",
-            Picture =    await imagen,
-            ProfileID = Session.Instance.Informacion.ID,
-            Direction = txtDireccion.Text ?? "Sin definir",
-            Phone = txtPhone.Text ?? "Sin definir"
+            Type = Types.Contacts.Enumerations.ContactTypes.Provider,
+            Mails = new()
+            {
+               new()
+               {
+                 Email=  txtMail.Text ?? "Sin definir"
+               } 
+            }
+            ,
+            Nombre = txtName.Text ?? "Unnamed",
+            //Picture = await imagen
+            Phones = new()
+            {
+                new()
+                {
+                    Number = txtPhone.Text ?? "Sin definir"
+                }
+            }
         };
 
 
         // Respuesta del controlador
-        var task = Access.Inventory.Controllers.Contact.Create(modelo);
+        var task = Access.Contacts.Controllers.Contacts.Create(Session.Instance.ContactsToken,modelo);
 
 
         // Muestras se completa la tarea

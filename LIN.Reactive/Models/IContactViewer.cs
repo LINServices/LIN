@@ -8,7 +8,7 @@ public interface IContactViewer
     /// <summary>
     /// Modelo
     /// </summary>
-    public ContactDataModel Modelo { get; set; }
+    public LIN.Types.Contacts.Models.ContactModel Modelo { get; set; }
 
 
     public string? ContextKey { get; init; }
