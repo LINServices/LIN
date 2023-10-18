@@ -78,7 +78,7 @@ public partial class Add : ContentPage
                new()
                {
                  Email=  txtMail.Text ?? "Sin definir"
-               } 
+               }
             }
             ,
             Nombre = txtName.Text ?? "Unnamed",
@@ -94,7 +94,7 @@ public partial class Add : ContentPage
 
 
         // Respuesta del controlador
-        var task = Access.Contacts.Controllers.Contacts.Create(Session.Instance.ContactsToken,modelo);
+        var task = Access.Inventory.Controllers.Contact.Create(Session.Instance.ContactsToken, modelo);
 
 
         // Muestras se completa la tarea
