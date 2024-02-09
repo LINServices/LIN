@@ -80,7 +80,7 @@ public partial class ContactEdit : Popup
 
         if (response.Response == Responses.Success)
         {
-            AppShell.Hub.SendContactModel(Session.Instance.Informacion.ID, Modelo.Id);
+            //AppShell.Hub.SendContactModel(Session.Instance.Informacion.ID, Modelo.Id);
             ContactObserver.Update(Modelo);
         }
 

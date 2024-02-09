@@ -44,8 +44,8 @@ public partial class Index : ContentPage
         this.InventarioID = inventario;
         this.Hub = hub;
 
-        if (Hub != null)
-            Hub.OnReciveOutflow += Hub_OnReciveOutflow;
+        //if (Hub != null)
+        //    Hub.OnReciveOutflow += Hub_OnReciveOutflow;
 
         Load();
     }

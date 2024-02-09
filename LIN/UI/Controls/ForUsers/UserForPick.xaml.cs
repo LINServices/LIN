@@ -1,5 +1,5 @@
-using LIN.Types.Auth.Abstracts;
-using LIN.Types.Auth.Enumerations;
+using LIN.Types.Cloud.Identity.Abstracts;
+using LIN.Types.Cloud.Identity.Enumerations;
 
 namespace LIN.UI.Controls;
 
@@ -51,11 +51,11 @@ public partial class UserForPick : Grid
     {
 
         // Datos
-        displayName.Text = Modelo.Account.Nombre;
-        displayUser.Text = "@" + Modelo.Account.Usuario;
+        displayName.Text = Modelo.Account.Name;
+        displayUser.Text = "@" + Modelo.Account.Identity.Unique;
 
         // Si no hay imagen que mostar
-        if (Modelo.Account.Perfil.Length == 0)
+        if (Modelo.Account.Profile.Length == 0)
         {
             img.Hide();
             lbPic.Show();
@@ -67,26 +67,12 @@ public partial class UserForPick : Grid
             lbPic.Hide();
             img.Show();
             bgImg.BackgroundColor = Microsoft.Maui.Graphics.Colors.Transparent;
-            img.Source = ImageEncoder.Decode(Modelo.Account.Perfil);
+            img.Source = ImageEncoder.Decode(Modelo.Account.Profile);
         }
 
 
         // Insignias
-        switch (Modelo.Account.Insignia)
-        {
-
-            case AccountBadges.Verified:
-                displayInsignia.Source = ImageSource.FromFile("verificado.png");
-                break;
-
-            case AccountBadges.VerifiedGold:
-                displayInsignia.Source = ImageSource.FromFile("verificadogold.png");
-                break;
-
-            default:
-                displayInsignia.Hide();
-                break;
-        }
+        
 
 
 

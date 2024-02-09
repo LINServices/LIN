@@ -378,14 +378,14 @@
 
         <!--  Fondo  -->
         <Setter Property="Shell.BackgroundColor" Value="{StaticResource Background}" />
-        <Setter Property="Shell.ForegroundColor" Value="{OnPlatform WinUI={StaticResource Primary}, Default={StaticResource Black}}" />
-        <Setter Property="Shell.TitleColor" Value="{StaticResource Black}" />
+        <Setter Property="Shell.ForegroundColor" Value="{StaticResource Gray900}" />
+        <Setter Property="Shell.TitleColor" Value="{StaticResource Gray900}" />
 
 
-        <Setter Property="Shell.DisabledColor" Value="{StaticResource Gray200}" />
+        <Setter Property="Shell.DisabledColor" Value="#f43f5e" />
 
         <!--  Color seleccionado en (WinUI)  -->
-        <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Gray600}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Primary}" />
 
 
 
@@ -393,7 +393,7 @@
 
         <Setter Property="Shell.NavBarHasShadow" Value="False" />
 
-        <Setter Property="Shell.TabBarBackgroundColor" Value="#F7F8FD" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Background}" />
 
 
 

@@ -1,3 +1,5 @@
+using SQLite;
+
 namespace LIN.UI.Views;
 
 
@@ -74,10 +76,13 @@ public partial class Singin : ContentPage
 
         var account = new AccountModel
         {
-            Nombre = name,
-            Usuario = user,
-            Contraseña = pass,
-            Perfil = await inpImg.GetBytes()
+            Name = name,
+            Identity = new()
+            {
+                Unique = user
+            },
+            Password = pass,
+            Profile = await inpImg.GetBytes()
         };
 
 

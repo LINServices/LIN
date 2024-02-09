@@ -42,7 +42,7 @@ public partial class Inventory : Grid
 
 
         displayName.Text = Modelo.Nombre;
-        displayDireccion.Text = Modelo.Direccion;
+        displayDireccion.Text = Modelo.Direction;
         displayRol.Text = Modelo.MyRol.Humanize();
 
     }

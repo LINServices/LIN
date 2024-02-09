@@ -12,8 +12,8 @@ internal class Events
         var service = AppShell.ElementHandler?.MauiContext?.Services.GetServices<IBackgroundService>().FirstOrDefault();
         service?.Stop();
 
-        if (Session.IsLocalOpen)
-            AppShell.Hub.ReconnectAndUpdate();
+        //if (Session.IsLocalOpen)
+        //    AppShell.Hub.ReconnectAndUpdate();
 
     }
 

@@ -10,10 +10,10 @@ public partial class Notificacion : Grid
     public event EventHandler<EventArgs>? Clicked;
 
 
-    public Types.Inventory.Models.Notificacion Modelo { get; set; }
+    public Types.Inventory.Transient.Notificacion Modelo { get; set; }
 
 
-    public Notificacion(LIN.Types.Inventory.Models.Notificacion modelo)
+    public Notificacion(LIN.Types.Inventory.Transient.Notificacion modelo)
     {
         InitializeComponent();
         this.Modelo = modelo;

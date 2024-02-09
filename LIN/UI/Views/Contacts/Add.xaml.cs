@@ -30,7 +30,7 @@ public partial class Add : ContentPage
     private bool IsDataComplete()
     {
 
-        // Nombre
+        // Name
         if (string.IsNullOrWhiteSpace(txtName.Text))
             return false;
 
@@ -72,6 +72,7 @@ public partial class Add : ContentPage
         // Model
         var modelo = new ContactModel()
         {
+            Picture = await imagen,
             Type = Types.Contacts.Enumerations.ContactTypes.Provider,
             Mails = new()
             {
@@ -132,7 +133,7 @@ public partial class Add : ContentPage
 
 
 
-        AppShell.Hub.SendContactModel(Session.Instance.Informacion.ID, response.LastID);
+       // AppShell.Hub.SendContactModel(Session.Instance.Informacion.ID, response.LastID);
 
         // Muestra el popup de agregado
         OnAdd?.Invoke(this, Services.AddResponse.Success);

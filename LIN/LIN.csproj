@@ -1,41 +1,39 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-android;</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks>net8.0-android;</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
+
+		<!-- Note for MacCatalyst:
+		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
+		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
+		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
+		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
+		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
 		<OutputType>Exe</OutputType>
 		<RootNamespace>LIN</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		
+
 		<!-- Display name -->
 		<ApplicationTitle>LIN</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.linservices.lin</ApplicationId>
-		<ApplicationIdGuid>7d4c0cde-d05f-42a2-9716-e90d7e38c7b5</ApplicationIdGuid>
+		<ApplicationId>com.lin.inventory</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>2.0</ApplicationDisplayVersion>
-		<ApplicationVersion>2</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
-		<MauiVersion>7.0.58</MauiVersion>
-	</PropertyGroup>
-	
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-	<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
@@ -46,7 +44,7 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -55,20 +53,28 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
-	
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+	</ItemGroup>
+
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\..\SILF\SILF\SILF.Script\SILF.Script.csproj" />
-	  <ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj" />
-	  <ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.Inventory\LIN.Access.Inventory.csproj" />
-	  <ProjectReference Include="..\..\..\Tipos\LIN.Modules\LIN.Modules.csproj" />
-	  <ProjectReference Include="..\..\..\Tipos\LIN.Types.Auth\LIN.Types.Auth.csproj" />
-	  <ProjectReference Include="..\..\..\Tipos\LIN.Types.Contacts\LIN.Types.Contacts.csproj" />
-	  <ProjectReference Include="..\..\..\Tipos\LIN.Types.Inventory\LIN.Types.Inventory.csproj" />
-	  <ProjectReference Include="..\..\..\Tipos\LIN.Types\LIN.Types.csproj" />
-	  <ProjectReference Include="..\LIN.Controls\LIN.Controls.csproj" />
-	  <ProjectReference Include="..\LIN.LocalDataBase\LIN.LocalDataBase.csproj" />
-	  <ProjectReference Include="..\LIN.Reactive\LIN.React.csproj" />
+		<ProjectReference Include="..\..\..\..\SILF\SILF\SILF.Script\SILF.Script.csproj" />
+		<ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj" />
+		<ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.Inventory\LIN.Access.Inventory.csproj" />
+		<ProjectReference Include="..\..\..\Tipos\LIN.Modules\LIN.Modules.csproj" />
+		<ProjectReference Include="..\..\..\Tipos\LIN.Types.Cloud.Identity\LIN.Types.Cloud.Identity.csproj" />
+		<ProjectReference Include="..\..\..\Tipos\LIN.Types.Contacts\LIN.Types.Contacts.csproj" />
+		<ProjectReference Include="..\..\..\Tipos\LIN.Types.Inventory\LIN.Types.Inventory.csproj" />
+		<ProjectReference Include="..\..\..\Tipos\LIN.Types\LIN.Types.csproj" />
+		<ProjectReference Include="..\LIN.Controls\LIN.Controls.csproj" />
+		<ProjectReference Include="..\LIN.LocalDataBase\LIN.LocalDataBase.csproj" />
+		<ProjectReference Include="..\LIN.Reactive\LIN.React.csproj" />
 	</ItemGroup>
+
+
+
 
 </Project>

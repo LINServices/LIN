@@ -1,5 +1,4 @@
 using CommunityToolkit.Maui.Storage;
-using LIN.Types.Auth.Abstracts;
 using LIN.UI.Popups;
 
 namespace LIN.UI.Views.Inflows;
@@ -29,7 +28,7 @@ public partial class ViewItem : ContentPage
     }
 
 
-    List<ProductDataTransfer> tranfers = new();
+    List<ProductModel> tranfers = new();
 
 
     /// <summary>
@@ -79,8 +78,8 @@ public partial class ViewItem : ContentPage
         var resUser = await taskUser;
         Creador = resUser.Model;
 
-        lbName.Text = resUser.Model.Nombre;
-        picUser.Source = ImageEncoder.Decode(resUser.Model.Perfil);
+        lbName.Text = resUser.Model.Name;
+        picUser.Source = ImageEncoder.Decode(resUser.Model.Profile);
 
         if (OpenExport)
             Export(null, null);
@@ -115,7 +114,7 @@ public partial class ViewItem : ContentPage
             return;
 
         var folderBase = result.Folder.Path;
-        await PDFService.RenderInflow(Modelo, Session.Instance.Account.Usuario, Creador.Usuario, tranfers, folderBase);
+        await PDFService.RenderInflow(Modelo, Session.Instance.Account.Identity.Unique, Creador.Identity.Unique, tranfers, folderBase);
 
         await DisplayAlert("Reporte", "Reporte generado exitosamente", "OK");
 

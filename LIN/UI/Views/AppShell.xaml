@@ -24,15 +24,16 @@
                     VerticalOptions="Center">
 
                     <Border
+                        Margin="10"
                         HeightRequest="30"
                         StrokeShape="RoundRectangle 25"
                         WidthRequest="30">
                         <Image
                             x:Name="perfil"
-                            HeightRequest="30"
+                            HeightRequest="25"
                             Source="invitacion.png"
                             VerticalOptions="Center"
-                            WidthRequest="30" />
+                            WidthRequest="25" />
                     </Border>
 
                     <Label

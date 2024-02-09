@@ -31,14 +31,14 @@ public partial class ProductTemplate : Grid
     /// <summary>
     /// Model del contacto
     /// </summary>
-    public ProductDataTransfer Modelo { get; set; }
+    public ProductModel Modelo { get; set; }
 
     public bool IsSelected { get; private set; } = false;
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public ProductTemplate(ProductDataTransfer modelo)
+    public ProductTemplate(ProductModel modelo)
     {
         InitializeComponent();
         this.Modelo = modelo;

@@ -22,7 +22,7 @@ public partial class AppShell : Shell
     /// <summary>
     /// Hub de ViewON
     /// </summary>
-    public static LIN.Access.Auth.Hubs.AccountHub Hub = new(BuildHub());
+   // public static LIN.Access.Auth.Hubs.AccountHub Hub = new(BuildHub());
 
 
 
@@ -41,11 +41,11 @@ public partial class AppShell : Shell
         InitializeComponent();
         Instance = this;
 
-        Hub = new(BuildHub());
+        //Hub = new(BuildHub());
 
-        // Eventos del HUB
-        Hub.OnReceivingCommand += Hub_OnRecieve;
-        Hub.OnDeviceChange += Hub_OnChange;
+        //// Eventos del HUB
+        //Hub.OnReceivingCommand += Hub_OnRecieve;
+        //Hub.OnDeviceChange += Hub_OnChange;
 
         BatteryService.StatusChange += BatteryService_StatusChange;
 
@@ -59,15 +59,15 @@ public partial class AppShell : Shell
     private void BatteryService_StatusChange(object? sender, BatteryStatus e)
     {
         
-        if (Hub?.DeviceModel == null)
-            return;
+        //if (Hub?.DeviceModel == null)
+        //    return;
 
-        if (Hub.DeviceModel.BateryLevel != e.Percent || Hub.DeviceModel.BateryConected != e.IsChargin)
-        {
-            Hub.DeviceModel.BateryLevel = e.Percent;
-            Hub.DeviceModel.BateryConected = e.IsChargin;
-        }
-        Hub.SendBattery();
+        //if (Hub.DeviceModel.BateryLevel != e.Percent || Hub.DeviceModel.BateryConected != e.IsChargin)
+        //{
+        //    Hub.DeviceModel.BateryLevel = e.Percent;
+        //    Hub.DeviceModel.BateryConected = e.IsChargin;
+        //}
+        //Hub.SendBattery();
     }
 
 
@@ -113,7 +113,7 @@ public partial class AppShell : Shell
         if (Instance == null)
             return;
 
-        Instance.lbUser.Text = user;
+        //Instance.lbUser.Text = user;
     }
 
     public static void SetImage(ImageSource source)
@@ -121,7 +121,7 @@ public partial class AppShell : Shell
         if (Instance == null)
             return;
 
-        Instance.perfil.Source = source;
+      //  Instance.perfil.Source = source;
     }
 
 
@@ -135,38 +135,38 @@ public partial class AppShell : Shell
 
 
     /// <summary>
-    /// Construlle el HUB
-    /// </summary>
-    private static async Task<DeviceModel> BuildHub()
-    {
+    ///// Construlle el HUB
+    ///// </summary>
+    //private static async Task<DeviceModel> BuildHub()
+    //{
 
-        // Arma el modelo
-        var model = new DeviceModel()
-        {
-            Name = MauiProgram.GetDeviceName(),
-            Cuenta = Session.Instance.Account.ID,
-            Modelo = DeviceInfo.Current.Model,
-            BateryConected = BatteryService.IsChargin,
-            BateryLevel = BatteryService.Percent,
-            Manufacter = DeviceInfo.Current.Manufacturer,
-            OsVersion = DeviceInfo.Current.VersionString,
-            Platform = MauiProgram.GetPlatform(),
-            DeviceKey = MauiProgram.DeviceSesionKey,
-            Token = Session.Instance.AccountToken,
-        };
+    //    // Arma el modelo
+    //    var model = new DeviceModel()
+    //    {
+    //        Name = MauiProgram.GetDeviceName(),
+    //        Cuenta = Session.Instance.Account.Id,
+    //        Modelo = DeviceInfo.Current.Model,
+    //        BateryConected = BatteryService.IsChargin,
+    //        BateryLevel = BatteryService.Percent,
+    //        Manufacter = DeviceInfo.Current.Manufacturer,
+    //        OsVersion = DeviceInfo.Current.VersionString,
+    //        Platform = MauiProgram.GetPlatform(),
+    //        DeviceKey = MauiProgram.DeviceSesionKey,
+    //        Token = Session.Instance.AccountToken,
+    //    };
 
-        // Locacion
-        var location = await LocationService.GetLocation();
+    //    // Locacion
+    //    var location = await LocationService.GetLocation();
 
-        double Logitud = location.Longitude;
-        double Latitud = location.Latitude;
+    //    double Logitud = location.Longitude;
+    //    double Latitud = location.Latitude;
 
-        model.Logitud = Logitud;
-        model.Latitud = Latitud;
+    //    model.Logitud = Logitud;
+    //    model.Latitud = Latitud;
 
-        return model;
+    //    return model;
 
-    }
+    //}
 
 
 
@@ -177,7 +177,7 @@ public partial class AppShell : Shell
     {
         Dispatcher.DispatchAsync(new Action(() =>
         {
-            Hub.GetDevicesList(Session.Instance.Account.ID);
+            //Hub.GetDevicesList(Session.Instance.Account.Id);
         }));
     }
 

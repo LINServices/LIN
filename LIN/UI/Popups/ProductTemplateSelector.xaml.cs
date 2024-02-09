@@ -98,7 +98,7 @@ public partial class ProductTemplateSelector : Popup
     /// <summary>
     /// Renderiza una lista de modelos
     /// </summary>
-    private void RenderModels(List<ProductDataTransfer> models)
+    private void RenderModels(List<ProductModel> models)
     {
         // Recorre los modelos
         foreach (var item in models)

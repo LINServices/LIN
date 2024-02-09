@@ -164,8 +164,8 @@
                                                WinUI=30}"
                     HorizontalOptions="Center"
                     Picture="pencil_white.png"
-                    WidthRequest="{OnPlatform Android=65,
-                                              WinUI=60}" />
+                    WidthRequest="{OnPlatform Android=35,
+                                              WinUI=30}" />
 
 
             </HorizontalStackLayout>

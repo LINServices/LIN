@@ -14,20 +14,20 @@ public partial class ProductDetail : Grid
     /// <summary>
     /// Modelo del producto
     /// </summary>
-    public AbstractDetailsDataModel Modelo { get; set; }
+    public InflowDetailsDataModel Modelo { get; set; }
 
 
-    public ProductDataTransfer Producto { get; set; }
+    public ProductModel Producto { get; set; }
 
 
-    List<ProductDataTransfer> Tranfers;
+    List<ProductModel> Tranfers;
 
     Action? OnFinish;
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public ProductDetail(AbstractDetailsDataModel modelo, List<ProductDataTransfer> tranfers, Action? OnFinish = null)
+    public ProductDetail(InflowDetailsDataModel modelo, List<ProductModel> tranfers, Action? OnFinish = null)
     {
         InitializeComponent();
         this.Modelo = modelo;
@@ -46,7 +46,7 @@ public partial class ProductDetail : Grid
     {
 
         // Obtiene el producto
-        Producto = (await Access.Inventory.Controllers.Product.ReadOneByDetail(Modelo.ProductoDetail)).Model;
+        Producto = (await Access.Inventory.Controllers.Product.ReadOneByDetail(Modelo.ProductDetailId, Session.Instance.Token)).Model;
 
         Tranfers.Add(Producto);
         OnFinish?.Invoke();
@@ -69,7 +69,7 @@ public partial class ProductDetail : Grid
 
 
 
-        var price = Producto.PrecioVenta - Producto.PrecioCompra;
+        var price = Producto.DetailModel.PrecioVenta - Producto.DetailModel.PrecioCompra;
 
         displayPrice.Text = $"{price * Modelo.Cantidad}";
 

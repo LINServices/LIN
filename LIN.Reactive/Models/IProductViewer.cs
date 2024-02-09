@@ -8,7 +8,7 @@ public interface IProductViewer
     /// <summary>
     /// Modelo
     /// </summary>
-    public ProductDataTransfer Modelo { get; set; }
+    public ProductModel Modelo { get; set; }
 
 
     public string? ContextKey { get; init; }

@@ -17,11 +17,11 @@ public partial class Add : ContentPage
     bool WithPlantilla { get; set; } = false;
 
 
-    ProductDataTransfer Plantilla { get; set; }
+    ProductModel Plantilla { get; set; }
 
 
     /// <summary>
-    /// ID del inventario asociado
+    /// Id del inventario asociado
     /// </summary>
     public int InventoryID { get; set; }
 
@@ -47,7 +47,7 @@ public partial class Add : ContentPage
     private bool IsDataComplete()
     {
 
-        // Nombre
+        // Name
         if (string.IsNullOrWhiteSpace(txtName.Text))
         {
 
@@ -165,7 +165,7 @@ public partial class Add : ContentPage
 
 
         // Model
-        ProductDataTransfer modelo;
+        ProductModel modelo;
         if (WithPlantilla)
         {
             modelo = new()
@@ -225,7 +225,7 @@ public partial class Add : ContentPage
 
 
         // Actualizacion en tiempo real
-        HubConnection?.SendAddModel(InventoryID, response.LastID);
+        //HubConnection?.SendAddModel(InventoryID, response.LastID);
 
         // Muestra el popup de agregado
         await this.ShowPopupAsync(new Popups.DefaultPopup());
@@ -311,16 +311,16 @@ public partial class Add : ContentPage
         var pop = new Popups.ProductTemplateSelector();
         var result = await pop.Show();
 
-        if (result is not null && result is ProductDataTransfer)
+        if (result is not null && result is ProductModel)
         {
-            txtName.Text = ((ProductDataTransfer)result).Name;
-            txtDescripcion.Text = ((ProductDataTransfer)result).Description;
-            SelectCategorie(((ProductDataTransfer)result).Category);
+            txtName.Text = ((ProductModel)result).Name;
+            txtDescripcion.Text = ((ProductModel)result).Description;
+            SelectCategorie(((ProductModel)result).Category);
 
             PrepareUnableState();
             WithPlantilla = true;
             displayPlantilla.Show();
-            Plantilla = (ProductDataTransfer)result;
+            Plantilla = (ProductModel)result;
         }
 
     }

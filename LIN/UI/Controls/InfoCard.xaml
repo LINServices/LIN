@@ -40,15 +40,17 @@
                                               Android=140}" />
 
 
-                <HorizontalStackLayout
+                <StackLayout
                     Grid.Row="0"
                     Margin="5,0,0,0"
-                    Padding="10"
+                    Orientation="Horizontal"
                     VerticalOptions="Center">
-                    <Image
+                    <StackLayout Orientation="Horizontal" Margin="8" >
+                         <Image
                         HeightRequest="15"
                         Source="{Binding Source={x:Reference this}, Path=Picture}"
                         VerticalOptions="Center"
+                        HorizontalOptions="Center"
                         WidthRequest="15" />
                     <Label
                         Margin="7,0,0,0"
@@ -57,8 +59,14 @@
                                               Android=12}"
                         Text="{Binding Source={x:Reference this}, Path=ChartText}"
                         TextColor="{Binding Source={x:Reference this}, Path=TextColor}"
-                        VerticalOptions="Center" />
-                </HorizontalStackLayout>
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center"
+                        />
+                    </StackLayout>
+                   
+                        
+                   
+                </StackLayout>
             </Grid>
 
 

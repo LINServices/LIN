@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace LIN.Services;
+﻿namespace LIN.Services;
 
 
 internal class PDFService
@@ -9,7 +7,7 @@ internal class PDFService
     /// <summary>
     /// Renderiza una entrada
     /// </summary>
-    public static async Task RenderOutflow(OutflowDataModel outflow, string exportBy, string createBy, List<ProductDataTransfer> tranfers, string path)
+    public static async Task RenderOutflow(OutflowDataModel outflow, string exportBy, string createBy, List<ProductModel> tranfers, string path)
     {
 
         using var stream = await FileSystem.OpenAppPackageFileAsync("plantilla.html");
@@ -32,7 +30,7 @@ internal class PDFService
         //var response = await LIN.Access.Developer.Controllers.PDF.ConvertHTML(html);
 
         // Guarda el archivo
-       // File.WriteAllBytes($"{path}\\salida_{outflow.ID}.pdf", response.File);
+       // File.WriteAllBytes($"{path}\\salida_{outflow.Id}.pdf", response.File);
 
     }
 
@@ -40,7 +38,7 @@ internal class PDFService
     /// <summary>
     /// Construlle las columnas
     /// </summary>
-    private static string BuildOutflowRows(List<OutflowDetailsDataModel> detalles, List<ProductDataTransfer> tranfers, out decimal totalFinal)
+    private static string BuildOutflowRows(List<OutflowDetailsDataModel> detalles, List<ProductModel> tranfers, out decimal totalFinal)
     {
         StringBuilder build = new();
 
@@ -49,20 +47,20 @@ internal class PDFService
         foreach (var detail in detalles)
         {
 
-            var price = tranfers.Where(T => T.IDDetail == detail.ProductoDetail).FirstOrDefault()?.PrecioVenta - tranfers.Where(T => T.IDDetail == detail.ProductoDetail).FirstOrDefault()?.PrecioCompra;
-            var ganancia = (price * detail.Cantidad) ?? 0;
+            //var price = tranfers.Where(T => T.DetailModel.Id == detail.ProductDetailId).FirstOrDefault()?.DetailModel.PrecioVenta - tranfers.Where(T => T.IDDetail == detail.ProductoDetail).FirstOrDefault()?.PrecioCompra;
+            //var ganancia = (price * detail.Cantidad) ?? 0;
 
-            var row = $"""
-                       <tr>
-                         <th scope="row">{count}</th>
-                         <td>{tranfers.Where(T => T.IDDetail == detail.ProductoDetail).FirstOrDefault()?.Name}</td>
-                         <td>{detail.Cantidad}</td>
-                         <td>{ganancia}</td>
-                       </tr>
-                       """;
-            total += ganancia;
-            build.Append(row);
-            count++;
+            //var row = $"""
+            //           <tr>
+            //             <th scope="row">{count}</th>
+            //             <td>{tranfers.Where(T => T.IDDetail == detail.ProductoDetail).FirstOrDefault()?.Name}</td>
+            //             <td>{detail.Cantidad}</td>
+            //             <td>{ganancia}</td>
+            //           </tr>
+            //           """;
+            //total += ganancia;
+            //build.Append(row);
+            //count++;
         }
 
         totalFinal = total;
@@ -81,7 +79,7 @@ internal class PDFService
     /// <summary>
     /// Renderiza una entrada
     /// </summary>
-    public static async Task RenderInflow(InflowDataModel inflow, string exportBy, string createBy, List<ProductDataTransfer> tranfers, string path)
+    public static async Task RenderInflow(InflowDataModel inflow, string exportBy, string createBy, List<ProductModel> tranfers, string path)
     {
 
         // Leer el archivo
@@ -103,7 +101,7 @@ internal class PDFService
       //  var response = await LIN.Access.Developer.Controllers.PDF.ConvertHTML(html);
 
         // Guarda el archivo
-       // File.WriteAllBytes($"{path}\\entrada_{inflow.ID}.pdf", response.File);
+       // File.WriteAllBytes($"{path}\\entrada_{inflow.Id}.pdf", response.File);
 
     }
 
@@ -111,7 +109,7 @@ internal class PDFService
     /// <summary>
     /// Construlle las columnas
     /// </summary>
-    private static string BuildInflowRows(List<InflowDetailsDataModel> detalles, List<ProductDataTransfer> tranfers, out decimal totalFinal)
+    private static string BuildInflowRows(List<InflowDetailsDataModel> detalles, List<ProductModel> tranfers, out decimal totalFinal)
     {
         StringBuilder build = new();
 
@@ -120,19 +118,19 @@ internal class PDFService
         foreach (var detail in detalles)
         {
 
-            var price = tranfers.Where(T => T.IDDetail == detail.ProductoDetail).FirstOrDefault()?.PrecioVenta - tranfers.Where(T => T.IDDetail == detail.ProductoDetail).FirstOrDefault()?.PrecioCompra;
-            var ganancia = (price * detail.Cantidad) ?? 0;
-            var row = $"""
-                       <tr>
-                         <th scope="row">{count}</th>
-                         <td>{tranfers.Where(T => T.IDDetail == detail.ProductoDetail).FirstOrDefault()?.Name}</td>
-                         <td>{detail.Cantidad}</td>
-                         <td>{ganancia}</td>
-                       </tr>
-                       """;
-            total += ganancia;
-            build.Append(row);
-            count++;
+            //var price = tranfers.Where(T => T.IDDetail == detail.ProductoDetail).FirstOrDefault()?.PrecioVenta - tranfers.Where(T => T.IDDetail == detail.ProductoDetail).FirstOrDefault()?.PrecioCompra;
+            //var ganancia = (price * detail.Cantidad) ?? 0;
+            //var row = $"""
+            //           <tr>
+            //             <th scope="row">{count}</th>
+            //             <td>{tranfers.Where(T => T.IDDetail == detail.ProductoDetail).FirstOrDefault()?.Name}</td>
+            //             <td>{detail.Cantidad}</td>
+            //             <td>{ganancia}</td>
+            //           </tr>
+            //           """;
+            //total += ganancia;
+            //build.Append(row);
+            //count++;
         }
 
         totalFinal = total;

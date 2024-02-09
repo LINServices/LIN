@@ -51,7 +51,7 @@ public partial class AddItem : ContentPage
 
         // Nuevo popup
         var pop = new ProductSelector(Inventario, true);
-        var models = (List<ProductDataTransfer>?)await this.ShowPopupAsync(pop);
+        var models = (List<ProductModel>?)await this.ShowPopupAsync(pop);
 
         if (models == null || models.Count <= 0)
             return;
@@ -174,7 +174,7 @@ public partial class AddItem : ContentPage
         }
 
         // Actualizacion en tiempo real
-        Hub?.SendAddModelOutflow(Inventario, response.LastID);
+        //Hub?.SendAddModelOutflow(Inventario, response.LastID);
 
 
         // Muestra el popup

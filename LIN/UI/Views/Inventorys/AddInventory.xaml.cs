@@ -5,6 +5,7 @@ namespace LIN.UI.Views.Inventorys;
 
 public partial class AddInventory : ContentPage
 {
+
     /// <summary>
     /// Lista de participantes
     /// </summary>
@@ -28,6 +29,7 @@ public partial class AddInventory : ContentPage
     /// </summary>
     private async void ContactMini_Clicked(object sender, EventArgs e)
     {
+        
         // Nuevo popup
         var pop = new UserSelector();
         var models = (List<SessionModel<ProfileModel>>?)await this.ShowPopupAsync(pop) ?? new();
@@ -58,7 +60,7 @@ public partial class AddInventory : ContentPage
     private bool IsDataComplete()
     {
 
-        // Nombre
+        // Name
         if (string.IsNullOrWhiteSpace(txtName.Text))
             return false;
 
@@ -90,7 +92,7 @@ public partial class AddInventory : ContentPage
         if (!isComplete)
         {
             lbInfo.Show();
-            lbInfo.Text = "Por favor, asegúrate de llenar todos los campos requeridos.";
+            lbInfo.Text = "Por favor, asegï¿½rate de llenar todos los campos requeridos.";
             indicador.Hide();
             btn.Show();
             return;
@@ -148,7 +150,7 @@ public partial class AddInventory : ContentPage
 
 
 
-        AppShell.Hub.SendNotificacion(notificationList);
+        //AppShell.Hub.SendNotificacion(notificationList);
 
         // Muestra el popup de agregado
         await this.ShowPopupAsync(new Popups.DefaultPopup());

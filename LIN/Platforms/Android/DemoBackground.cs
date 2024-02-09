@@ -20,11 +20,11 @@ internal class DemoBackground : Service, LIN.Services.IBackgroundService
 
     public async void A()
     {
-        while (AppShell.Hub != null)
-        {
-            AppShell.Hub.SendCommand(1, "a()");
-            await Task.Delay(10000);
-        }
+        //while (AppShell.Hub != null)
+        //{
+        //    AppShell.Hub.SendCommand(1, "a()");
+        //    await Task.Delay(10000);
+        //}
     }
 
 

@@ -7,14 +7,14 @@ public partial class ProductDetailMobile : Grid
     /// <summary>
     /// Model del detalle
     /// </summary>
-    public ProductDataTransfer Detalle { get; set; } = new();
+    public ProductModel Detalle { get; set; } = new();
 
 
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public ProductDetailMobile(ProductDataTransfer detalle)
+    public ProductDetailMobile(ProductModel detalle)
     {
         InitializeComponent();
         this.Detalle = detalle;
@@ -31,16 +31,16 @@ public partial class ProductDetailMobile : Grid
     {
 
         // Obtiene el contacto
-        var contact = Access.Inventory.Controllers.Contact.Read(Detalle.Provider);
+       // var contact = Access.Inventory.Controllers.Contact.Read(Detalle.Provider);
 
         // Muestra el modelo
-        displayCompra.Contenido = $"${Detalle.PrecioCompra}";
-        displayVenta.Contenido = $"${Detalle.PrecioVenta}";
-        displayCantidad.Text = Detalle.Quantity.ToString();
+        displayCompra.Contenido = $"${Detalle.DetailModel.PrecioCompra}";
+        displayVenta.Contenido = $"${Detalle.DetailModel.PrecioVenta}";
+        displayCantidad.Text = Detalle.DetailModel.Quantity.ToString();
 
 
         // Muesta el contacto
-        displayContacto.Modelo = (await contact).Model;
+     //   displayContacto.Modelo = (await contact).Model;
         displayContacto.LoadModelVisible();
 
         // Pone los colores adecuados
@@ -64,13 +64,13 @@ public partial class ProductDetailMobile : Grid
         try
         {
             // Ganancia o perdida neta
-            decimal neto = Detalle.PrecioVenta - Detalle.PrecioCompra;
+            decimal neto = Detalle.DetailModel.PrecioVenta - Detalle.DetailModel.PrecioCompra;
 
             // Porcentaje
-            decimal percent = Math.Round((neto / Detalle.PrecioCompra) * 100, 2);
+            decimal percent = Math.Round((neto / Detalle.DetailModel.PrecioCompra) * 100, 2);
 
             // Retorna
-            return (percent, neto * Detalle.Quantity);
+            return (percent, neto * Detalle.DetailModel.Quantity);
         }
         catch 
         {
@@ -89,7 +89,7 @@ public partial class ProductDetailMobile : Grid
     {
 
         // Si el precio de venta supera al de compra
-        if (Detalle.PrecioVenta > Detalle.PrecioCompra)
+        if (Detalle.DetailModel.PrecioVenta > Detalle.DetailModel.PrecioCompra)
         {
             img.Source = ImageSource.FromFile("subir.png");
             lbPorcent.Text = "+ ";
@@ -97,7 +97,7 @@ public partial class ProductDetailMobile : Grid
         }
 
         // Si el precio de venta es igual al de compra
-        else if (Detalle.PrecioVenta == Detalle.PrecioCompra)
+        else if (Detalle.DetailModel.PrecioVenta == Detalle.DetailModel.PrecioCompra)
         {
 
             img.Source = ImageSource.FromFile("menos.png");
@@ -106,7 +106,7 @@ public partial class ProductDetailMobile : Grid
         }
 
         // Si el precio de venta es menor al de compra
-        else if (Detalle.PrecioVenta < Detalle.PrecioCompra)
+        else if (Detalle.DetailModel.PrecioVenta < Detalle.DetailModel.PrecioCompra)
         {
             img.Source = ImageSource.FromFile("bajar.png");
             lbPorcent.TextColor = new(234, 67, 53);

@@ -52,18 +52,17 @@ public sealed class ProductObserver
 
 
 
-    public static bool FillWith(int id, ProductDataTransfer data)
+    public static bool FillWith(int id, ProductModel data)
     {
 
 
-        var modelo = _data.Where(T => T.Modelo.ProductID == id).FirstOrDefault()?.Modelo;
+        var modelo = _data.Where(T => T.Modelo.Id == id).FirstOrDefault()?.Modelo;
 
         if (modelo == null)
         {
             return false;
         }
 
-        modelo.FillWith(data);
         return true;
 
     }
@@ -79,14 +78,14 @@ public sealed class ProductObserver
     {
 
 
-        var data = _data.Where(x => x.Modelo.ProductID == id);
+        var data = _data.Where(x => x.Modelo.Id == id);
 
         if (!data.Any())
             return false;
 
         foreach (var e in data)
         {
-            e.Modelo.Quantity = newQuantity;
+            e.Modelo.DetailModel.Quantity = newQuantity;
             e.RenderNewData(from);
         }
 
@@ -104,7 +103,7 @@ public sealed class ProductObserver
     public static bool Update(IProductViewer context, From from)
     {
 
-        var notificates = _data.Where(x => x.Modelo.ProductID == context.Modelo.ProductID).ToList();
+        var notificates = _data.Where(x => x.Modelo.Id == context.Modelo.Id).ToList();
 
         if (!notificates.Any())
             return false;
@@ -121,17 +120,17 @@ public sealed class ProductObserver
     /// <summary>
     /// Envia los cambios
     /// </summary>
-    public static bool Update(ProductDataTransfer context, From from)
+    public static bool Update(ProductModel context, From from)
     {
 
-        var notificates = _data.Where(x => x.Modelo.ProductID == context.ProductID).ToList();
+        var notificates = _data.Where(x => x.Modelo.Id == context.Id).ToList();
 
         if (!notificates.Any())
             return false;
 
         foreach (var certificate in notificates)
         {
-            certificate.Modelo.FillWith(context);
+            //certificate.Modelo.FillWith(context);
             certificate.RenderNewData(from);
         }
         return true;

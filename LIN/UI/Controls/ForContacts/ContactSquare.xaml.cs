@@ -86,6 +86,9 @@ public partial class ContactSquare : Grid
     public void LoadModelVisible()
     {
 
+        if (Modelo == null)
+            return;
+
         // Datos
         lbName.Text = TextShortener.Short(Modelo.Nombre ?? "", 12);
 

@@ -7,21 +7,21 @@ public partial class Index : ContentPage
     /// <summary>
     /// Modelo de un dispositivo
     /// </summary>
-    public DeviceModel Modelo { get; set; }
+   // public DeviceModel Modelo { get; set; }
 
 
 
     /// <summary>
     /// Constructo
     /// </summary>
-    public Index(DeviceModel modelo)
-    {
-        InitializeComponent();
-        Disappearing += Index_Disappearing;
-        Modelo = modelo;
-        LoadModelVisible();
+    //public Index(DeviceModel modelo)
+    //{
+    //    InitializeComponent();
+    //    Disappearing += Index_Disappearing;
+    //    Modelo = modelo;
+    //    LoadModelVisible();
 
-    }
+    //}
 
 
 
@@ -78,49 +78,49 @@ public partial class Index : ContentPage
 
 
 
-        // Metadatos
-        lbName.Text = Modelo.Name;
-        cardModel.Contenido = $"{Modelo.Manufacter} {Modelo.Modelo}";
-        card1.Contenido = $"{Modelo.Platform} {Modelo.OsVersion}";
-        displayBateria.Text = $"{Modelo.BateryLevel}%";
+        //// Metadatos
+        //lbName.Text = Modelo.Name;
+        //cardModel.Contenido = $"{Modelo.Manufacter} {Modelo.Modelo}";
+        //card1.Contenido = $"{Modelo.Platform} {Modelo.OsVersion}";
+        //displayBateria.Text = $"{Modelo.BateryLevel}%";
 
 
-        // Nivel de Bateria y si esta cargando
-        cardBatery.Contenido = $"{Modelo.BateryLevel}% - {Modelo.BateryConected switch
-        {
-            false => "Descargando",
-            true => "Cargando"
-        }}";
+        //// Nivel de Bateria y si esta cargando
+        //cardBatery.Contenido = $"{Modelo.BateryLevel}% - {Modelo.BateryConected switch
+        //{
+        //    false => "Descargando",
+        //    true => "Cargando"
+        //}}";
 
 
-        // Imagen (Windows)
-        if (Modelo.Platform == Platforms.Windows)
-        {
-            img.Source = ImageSource.FromFile("ordenador.png");
-            card1.Source = ImageSource.FromFile("windows_logo.png");
-        }
+        //// Imagen (Windows)
+        //if (Modelo.Platform == Platforms.Windows)
+        //{
+        //    img.Source = ImageSource.FromFile("ordenador.png");
+        //    card1.Source = ImageSource.FromFile("windows_logo.png");
+        //}
 
-        // Imagen (Android)
-        else if (Modelo.Platform == Platforms.Android)
-        {
-            img.Source = ImageSource.FromFile("telefono.png");
-            card1.Source = ImageSource.FromFile("android_logo.png");
-        }
+        //// Imagen (Android)
+        //else if (Modelo.Platform == Platforms.Android)
+        //{
+        //    img.Source = ImageSource.FromFile("telefono.png");
+        //    card1.Source = ImageSource.FromFile("android_logo.png");
+        //}
 
-        // Imagen (Web)
-        else if (Modelo.Platform == Platforms.Web)
-            img.Source = ImageSource.FromFile("web.png");
+        //// Imagen (Web)
+        //else if (Modelo.Platform == Platforms.Web)
+        //    img.Source = ImageSource.FromFile("web.png");
 
 
-        // Establece el Mapa
-        mapa.SetNewCoordenadas(Modelo.Logitud, Modelo.Latitud);
+        //// Establece el Mapa
+        //mapa.SetNewCoordenadas(Modelo.Logitud, Modelo.Latitud);
 
-        // Nombre del lugar segun la ubicacion
-        var place = await Services.LocationService.GetPlace(Modelo.Logitud, Modelo.Latitud);
+        //// Name del lugar segun la ubicacion
+        //var place = await Services.LocationService.GetPlace(Modelo.Logitud, Modelo.Latitud);
 
-        // Muetra la ubicacion
-        cardDireccion.Contenido = $"{place?.Thoroughfare} {place?.SubThoroughfare}";
-        cardStates.Contenido = $"{place?.Locality}, {place?.AdminArea}, {place?.CountryName}";
+        //// Muetra la ubicacion
+        //cardDireccion.Contenido = $"{place?.Thoroughfare} {place?.SubThoroughfare}";
+        //cardStates.Contenido = $"{place?.Locality}, {place?.AdminArea}, {place?.CountryName}";
 
     }
 

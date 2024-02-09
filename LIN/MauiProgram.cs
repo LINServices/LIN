@@ -70,7 +70,7 @@ public static class MauiProgram
 #if ANDROID
         builder.Services.AddTransient<IBackgroundService, LIN.DemoBackground>();
 #endif
-        builder.UseCustomControls();
+      
         builder.ConfigureFonts(SetFonts);
         builder.UseMauiCommunityToolkit();
         builder.ConfigureEssentials(essentials =>
@@ -129,8 +129,8 @@ public static class MauiProgram
                     {
                         try
                         {
-                            if (AppShell.Hub != null)
-                                _ = AppShell.Hub.CloseSesion();
+                        //    if (AppShell.Hub != null)
+                        //        _ = AppShell.Hub.CloseSesion();
                         }
                         catch
                         {
@@ -176,6 +176,7 @@ public static class MauiProgram
 
          });
 
+  builder.UseCustomControls();
 
 
         DeviceSesionKey = KeyGen.Generate(20, "dv.");

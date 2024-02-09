@@ -94,7 +94,7 @@ public partial class ContactSelector : Popup
     private async Task<bool> RetriveData()
     {
 
-        // ID de la cuenta
+        // Id de la cuenta
         var id = Session.Instance.Informacion.ID;
 
         // Respuesta

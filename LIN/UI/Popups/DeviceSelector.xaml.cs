@@ -7,10 +7,10 @@ public partial class DeviceSelector : Popup
     //======= Propiedades =======//
 
 
-    /// <summary>
-    /// Lista de modelos
-    /// </summary>
-    private protected List<DeviceModel> Modelos { get; set; } = new();
+    ///// <summary>
+    ///// Lista de modelos
+    ///// </summary>
+    //private protected List<DeviceModel> Modelos { get; set; } = new();
 
 
 
@@ -60,7 +60,7 @@ public partial class DeviceSelector : Popup
     /// </summary>
     private async void Load()
     {
-        Modelos.Clear();
+       // Modelos.Clear();
         Controles.Clear();
         content.Clear();
         displayInfo.Hide();
@@ -77,33 +77,33 @@ public partial class DeviceSelector : Popup
 
 
         // No hay dispositivos
-        if (Modelos.Count <= 0)
-        {
-            ShowInfo("No hay dispositivos conectados");
-            return;
-        }
+        //if (Modelos.Count <= 0)
+        //{
+        //    ShowInfo("No hay dispositivos conectados");
+        //    return;
+        //}
 
-        else if (Modelos.Count == 1 && Filtro.AutoSelect)
-        {
-            try
-            {
-                AppShell.Hub.SendCommand(Modelos[0].ID, Comando);
-                this.Close();
-                return;
-            }
-            catch
-            {
-            }
-        }
+        //else if (Modelos.Count == 1 && Filtro.AutoSelect)
+        //{
+        //    try
+        //    {
+        //        AppShell.Hub.SendCommand(Modelos[0].ID, Comando);
+        //        this.Close();
+        //        return;
+        //    }
+        //    catch
+        //    {
+        //    }
+        //}
 
 
-        // Construlle los controles
-        BuildControls(Modelos);
+        //// Construlle los controles
+        //BuildControls(Modelos);
 
-        // Renderiza los controles
-        RenderControls(Controles);
+        //// Renderiza los controles
+        //RenderControls(Controles);
 
-        ShowInfo($"{Modelos.Count} Dispositivos conectados");
+        //ShowInfo($"{Modelos.Count} Dispositivos conectados");
 
     }
 
@@ -115,21 +115,21 @@ public partial class DeviceSelector : Popup
     private async Task<bool> RetrieveData()
     {
 
-        //Solicitud
-        var devices = await Access.Auth.Controllers.Devices.ReadAll(Session.Instance.AccountToken);
+        ////Solicitud
+        //var devices = await Access.Auth.Controllers.Devices.ReadAll(Session.Instance.AccountToken);
 
-        // Respuesta incorrecta
-        if (devices.Response != Responses.Success)
-            return false;
+        //// Respuesta incorrecta
+        //if (devices.Response != Responses.Success)
+        //    return false;
 
-        // Modelos
-        List<DeviceModel> filters = new();
+        //// Modelos
+        //List<DeviceModel> filters = new();
 
 
-        if (!Filtro.HasMe)
-            filters = devices.Models.Where(T => T.ID != AppShell.Hub.ID).ToList();
+        //if (!Filtro.HasMe)
+        //    filters = devices.Models.Where(T => T.ID != AppShell.Hub.ID).ToList();
 
-        Modelos = ApplyFilters(filters, Filtro);
+        //Modelos = ApplyFilters(filters, Filtro);
 
         return true;
     }
@@ -168,32 +168,32 @@ public partial class DeviceSelector : Popup
     /// <summary>
     /// Construlle una lista de controles
     /// </summary>
-    private void BuildControls(List<DeviceModel> models)
-    {
-        foreach (var model in models)
-        {
-            var control = BuildOneControl(model);
-            Controles.Add(control);
-        }
+    //private void BuildControls(List<DeviceModel> models)
+    //{
+    //    foreach (var model in models)
+    //    {
+    //        var control = BuildOneControl(model);
+    //        Controles.Add(control);
+    //    }
 
-    }
+    //}
 
 
 
     /// <summary>
     /// Construlle un control
     /// </summary>
-    private DeviceControl BuildOneControl(DeviceModel model)
-    {
-        var control = new DeviceControl(model, false);
-        control.Clicked += (sender, e) =>
-        {
-            AppShell.Hub.SendCommand(model.ID, Comando);
-            this.Close();
-        };
-        control.Margin = new(0, 3, 0, 0);
-        return control;
-    }
+    //private DeviceControl BuildOneControl(DeviceModel model)
+    //{
+    //    var control = new DeviceControl(model, false);
+    //    control.Clicked += (sender, e) =>
+    //    {
+    //        AppShell.Hub.SendCommand(model.ID, Comando);
+    //        this.Close();
+    //    };
+    //    control.Margin = new(0, 3, 0, 0);
+    //    return control;
+    //}
 
 
 
@@ -240,68 +240,68 @@ public partial class DeviceSelector : Popup
     /// <summary>
     /// Aplica todos los filtros
     /// </summary>
-    private static List<DeviceModel> ApplyFilters(List<DeviceModel> lista, DeviceFilterModel filtro)
-    {
-        // Lista de elementos filtrados
-        List<DeviceModel> filtrado = new();
+    //private static List<DeviceModel> ApplyFilters(List<DeviceModel> lista, DeviceFilterModel filtro)
+    //{
+    //    // Lista de elementos filtrados
+    //    List<DeviceModel> filtrado = new();
 
-        var filterApp = ApplyAppFilters(lista, filtro);
-        var filterPlatform = ApplyPlatformsFilters(filterApp, filtro);
+    //    var filterApp = ApplyAppFilters(lista, filtro);
+    //    var filterPlatform = ApplyPlatformsFilters(filterApp, filtro);
 
-        return filterPlatform;
+    //    return filterPlatform;
 
-    }
+    //}
 
 
 
     /// <summary>
     /// Aplica el filtro de plataforma
     /// </summary>
-    private static List<DeviceModel> ApplyPlatformsFilters(List<DeviceModel> lista, DeviceFilterModel filtro)
-    {
-        // Lista de elementos filtrados
-        List<DeviceModel> filtrado = new();
-        if (filtro.Plataformas.Contains(Platforms.Undefined))
-        {
-            filtrado.AddRange(lista);
-            return filtrado;
-        }
+    //private static List<DeviceModel> ApplyPlatformsFilters(List<DeviceModel> lista, DeviceFilterModel filtro)
+    //{
+    //    // Lista de elementos filtrados
+    //    List<DeviceModel> filtrado = new();
+    //    if (filtro.Plataformas.Contains(Platforms.Undefined))
+    //    {
+    //        filtrado.AddRange(lista);
+    //        return filtrado;
+    //    }
 
-        // Filtrado por plataforma
-        foreach (var model in lista)
-        {
-            if (filtro.Plataformas.Contains(model.Platform))
-                filtrado.Add(model);
-        }
+    //    // Filtrado por plataforma
+    //    foreach (var model in lista)
+    //    {
+    //        if (filtro.Plataformas.Contains(model.Platform))
+    //            filtrado.Add(model);
+    //    }
 
-        return filtrado;
+    //    return filtrado;
 
-    }
+    //}
 
 
 
-    /// <summary>
-    /// Aplica el filtro de aplicacion
-    /// </summary>
-    private static List<DeviceModel> ApplyAppFilters(List<DeviceModel> lista, DeviceFilterModel filtro)
-    {
-        // Lista de elementos filtrados
-        List<DeviceModel> filtrado = new();
-        if (filtro.App.Contains(Applications.Undefined))
-        {
-            filtrado.AddRange(lista);
-            return filtrado;
-        }
+    ///// <summary>
+    ///// Aplica el filtro de aplicacion
+    ///// </summary>
+    //private static List<DeviceModel> ApplyAppFilters(List<DeviceModel> lista, DeviceFilterModel filtro)
+    //{
+    //    // Lista de elementos filtrados
+    //    List<DeviceModel> filtrado = new();
+    //    if (filtro.App.Contains(Applications.Undefined))
+    //    {
+    //        filtrado.AddRange(lista);
+    //        return filtrado;
+    //    }
 
-        // Filtrado por plataforma
-        foreach (var model in lista)
-        {
-            filtrado.Add(model);
-        }
+    //    // Filtrado por plataforma
+    //    foreach (var model in lista)
+    //    {
+    //        filtrado.Add(model);
+    //    }
 
-        return filtrado;
+    //    return filtrado;
 
-    }
+    //}
 
 
 

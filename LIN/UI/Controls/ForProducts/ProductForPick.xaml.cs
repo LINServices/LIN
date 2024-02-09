@@ -29,7 +29,7 @@ public partial class ProductForPick : Grid
     /// <summary>
     /// Model del contacto
     /// </summary>
-    public ProductDataTransfer Modelo { get; set; }
+    public ProductModel Modelo { get; set; }
 
 
 
@@ -54,7 +54,7 @@ public partial class ProductForPick : Grid
     /// <summary>
     /// Constructor
     /// </summary>
-    public ProductForPick(ProductDataTransfer modelo)
+    public ProductForPick(ProductModel modelo)
     {
         InitializeComponent();
         this.Modelo = modelo;
@@ -83,7 +83,7 @@ public partial class ProductForPick : Grid
             lbCode.Text = Modelo.Code;
         }
 
-        lbQu.Text = $"{Modelo.Quantity}u";
+        lbQu.Text = $"{Modelo.DetailModel.Quantity}u";
 
         // Si no hay imagen que mostar
         if (Modelo.Image.Length != 0)

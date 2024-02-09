@@ -1,4 +1,4 @@
-using LIN.Types.Auth.Enumerations;
+using LIN.Types.Cloud.Identity.Enumerations;
 
 namespace LIN.UI.Views;
 
@@ -7,10 +7,10 @@ public partial class AccountPage : ContentPage
 {
 
 
-    /// <summary>
-    /// Lista de dispositivos
-    /// </summary>
-    private static List<DeviceModel> Devices { get; set; } = new();
+    ///// <summary>
+    ///// Lista de dispositivos
+    ///// </summary>
+    //private static List<DeviceModel> Devices { get; set; } = new();
 
 
 
@@ -38,33 +38,16 @@ public partial class AccountPage : ContentPage
         Appearing += AccountPage_Appearing;
 
         // Eventos para el HUB
-        AppShell.Hub.OnReceiveDevicesList += OnRecieveAll;
-        AppShell.Hub.OnDeviceJoins += OnReceiveDevice;
-        AppShell.Hub.OnDeviceLeaves += OnSomeoneLeave;
+        //AppShell.Hub.OnReceiveDevicesList += OnRecieveAll;
+        //AppShell.Hub.OnDeviceJoins += OnReceiveDevice;
+        //AppShell.Hub.OnDeviceLeaves += OnSomeoneLeave;
 
         // Muestra la información
-        perfil.Source = ImageEncoder.Decode(Session.Instance.Account.Perfil);
-        lbName.Text = Session.Instance. Account.Nombre;
-        displayUser.Text = "@" + Session.Instance.Account.Usuario;
+        perfil.Source = ImageEncoder.Decode(Session.Instance.Account.Profile);
+        lbName.Text = Session.Instance. Account.Name;
+        displayUser.Text = "@" + Session.Instance.Account.Identity.Unique;
 
-        // Insignias
-        switch (Session.Instance.Account.Insignia)
-        {
-
-            case AccountBadges.Verified:
-                displayInsignia.Show();
-                displayInsignia.Source = ImageSource.FromFile("verificado.png");
-                break;
-
-            case AccountBadges.VerifiedGold:
-                displayInsignia.Show();
-                displayInsignia.Source = ImageSource.FromFile("verificadogold.png");
-                break;
-
-            default:
-                displayInsignia.Hide();
-                break;
-        }
+    
 
     }
 
@@ -104,18 +87,18 @@ public partial class AccountPage : ContentPage
         Dispatcher.DispatchAsync(new Action(() =>
         {
 
-            // Obtiene los controles
-            var controls = DevicesControls.Where(D => D.Modelo.ID == e);
+            //// Obtiene los controles
+            //var controls = DevicesControls.Where(D => D.Modelo.ID == e);
 
-            // Oculta los controles visibles
-            foreach (var control in controls)
-                control.Hide();
+            //// Oculta los controles visibles
+            //foreach (var control in controls)
+            //    control.Hide();
 
-            // Elimina los controles del cache
-            DevicesControls.RemoveAll(D => D.Modelo.ID == e);
+            //// Elimina los controles del cache
+            //DevicesControls.RemoveAll(D => D.Modelo.ID == e);
 
-            // Elimina los modelos
-            Devices.RemoveAll(T => T.ID == e);
+            //// Elimina los modelos
+            //Devices.RemoveAll(T => T.ID == e);
 
         }));
 
@@ -126,86 +109,86 @@ public partial class AccountPage : ContentPage
     /// <summary>
     /// Evento: Recibir un dispositivo
     /// </summary>
-    private void OnReceiveDevice(object? sender, DeviceModel e)
-    {
-        Dispatcher.DispatchAsync(() =>
-        {
+    //private void OnReceiveDevice(object? sender, DeviceModel e)
+    //{
+    //    Dispatcher.DispatchAsync(() =>
+    //    {
 
-            // Contador
-            var models = Devices.Where(T => T.DeviceKey == e.DeviceKey).ToList();
+    //        // Contador
+    //        var models = Devices.Where(T => T.DeviceKey == e.DeviceKey).ToList();
 
-            // Remplaza la informacion
-            if (models.Count > 0)
-            {
-                models[0].BateryLevel = e.BateryLevel;
-                models[0].BateryConected = e.BateryConected;
-                models[0].Estado = e.Estado;
-                models[0].ID = e.ID;
-                models[0].Logitud = e.Logitud;
-                models[0].Latitud = e.Latitud;
-                return;
-            }
+    //        // Remplaza la informacion
+    //        if (models.Count > 0)
+    //        {
+    //            models[0].BateryLevel = e.BateryLevel;
+    //            models[0].BateryConected = e.BateryConected;
+    //            models[0].Estado = e.Estado;
+    //            models[0].ID = e.ID;
+    //            models[0].Logitud = e.Logitud;
+    //            models[0].Latitud = e.Latitud;
+    //            return;
+    //        }
 
-            // Agrega el nuevo dispositivo a la lista
-            Devices.Add(e);
+    //        // Agrega el nuevo dispositivo a la lista
+    //        Devices.Add(e);
 
-            // Renderiza un modelo
-            RenderDevice(e);
+    //        // Renderiza un modelo
+    //        RenderDevice(e);
 
-        });
-    }
-
-
-
-    /// <summary>
-    /// Evento: Reciben todos los dispositivos
-    /// </summary>
-    private void OnRecieveAll(object? sender, List<DeviceModel> e)
-    {
-        Dispatcher.DispatchAsync(() =>
-        {
-
-            foreach (var deC in DevicesControls)
-            {
-                deC.MarkedToHide = true;
-            }
-
-            // Recorre los nuevos modelos
-            foreach (var @new in e)
-            {
-
-                // Comprueba si ya existen
-                var have = DevicesControls.Where(T => T.Modelo.DeviceKey == @new.DeviceKey);
-
-                // Si ya existe
-                if (have.Any())
-                {
-                    foreach (var i in have)
-                        i.MarkedToHide = false;
-
-                    continue;
-                }
+    //    });
+    //}
 
 
 
-                // Renderiza el nuevo modelo
-                Devices.Add(@new);
+    ///// <summary>
+    ///// Evento: Reciben todos los dispositivos
+    ///// </summary>
+    //private void OnRecieveAll(object? sender, List<DeviceModel> e)
+    //{
+    //    Dispatcher.DispatchAsync(() =>
+    //    {
 
-                RenderDevice(@new);
+    //        foreach (var deC in DevicesControls)
+    //        {
+    //            deC.MarkedToHide = true;
+    //        }
 
-            }
+    //        // Recorre los nuevos modelos
+    //        foreach (var @new in e)
+    //        {
+
+    //            // Comprueba si ya existen
+    //            var have = DevicesControls.Where(T => T.Modelo.DeviceKey == @new.DeviceKey);
+
+    //            // Si ya existe
+    //            if (have.Any())
+    //            {
+    //                foreach (var i in have)
+    //                    i.MarkedToHide = false;
+
+    //                continue;
+    //            }
 
 
-            var items = DevicesControls.FindAll(T => T.MarkedToHide);
 
-            foreach (var i in items)
-            {
-                i.Hide();
-                DevicesControls.Remove(i);
-            }
+    //            // Renderiza el nuevo modelo
+    //            Devices.Add(@new);
 
-        });
-    }
+    //            RenderDevice(@new);
+
+    //        }
+
+
+    //        var items = DevicesControls.FindAll(T => T.MarkedToHide);
+
+    //        foreach (var i in items)
+    //        {
+    //            i.Hide();
+    //            DevicesControls.Remove(i);
+    //        }
+
+    //    });
+    //}
 
 
 
@@ -233,97 +216,23 @@ public partial class AccountPage : ContentPage
 
         Dispatcher.DispatchAsync(new Action(() =>
         {
-            var some = DevicesControls.Where(C => C.Modelo.ID == e).FirstOrDefault();
-            if (some != null)
-            {
-                some.Hide();
-                DevicesControls.Remove(some);
-                Devices.RemoveAll(T => T.ID == e);
-            }
+            //var some = DevicesControls.Where(C => C.Modelo.ID == e).FirstOrDefault();
+            //if (some != null)
+            //{
+            //    some.Hide();
+            //    DevicesControls.Remove(some);
+            //    Devices.RemoveAll(T => T.ID == e);
+            //}
         }));
 
     }
 
 
 
-    /// <summary>
-    /// Evento: Recibir un dispositivo
-    /// </summary>
-    [Obsolete("Metodo obsoleto, Eliminar")]
-    private void Hub_OnReceiveDevice(object? sender, DeviceModel e)
-    {
-        Dispatcher.DispatchAsync(() =>
-         {
-
-             // Contador
-             var models = Devices.Where(T => T.DeviceKey == e.DeviceKey).ToList();
-
-             // Remplaza la informacion
-             if (models.Count > 0)
-             {
-                 models[0].BateryLevel = e.BateryLevel;
-                 models[0].BateryConected = e.BateryConected;
-                 models[0].Estado = e.Estado;
-                 models[0].ID = e.ID;
-                 models[0].Logitud = e.Logitud;
-                 models[0].Latitud = e.Latitud;
-                 return;
-             }
-
-             // Agrega el nuevo dispositivo a la lista
-             Devices.Add(e);
-
-             // Renderiza un modelo
-             RenderDevice(e);
-
-         });
-    }
+  
 
 
-
-    /// <summary>
-    /// Cuando se obtienen los modelos
-    /// </summary>
-    [Obsolete("Metodo obsoleto, Eliminar")]
-    private void Hub_OnRecieveAll(object? sender, List<DeviceModel> e)
-    {
-        Dispatcher.DispatchAsync(() =>
-        {
-
-            if (e.Count == Devices.Count)
-            {
-                e = e.OrderBy(T => T.Name).ToList();
-                Devices = Devices.OrderBy(T => T.Name).ToList();
-
-                bool ret = true;
-                for (var i = 0; i < Devices.Count; i++)
-                {
-                    if (Devices[i] == e[i])
-                        continue;
-                    else
-                    {
-                        ret = false;
-                        break;
-                    }
-                }
-                if (ret)
-                    return;
-
-            }
-
-
-            Devices = e;
-            contenido.Clear();
-
-            // Renderiza los controles
-            DevicesControls.Clear();
-            Devices.Clear();
-            RenderDevices(Devices);
-
-        });
-    }
-
-
+  
 
     /// <summary>
     /// Pagina apareciendo
@@ -332,25 +241,25 @@ public partial class AccountPage : ContentPage
     private async void AccountPage_Appearing(object? sender, EventArgs e)
     {
 
-        if (AppShell.Hub == null)
-            return;
+        //if (AppShell.Hub == null)
+        //    return;
 
-        AppShell.Hub.SendTest();
-        AppShell.ActualPage = this;
+        //AppShell.Hub.SendTest();
+        //AppShell.ActualPage = this;
 
         if (rendering)
             return;
 
         rendering = true;
 
-      // var devices = await LIN.Access.Controllers.Devices.ReadAll(AppShell.Hub.ID, Session.Instance.Informacion.ID);
+      // var devices = await LIN.Access.Controllers.Devices.ReadAll(AppShell.Hub.Id, Session.Instance.Informacion.Id);
 
 
      //OnRecieveAll(this, devices.Models);
 
         rendering = false;
-
-        AppShell.Hub.TestConnection();
+//
+     //   AppShell.Hub.TestConnection();
 
     }
 
@@ -358,27 +267,27 @@ public partial class AccountPage : ContentPage
 
 
 
-    private void RenderDevices(List<DeviceModel> modelos)
-    {
-        foreach (var model in modelos)
-            RenderDevice(model);
-    }
+    //private void RenderDevices(List<DeviceModel> modelos)
+    //{
+    //    foreach (var model in modelos)
+    //        RenderDevice(model);
+    //}
 
 
-    private void RenderDevice(DeviceModel modelo)
-    {
-        // Control
-        var control = new DeviceControl(modelo, true);
+    //private void RenderDevice(DeviceModel modelo)
+    //{
+    //    // Control
+    //    var control = new DeviceControl(modelo, true);
 
-        // Evento
-        control.Clicked += (sender, e) =>
-         {
-             new Views.Devices.Index(modelo).Show();
-         };
+    //    // Evento
+    //    control.Clicked += (sender, e) =>
+    //     {
+    //         new Views.Devices.Index(modelo).Show();
+    //     };
 
-        DevicesControls.Add(control);
-        contenido.Add(control);
-    }
+    //    DevicesControls.Add(control);
+    //    contenido.Add(control);
+    //}
 
     private async void Button_Clicked(object sender, EventArgs e)
     {

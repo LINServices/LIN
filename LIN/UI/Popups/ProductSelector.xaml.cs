@@ -10,13 +10,13 @@ public partial class ProductSelector : Popup
     /// <summary>
     /// Lista de modelos seleccionados
     /// </summary>
-    private readonly List<ProductDataTransfer> SelectedItems = new();
+    private readonly List<ProductModel> SelectedItems = new();
 
 
     /// <summary>
     /// Lista de modelos
     /// </summary>
-    private List<ProductDataTransfer> Modelos = new();
+    private List<ProductModel> Modelos = new();
 
 
 
@@ -35,7 +35,7 @@ public partial class ProductSelector : Popup
 
 
     /// <summary>
-    /// ID del inventario
+    /// Id del inventario
     /// </summary>
     private int Inventario { get; }
 
@@ -104,7 +104,7 @@ public partial class ProductSelector : Popup
     private async Task<bool> RetriveData()
     {
 
-        // ID de la cuenta
+        // Id de la cuenta
         var id = Session.Instance.Informacion.ID;
 
         // Respuesta
@@ -185,7 +185,7 @@ public partial class ProductSelector : Popup
 
 
 
-    private List<Controls.ProductForPick> BuildControls(List<ProductDataTransfer> modelos)
+    private List<Controls.ProductForPick> BuildControls(List<ProductModel> modelos)
     {
         List<Controls.ProductForPick> controles = new();
         foreach (var modelo in modelos)
@@ -195,7 +195,7 @@ public partial class ProductSelector : Popup
     }
 
 
-    private Controls.ProductForPick BuildControl(ProductDataTransfer modelo)
+    private Controls.ProductForPick BuildControl(ProductModel modelo)
     {
         var control = new Controls.ProductForPick(modelo)
         {

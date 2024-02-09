@@ -9,7 +9,7 @@ public partial class ProductEdit : Popup, IProductViewer
     /// <summary>
     /// Modelo del producto
     /// </summary>
-    public ProductDataTransfer Modelo { get; set; }
+    public ProductModel Modelo { get; set; }
 
 
     public string? ContextKey { get; init; } = "";
@@ -20,7 +20,7 @@ public partial class ProductEdit : Popup, IProductViewer
     /// <summary>
     /// Constructor
     /// </summary>
-    public ProductEdit(ProductDataTransfer product, InventoryAccessHub? hub)
+    public ProductEdit(ProductModel product, InventoryAccessHub? hub)
     {
         InitializeComponent();
         this.CanBeDismissedByTappingOutsideOfPopup = false;
@@ -39,8 +39,8 @@ public partial class ProductEdit : Popup, IProductViewer
 
         inputImage.SetImage(Modelo.Image, "caja.png");
         txtName.Text = Modelo.Name;
-        txtPrecioCompra.Text = Modelo.PrecioCompra.ToString();
-        txtPrecioVenta.Text = Modelo.PrecioVenta.ToString();
+        txtPrecioCompra.Text = Modelo.DetailModel.PrecioCompra.ToString();
+        txtPrecioVenta.Text = Modelo.DetailModel.PrecioVenta.ToString();
         txtDescripcion.Text = Modelo.Description;
 
 
@@ -140,18 +140,17 @@ public partial class ProductEdit : Popup, IProductViewer
         }
 
         // Detalles cambio
-        detailChange = !(precioCompra == Modelo.PrecioCompra && precioVenta == Modelo.PrecioVenta);
+        detailChange = !(precioCompra == Modelo.DetailModel.PrecioCompra && precioVenta == Modelo.DetailModel.PrecioVenta);
 
 
 
-        var newModel = new ProductDataTransfer()
+        var newModel = new ProductModel()
         {
             Category = TextShortener.ToProductCategory((string)inpCategoria.SelectedItem ?? ""),
             Name = txtName.Text,
             Code = "",
             Description = txtDescripcion.Text,
-            Provider = Modelo.Provider,
-            Estado = Modelo.Estado,
+            Statement = Modelo.Statement,
             ProductID = Modelo.ProductID,
             PrecioCompra = precioCompra,
             PrecioVenta = precioVenta,
@@ -191,7 +190,7 @@ public partial class ProductEdit : Popup, IProductViewer
             {
                 Modelo.FillWith(newModel);
                 ModelHasChange();
-                Hub?.UpdateProduct(Modelo.Inventory, Modelo.ProductID);
+               // Hub?.UpdateProduct(Modelo.Inventory, Modelo.ProductID);
 
             }
 

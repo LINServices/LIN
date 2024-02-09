@@ -14,7 +14,7 @@ public partial class Index : ContentPage
 
 
     /// <summary>
-    /// ID del inventario
+    /// Id del inventario
     /// </summary>
     private int InventarioID { get; set; }
 
@@ -47,8 +47,8 @@ public partial class Index : ContentPage
         this.Hub = hub;
         this.InventarioID = inventario;
 
-        if (hub != null)
-            hub.OnReciveInflow += Hub_OnReciveInflow;
+        //if (hub != null)
+        //    hub.OnReciveInflow += Hub_OnReciveInflow;
 
         Load();
     }

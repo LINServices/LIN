@@ -19,7 +19,7 @@ public partial class Informes : ContentPage
 
 
     /// <summary>
-    /// ID del inventario
+    /// Id del inventario
     /// </summary>
     private int Inventario { get; set; } = new();
 
@@ -114,7 +114,7 @@ public partial class Informes : ContentPage
 
 
         // ---- EVENTO DEL HUB
-        AppShell.Hub.SendNotificacion(ids);
+        //AppShell.Hub.SendNotificacion(ids);
 
         // Muestra el popup de agregado
         await this.ShowPopupAsync(new DefaultPopup());

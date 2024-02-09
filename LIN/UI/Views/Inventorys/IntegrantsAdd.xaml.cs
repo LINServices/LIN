@@ -118,7 +118,7 @@ public partial class IntegrantsAdd : ContentPage
 
 
         // ---- EVENTO DEL HUB
-        AppShell.Hub.SendNotificacion(ids);
+        //AppShell.Hub.SendNotificacion(ids);
 
         // Muestra el popup de agregado
         await this.ShowPopupAsync(new DefaultPopup());

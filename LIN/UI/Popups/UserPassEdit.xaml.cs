@@ -54,22 +54,22 @@ public partial class UserPassEdit : Popup
         }
 
 
-        var modelo = new UpdatePasswordModel
-        {
-            Account = Session.Instance.Account.ID,
-            NewPassword = newPassword,
-            OldPassword = oldPassword
-        };
+        //var modelo = new UpdatePasswordModel
+        //{
+        //    Account = Session.Instance.Account.Id,
+        //    NewPassword = newPassword,
+        //    OldPassword = oldPassword
+        //};
 
 
-        var response = await LIN.Access.Auth.Controllers.Account.UpdatePassword(modelo, Session.Instance.AccountToken);
+        //var response = await LIN.Access.Auth.Controllers.Account.UpdatePassword(modelo, Session.Instance.AccountToken);
 
-        if (response.Response != Responses.Success)
-        {
-            displayInfo.Text = "No se pudo cambiar la contraseña";
-            displayInfo.Show();
-            return;
-        }
+        //if (response.Response != Responses.Success)
+        //{
+        //    displayInfo.Text = "No se pudo cambiar la contraseña";
+        //    displayInfo.Show();
+        //    return;
+        //}
 
 
         this.Close();

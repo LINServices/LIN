@@ -8,7 +8,7 @@ public partial class Home : ContentPage
     /// <summary>
     /// Lista de modelos de productos
     /// </summary>
-    private List<Types.Inventory.Models.Notificacion> Notificacions = new();
+    private List<Types.Inventory.Transient.Notificacion> Notificacions = new();
 
 
     /// <summary>
@@ -129,7 +129,7 @@ public partial class Home : ContentPage
     {
 
         // Items
-        var items = await Inventories.ReadNotifications(Session.Instance.Informacion.ID);
+        var items = await Inventories.ReadNotifications(Session.Instance.Token);
 
         // Analisis de respuesta
         if (items.Response != Responses.Success)
@@ -147,7 +147,7 @@ public partial class Home : ContentPage
     /// <summary>
     /// Muestra los controles a la vista
     /// </summary>
-    public void AppendModel(Types.Inventory.Models.Notificacion modelo)
+    public void AppendModel(Types.Inventory.Transient.Notificacion modelo)
     {
         Notificacions.Add(modelo);
         Controles = LoadCache(Notificacions);
@@ -182,13 +182,13 @@ public partial class Home : ContentPage
     }
 
 
-    public View TL => AppShell.Instance.ju;
+  //  public View TL => AppShell.Instance.ju;
 
 
     /// <summary>
     /// Carga los modelos a los nuevos controles
     /// </summary>
-    private static List<Controls.Notificacion> LoadCache(List<LIN.Types.Inventory.Models.Notificacion> lista)
+    private static List<Controls.Notificacion> LoadCache(List<LIN.Types.Inventory.Transient.Notificacion> lista)
     {
 
         // Lista
@@ -255,20 +255,17 @@ public partial class Home : ContentPage
     /// </summary>
     private async void LoadUserData()
     {
-        perfil.Source = ImageEncoder.Decode(Session.Instance.Account.Perfil);
+        perfil.Source = ImageEncoder.Decode(Session.Instance.Account.Profile);
 
 
-        if (Session.Instance.Account.Genero == Genders.Female)
             lbBienvenido.Text = "Bienvenida, ";
-        else
-            lbBienvenido.Text = "Bienvenido, ";
 
-        lbName.Text = Session.Instance.Account.Nombre.Trim().Split(" ")[0];
+        lbName.Text = Session.Instance.Account.Name.Trim().Split(" ")[0];
 
 
-        lbUser.Text = Session.Instance.Account.Nombre;
-        AppShell.SetTitle(Session.Instance.Account.Nombre);
-        AppShell.SetImage(ImageEncoder.Decode(Session.Instance.Account.Perfil));
+        lbUser.Text = Session.Instance.Account.Name;
+        AppShell.SetTitle(Session.Instance.Account.Name);
+        AppShell.SetImage(ImageEncoder.Decode(Session.Instance.Account.Profile));
 
 
 

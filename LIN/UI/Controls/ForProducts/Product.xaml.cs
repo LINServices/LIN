@@ -15,7 +15,7 @@ public partial class Product : Grid, IProductViewer
     /// <summary>
     /// Modelo del producto
     /// </summary>
-    public ProductDataTransfer Modelo { get; set; }
+    public ProductModel Modelo { get; set; }
 
 
     public string? ContextKey { get; init; }
@@ -26,13 +26,13 @@ public partial class Product : Grid, IProductViewer
     /// <summary>
     /// Constructor
     /// </summary>
-    public Product(ProductDataTransfer modelo)
+    public Product(ProductModel modelo)
     {
         InitializeComponent();
         this.Modelo = modelo;
         LoadModelVisible();
 
-        ContextKey = $"ipv.{modelo.ProductID}";
+        ContextKey = $"ipv.{modelo.Id}";
 
         ProductObserver.Add(this);
 
@@ -59,7 +59,7 @@ public partial class Product : Grid, IProductViewer
     public async void LoadModelVisible()
     {
 
-        if (Modelo.Estado != ProductBaseStatements.Normal)
+        if (Modelo.Statement != ProductBaseStatements.Normal)
         {
             this.Hide();
             return;
@@ -67,7 +67,7 @@ public partial class Product : Grid, IProductViewer
 
         // Metadatos 
         displayName.Text = Modelo.Name;
-        displayPrice.Text = Modelo.PrecioCompra.ToString("0.##");
+        displayPrice.Text = Modelo.DetailModel.PrecioCompra.ToString("0.##");
 
 
         // Imagen
@@ -77,7 +77,7 @@ public partial class Product : Grid, IProductViewer
             displayImagen.Source = ImageEncoder.Decode(Modelo.Image);
 
         // Cantidad
-        switch (Modelo.Quantity)
+        switch (Modelo.DetailModel.Quantity)
         { 
             case <= 0:
                 {

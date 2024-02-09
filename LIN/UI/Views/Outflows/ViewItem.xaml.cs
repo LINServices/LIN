@@ -21,7 +21,7 @@ public partial class ViewItem : ContentPage
     }
 
 
-    List<ProductDataTransfer> Transfers = new();
+    List<ProductModel> Transfers = new();
 
 
     public async Task RequestData()
@@ -53,9 +53,9 @@ public partial class ViewItem : ContentPage
 
 
         var resUser = await taskUser;
-        //Creador = resUser.Model.ID;
-        lbName.Text = resUser.Model.Nombre;
-        picUser.Source = ImageEncoder.Decode(resUser.Model.Perfil);
+        //Creador = resUser.Model.Id;
+        lbName.Text = resUser.Model.Name;
+        picUser.Source = ImageEncoder.Decode(resUser.Model.Profile);
         displayCategory.Text = Modelo.Type.Humanize();
 
         if (OpenExport)
@@ -131,7 +131,7 @@ public partial class ViewItem : ContentPage
 
         var folderBase = result.Folder.Path;
 
-        await PDFService.RenderOutflow(Modelo, Session.Instance.Account.Usuario, Creador.Account.Usuario, Transfers, folderBase);
+        await PDFService.RenderOutflow(Modelo, Session.Instance.Account.Identity.Unique, Creador.Account.Identity.Unique, Transfers, folderBase);
         await DisplayAlert("Reporte", "Reporte generado exitosamente", "OK");
 
 #elif ANDROID

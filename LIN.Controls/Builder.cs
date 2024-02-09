@@ -1,5 +1,10 @@
 ﻿global using CommunityToolkit.Maui.Animations;
 using LIN.Controls.Handlers;
+
+#if ANDROID
+using Microsoft.Maui.Controls.Compatibility.Platform.Android;
+#endif
+
 using Microsoft.Maui.Platform;
 
 namespace LIN.Controls;
@@ -20,7 +25,9 @@ public static class Builder
             {
 #if __ANDROID__
 
-                handler.PlatformView.SetBackgroundColor(Colors.Transparent.ToPlatform());
+                handler.PlatformView.Background = null;
+                handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+                handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Colors.Transparent.ToAndroid());
 #elif __IOS__
               handler  .PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #elif WINDOWS

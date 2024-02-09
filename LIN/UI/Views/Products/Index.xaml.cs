@@ -18,7 +18,7 @@ public partial class Index : ContentPage
     /// <summary>
     /// Lista de modelos
     /// </summary>
-    private List<ProductDataTransfer> Modelos { get; set; } = new();
+    private List<ProductModel> Modelos { get; set; } = new();
 
 
 
@@ -30,7 +30,7 @@ public partial class Index : ContentPage
 
 
     /// <summary>
-    /// ID del inventario asociado
+    /// Id del inventario asociado
     /// </summary>
     private InventoryDataModel Inventario { get; set; }
 
@@ -115,13 +115,13 @@ public partial class Index : ContentPage
     /// </summary>
     private void SuscribeToHub()
     {
-        HubConnection = new InventoryAccessHub(Inventario.ID);
-        HubConnection.On += HubConnection_On;
-        HubConnection.OnDeleteProducto += HubConnection_OnDeleteProducto;
-        HubConnection.OnUpdate += HubConnection_OnUpdate;
+        //HubConnection = new InventoryAccessHub(Inventario.ID);
+        //HubConnection.On += HubConnection_On;
+        //HubConnection.OnDeleteProducto += HubConnection_OnDeleteProducto;
+        //HubConnection.OnUpdate += HubConnection_OnUpdate;
     }
 
-    private void HubConnection_OnUpdate(object? sender, ProductDataTransfer e)
+    private void HubConnection_OnUpdate(object? sender, ProductModel e)
     {
         Dispatcher.DispatchAsync(() => {
 
@@ -135,7 +135,7 @@ public partial class Index : ContentPage
     {
         Dispatcher.DispatchAsync(() => {
 
-            var modelo = new ProductDataTransfer
+            var modelo = new ProductModel
             {
                 ProductID = e,
                 Estado = ProductBaseStatements.Deleted
@@ -252,7 +252,7 @@ public partial class Index : ContentPage
     /// <summary>
     /// Construlle los controles apartir de una lista de modelos
     /// </summary>
-    private void BuildControls(List<ProductDataTransfer> lista)
+    private void BuildControls(List<ProductModel> lista)
     {
 
         // Limpia los controles
@@ -272,7 +272,7 @@ public partial class Index : ContentPage
     /// <summary>
     /// Construlle un control
     /// </summary>
-    private  Controls.Product BuildOneControl(ProductDataTransfer modelo)
+    private  Controls.Product BuildOneControl(ProductModel modelo)
     {
         var control = new Controls.Product(modelo ?? new());
         control.Clicked += (sender, e) =>
@@ -287,7 +287,7 @@ public partial class Index : ContentPage
     /// <summary>
     /// Agrega un nuevo modelo (Cache y vista)
     /// </summary>
-    public void AppendModel(ProductDataTransfer modelo)
+    public void AppendModel(ProductModel modelo)
     {
         // Modelo nulo
         if (modelo == null)
@@ -469,7 +469,7 @@ public partial class Index : ContentPage
     /// <summary>
     /// Cuando se recibe informacion del HUB
     /// </summary>
-    private void HubConnection_On(object? sender, ProductDataTransfer e)
+    private void HubConnection_On(object? sender, ProductModel e)
     {
         this.Dispatcher.DispatchAsync(() =>
         {

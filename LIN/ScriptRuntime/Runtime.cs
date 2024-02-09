@@ -81,7 +81,7 @@ internal class Scripts
             if (!can)
                 return;
 
-            var model = await Access.Inventory.Controllers.Product.Read(id);
+            var model = await Access.Inventory.Controllers.Product.Read(id, Session.Instance.Token);
 
             var form = new UI.Views.Products.ViewItem(model.Model);
 
@@ -109,7 +109,7 @@ internal class Scripts
             if (!can)
                 return;
 
-            var model = await Access.Inventory.Controllers.Contact.Read(id);
+            var model = await Access.Inventory.Controllers.Contact.Read(id, Session.Instance.Token);
 
 
             var pop = new UI.Popups.ContactPopup(model.Model);
@@ -139,7 +139,7 @@ internal class Scripts
             if (!can)
                 return;
 
-            var model = await Inflows.Read(id);
+            var model = await Inflows.Read(id, Session.Instance.Token);
             var form = new UI.Views.Inflows.ViewItem(model.Model, true);
 
             form.Show();
@@ -168,7 +168,7 @@ internal class Scripts
                 return;
 
 
-            var model = await Outflows.Read(id);
+            var model = await Outflows.Read(id, Session.Instance.Token);
             var form = new UI.Views.Outflows.ViewItem(model.Model, true);
 
             form.Show();
@@ -196,7 +196,7 @@ internal class Scripts
                 return;
 
 
-            var model = await Inflows.Read(id);
+            var model = await Inflows.Read(id, Session.Instance.Token);
             var form = new UI.Views.Inflows.ViewItem(model.Model);
 
             form.Show();
@@ -223,7 +223,7 @@ internal class Scripts
             if (!can)
                 return;
 
-            var model = await Outflows.Read(id);
+            var model = await Outflows.Read(id, Session.Instance.Token);
 
             var form = new UI.Views.Outflows.ViewItem(model.Model);
 

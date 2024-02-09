@@ -29,23 +29,23 @@ public partial class DeviceControl : Grid
     /// <summary>
     /// Modelo
     /// </summary>
-    public DeviceModel Modelo { get; set; }
+    //public DeviceModel Modelo { get; set; }
 
 
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public DeviceControl(DeviceModel modelo, bool desvincular)
-    {
-        InitializeComponent();
-        this.Modelo = modelo;
-        LoadModelVisible();
+    //public DeviceControl(DeviceModel modelo, bool desvincular)
+    //{
+    //    InitializeComponent();
+    //    this.Modelo = modelo;
+    //    LoadModelVisible();
 
-        if (desvincular)
-            btnDesvincular.Show();
+    //    if (desvincular)
+    //        btnDesvincular.Show();
         
-    }
+    //}
 
 
 
@@ -55,18 +55,18 @@ public partial class DeviceControl : Grid
     public void LoadModelVisible()
     {
 
-        displayName.Text = Modelo.Name;
-        ToolTipProperties.SetText(displayName, Modelo.DeviceKey);
+        //displayName.Text = Modelo.Name;
+        //ToolTipProperties.SetText(displayName, Modelo.DeviceKey);
 
-        displayApp.Text = "Aplicación";
+        //displayApp.Text = "Aplicación";
 
 
-        if (Modelo.Platform == Platforms.Windows)
-            img.Source = ImageSource.FromFile("ordenador.png");
-        else if (Modelo.Platform == Platforms.Android)
-            img.Source = ImageSource.FromFile("telefono.png");
-        else if (Modelo.Platform == Platforms.Web)
-            img.Source = ImageSource.FromFile("web.png");
+        //if (Modelo.Platform == Platforms.Windows)
+        //    img.Source = ImageSource.FromFile("ordenador.png");
+        //else if (Modelo.Platform == Platforms.Android)
+        //    img.Source = ImageSource.FromFile("telefono.png");
+        //else if (Modelo.Platform == Platforms.Web)
+        //    img.Source = ImageSource.FromFile("web.png");
 
 
     }
@@ -81,7 +81,7 @@ public partial class DeviceControl : Grid
 
     private void Desvincular(object sender, EventArgs e)
     {
-        AppShell.Hub.SendCommand(Modelo.ID, "disconnect()");
+      //  AppShell.Hub.SendCommand(Modelo.ID, "disconnect()");
     }
 
 

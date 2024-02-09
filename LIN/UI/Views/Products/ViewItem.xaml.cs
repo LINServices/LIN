@@ -12,7 +12,7 @@ public partial class ViewItem : ContentPage, IProductViewer
     /// <summary>
     /// Modelo del producto
     /// </summary>
-    public ProductDataTransfer Modelo { get; set; }
+    public ProductModel Modelo { get; set; }
 
 
     public string? ContextKey { get; init; } = "VI";
@@ -26,7 +26,7 @@ public partial class ViewItem : ContentPage, IProductViewer
     /// <summary>
     /// Constructor
     /// </summary>
-    public ViewItem(ProductDataTransfer modelo, InventoryDataModel? inventario = null, InventoryAccessHub? hub = null)
+    public ViewItem(ProductModel modelo, InventoryDataModel? inventario = null, InventoryAccessHub? hub = null)
     {
         // Suscribe la vista
         ProductObserver.Add(this);
@@ -174,7 +174,7 @@ public partial class ViewItem : ContentPage, IProductViewer
             return;
         }
 
-        Hub?.DeleteProducto(Modelo.Inventory, Modelo.ProductID);
+        //Hub?.DeleteProducto(Modelo.Inventory, Modelo.ProductID);
         ProductObserver.Remove(this);
         Modelo.Estado = ProductBaseStatements.Deleted;
         ProductObserver.Update(Modelo, From.SameDevice);

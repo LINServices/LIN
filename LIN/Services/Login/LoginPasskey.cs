@@ -20,7 +20,7 @@ internal class LoginPasskey : ILoginStrategy
 
     public void Dispose()
     {
-        Hub?.Disconet();
+        Hub?.Disconnect();
         Hub = null;
         isDispose = true;
     }
@@ -41,11 +41,11 @@ internal class LoginPasskey : ILoginStrategy
             // Ejecucion de OnWaiting
             OnWaiting();
 
-            Hub = new LIN.Access.Auth.Hubs.PassKeyHub(username, "AJEESKK123");
+            Hub = new LIN.Access.Auth.Hubs.PassKeyHub(username, "AJEESKK123", "");
             await Hub.Suscribe();
 
 
-            Hub.OnRecieveResponse += Hub_OnRecieveResponse;
+            Hub.OnReceiveResponse += Hub_OnRecieveResponse;
 
             var intent = new PassKeyModel()
             {
@@ -57,7 +57,7 @@ internal class LoginPasskey : ILoginStrategy
 
             await Task.Delay(60000);
 
-            Hub?.Disconet();
+            Hub?.Disconnect();
             Hub = null;
 
             return ("La sesión expiro", isDispose);
