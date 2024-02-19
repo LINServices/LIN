@@ -23,7 +23,7 @@ Aplicación para la gestión de inventarios en tiempo real desde las plataformas
 
 ![Login en Windows](./Img/LoginW.png)
 
-![Login en Android](./Img/LoginMobile.jpg)
+![Login en Android](./Img/LoginMobile.jpg | width=100)
 
 
 ## Inventario
