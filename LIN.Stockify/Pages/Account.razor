@@ -1,0 +1,124 @@
+﻿@page "/account"
+
+@inject NavigationManager nav
+
+
+
+@* Pantalla principal. *@
+<div class="flex justify-center">
+    <div class="w-full bg-white border border-gray-200 rounded-xl shadow dark:bg-zinc-900 dark:border-zinc-700 mt-10 max-w-lg mx-5">
+
+        <div class="flex flex-col items-center mb-8">
+
+            <div class="mt-5">
+                @if (@LIN.Access.Inventory.Session.Instance.Account.Profile.Length <= 0)
+                {
+                    <div class="relative inline-flex items-center justify-center w-20 h-20 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 shadow-lg mb-3">
+                        <span class="text-2xl text-gray-600 dark:text-gray-300">JL</span>
+                    </div>
+                }
+                else
+                {
+                    <img class="w-20 h-20 mb-3 rounded-full shadow-lg" src="/docs/images/people/profile-picture-3.jpg" alt="Bonnie image" />
+                }
+            </div>
+
+
+            <h5 class="mb-1 text-xl font-bold text-gray-900 dark:text-white">@LIN.Access.Inventory.Session.Instance.Account?.Name</h5>
+            <span class="text-sm text-gray-500 dark:text-gray-400">@@@LIN.Access.Inventory.Session.Instance.Account?.Identity?.Unique</span>
+            <div class="flex mt-4 md:mt-6">
+                <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-current-700 rounded-lg hover:bg-current-800 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Ver cuenta</a>
+                <a @onclick="Close" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700 ms-3">Cerrar sesión</a>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+  
+@code {
+
+
+    async void Accept(int id)
+    {
+        await LIN.Access.Inventory.Controllers.Inventories.UpdateState(id, InventoryAccessState.Accepted);
+    }
+
+
+    async void SendCo(string devices)
+    {
+        Services.Realtime.InventoryAccess.SendToDevice(devices, new()
+            {
+                Command = "updateCt()"
+            });
+    }
+
+    async void Close()
+    {
+        LIN.Access.Inventory.Session.CloseSession();
+        await new LIN.LocalDataBase.Data.UserDB().DeleteUsers();
+
+        nav.NavigateTo("/", true, true);
+
+    }
+
+
+
+
+    private static List<Types.Inventory.Transient.Notificacion>? Notificacions = null;
+
+
+    private async Task<bool> RefreshData()
+    {
+
+
+        if (Notificacions != null)
+            return true;
+
+        // Items
+        var items = await LIN.Access.Inventory.Controllers.Inventories.ReadNotifications(LIN.Access.Inventory.Session.Instance.Token);
+
+        // Analisis de respuesta
+        if (items.Response != Responses.Success)
+            return false;
+
+        // Rellena los items
+        Notificacions = items.Models.ToList();
+        return true;
+
+    }
+
+
+
+    List<DeviceModel> Devices = null;
+    private async Task<bool> GetDevices()
+    {
+
+
+        // Items
+        var items = await LIN.Access.Inventory.Controllers.Profile.ReadDevices(LIN.Access.Inventory.Session.Instance.Token);
+
+        // Analisis de respuesta
+        if (items.Response != Responses.Success)
+            return false;
+
+        // Rellena los items
+        Devices = items.Models.ToList();
+        return true;
+
+    }
+
+
+    protected override void OnInitialized()
+    {
+        MainLayout.Configure(()=>{}, 3);
+        base.OnInitialized();
+    }
+
+
+}

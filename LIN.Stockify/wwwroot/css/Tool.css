@@ -1,0 +1,16 @@
+﻿/* Oculta los botones de aumento y disminución en input type number */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Oculta los botones de aumento y disminución en Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* Asegúrate de que el estilo se aplique en otros navegadores */
+input[type="number"] {
+    appearance: none;
+}

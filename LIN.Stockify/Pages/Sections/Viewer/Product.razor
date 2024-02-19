@@ -1,0 +1,87 @@
+﻿@page "/product"
+
+
+<style>
+    .bg-image {
+        background-image: url('./img/frutas.jpg');
+        background-size: cover;
+        background-position: center center;
+    }
+</style>
+
+
+<div class="flex flex-grow flex-col w-full h-full overflow-hidden px-4 lg:px-6 items-center">
+
+
+    <Header Tittle="Producto" GoBack="true" />
+
+    <div class="w-full max-w-lg">
+
+
+        @* Header. *@
+        <div class="w-full mt-5 dl:mt-0">
+
+            @* Cartas. *@
+            <div class="flex flex-col w-full items-center justify-center">
+
+
+                <div class="flex justify-center bg-image border-2 border-zinc-200 dark:border-zinc-500 w-full rounded-lg p-2">
+
+                    <div class="h-20 w-20 bg-zinc-100 p-2 rounded-lg ring-1 ring-zinc-300 bg-ring-100 dark:ring-zinc-600 dark:bg-zinc-900  translate-y-5">
+                        <img class="h-full w-full" src="./img/inventory.png" />
+                    </div>
+
+                </div>
+
+
+
+
+                <label class="font-bold text-2xl mt-5 dark:text-zinc-200">@Modelo.Name</label>
+
+
+                <div class="flex items-center justify-center bg-red-100 dark:bg-red-100/20 rounded-lg p-1.5 w-full max-w-60 mt-2">
+                    <img class="w-5 h-5 mr-1.5" src="./img/Products/fruit.png" />
+                    <label class="text-red-600 mt-0.5">Frutas y verduras</label>
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+        @* Componentes. *@
+        <div class="flex-1 overflow-auto gap-2 mt-5 h-full">
+
+            <div class="flex justify-between h-20 w-full gap-3">
+
+                <div class="flex flex-col justify-center bg-zinc-100 dark:bg-zinc-900 w-full rounded-lg border border-zinc-300 px-3 dark:border-zinc-600">
+                    <label class="font-bold dark:text-zinc-300">Venta</label>
+                    <label class="text-sm -mt-0.5 text-green-600">$@Modelo.DetailModel.PrecioVenta</label>
+                </div>
+
+                <div class="flex flex-col justify-center bg-zinc-100 dark:bg-zinc-900 w-full rounded-lg border border-zinc-300 px-3 dark:border-zinc-600">
+                    <label class="font-bold dark:text-zinc-300">Compra</label>
+                    <label class="text-sm -mt-0.5 text-green-600">$@Modelo.DetailModel.PrecioCompra</label>
+                </div>
+
+            </div>
+
+
+
+
+
+
+            <div class="flex flex-col w-full h-fit rounded-xl bg-zinc-100 dark:bg-zinc-900 p-3 border border-zinc-300 mt-3 dark:border-zinc-600">
+
+                <label class="font-bold dark:text-zinc-200">Descripción</label>
+                <label class="text-sm dark:text-zinc-400">@Modelo.Description</label>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>

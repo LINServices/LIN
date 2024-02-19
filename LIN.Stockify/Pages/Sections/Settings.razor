@@ -1,0 +1,54 @@
+﻿@page "/members"
+
+
+
+@code {
+
+
+
+
+}
+
+
+
+
+<div class="flex flex-col">
+</div>
+
+
+
+
+
+<div class="flex flex-col p-4">
+
+
+
+    @if (Modelos == null)
+    {
+        <div class="flex items-center justify-center">
+            <LIN.Components.Shared.Loader></LIN.Components.Shared.Loader>
+        </div>
+    }
+    else
+    {
+        @foreach (var e in Modelos ?? [])
+        {
+            <div class="flex items-center bg-white shadow-sm rounded-lg p-3 dark:bg-zinc-900">
+
+                <div class="h-10 w-10 p-2 rounded-lg  ring-1 ring-zinc-300 bg-ring-100 dark:ring-zinc-600 ">
+                    <img class="h-full w-full" src="./img/inventory.png" />
+                </div>
+
+                <div class="flex flex-col ml-2">
+                    <label class="font-bold text-sm text-zinc-700 dark:text-zinc-300">@e.Nombre</label>
+                    <label class="text-xs -mt-1 text-zinc-600 dark:text-zinc-400">@e.Usuario.ToString()</label>
+                </div>
+
+            </div>
+        }
+    }
+
+
+
+
+</div>

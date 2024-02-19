@@ -1,0 +1,153 @@
+﻿@code{
+
+
+    /// <summary>
+    /// Modelo del producto.
+    /// </summary>
+    [Parameter]
+    public ProductModel? Model { get; set; }
+
+
+    [Parameter]
+    public bool IsInflow { get; set; }
+
+
+
+    /// <summary>
+    /// Evento al hacer click.
+    /// </summary>
+    [Parameter]
+    public Action<ProductModel?>? OnClick { get; set; }
+
+
+
+
+    [Parameter]
+    public Action<int, int>? OnValueChange { get; set; }
+
+
+
+    private int _cantidad =0;
+
+
+    [Parameter]
+    public int Cantidad { 
+        get => _cantidad; 
+        set
+        {
+            if (Model != null)
+                OnValueChange?.Invoke(Model.Id, value);
+
+            _cantidad = value;
+        }
+    }
+
+
+    /// <summary>
+    /// Enviar el evento.
+    /// </summary>
+    private void SendEvent()
+    {
+        OnClick?.Invoke(Model);
+    }
+
+
+
+    private void Decrement()
+    {
+        if (Cantidad > 0)
+        {
+            Cantidad--;
+
+        }
+        
+    }
+
+    private void Increment()
+    {
+        Cantidad++;
+    }
+
+
+    private string GetImage()
+    {
+
+        if (Model.Image.Length <= 0)
+        {
+            return "./img/Products/packages.png";
+        }
+
+        return $"data:image/png;base64,{Convert.ToBase64String(Model.Image)}";
+
+   
+    }
+
+
+
+
+    private (string, string, string) GetClass()
+    {
+
+        if (Model.DetailModel.Quantity <= 0)
+        {
+            return ("bg-red-50 border-red-500 dark:border-red-800 dark:bg-red-950/80", "fill-red-500 dark:fill-red-500", "dark:text-red-200");
+        }
+
+        else if (Model.DetailModel.Quantity <= 10)
+        {
+            return ("bg-orange-50 border-orange-500 dark:border-orange-800 dark:bg-orange-950/50", "fill-orange-500 dark:fill-orange-500", "dark:text-orange-200");
+        }
+
+
+        return ("bg-zinc-100 dark:border-zinc-600 dark:bg-zinc-800", "dark:fill-zinc-400", "dark:text-zinc-300");
+
+    }
+}
+
+
+<div @onclick="SendEvent" class="flex justify-between items-center bg-white shadow-sm rounded-lg p-3 dark:bg-zinc-900 mt-2">
+
+    <div class="flex justify-between items-center">
+        <div class="h-10 w-10 p-2 rounded-lg  ring-1 ring-zinc-300 bg-ring-100 dark:ring-zinc-600 ">
+            <img class="h-full w-full" src="@GetImage()" />
+        </div>
+
+        <div class="flex flex-col ml-2">
+            <label class="font-bold text-sm text-zinc-700 dark:text-zinc-300">@(Model?.Name ?? "Sin nombre")</label>
+            <label class="text-xs -mt-1 text-zinc-600 dark:text-zinc-400">@(Model?.Category.ToString() ?? "Sin categoría")</label>
+        </div>
+    </div>
+
+    @{
+        var classes = GetClass();
+    }
+
+    <div>
+
+        <div class="max-w-xs mx-auto">
+            <div class="relative flex items-center">
+                <button @onclick="Decrement" type="button" id="decrement-button" data-input-counter-decrement="counter-input" class="flex-shrink-0 bg-gray-100 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:border-zinc-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                    <svg class="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
+                    </svg>
+                </button>
+                <input @bind="Cantidad" type="number" id="counter-input" data-input-counter class="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center justify-center" placeholder="" required />
+                <button @onclick="Increment" type="button" id="increment-button" data-input-counter-increment="counter-input" class="flex-shrink-0 bg-gray-100 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:border-zinc-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                    <svg class="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
+                    </svg>
+                </button>
+            </div>
+
+            @if (!IsInflow && ((Model?.DetailModel?.Quantity ?? 0) - Cantidad ) < 0)
+            {
+                  <div class="flex items-center justify-center bg-red-500 rounded-lg w-full mt-0.5">
+                <label class="text-xs text-white">Sin Stock</label>
+            </div>
+            }
+          
+
+        </div>
+
+    </div>
+</div>

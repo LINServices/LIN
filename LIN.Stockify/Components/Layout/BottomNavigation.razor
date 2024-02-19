@@ -1,0 +1,72 @@
+﻿@inject NavigationManager navigationManager
+
+
+<div class="w-full h-16 max-w-lg bg-white border border-gray-200 rounded-full bottom-4 dark:bg-zinc-900 dark:border-zinc-700 mx-1.5">
+    <div class="grid h-full max-w-lg grid-cols-5 mx-auto">
+
+       @* Botón de Home *@
+        <button @onclick="()=>GoSection(0)" data-tooltip-target="tooltip-home" type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-zinc-800 group">
+            <svg class="w-5 h-5 mb-1 group-hover:text-current-600 dark:group-hover:text-zinc-500 @(Section == 0 ? "fill-current-500 dark:fill-current-600":"text-zinc-500")" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+            </svg>
+            <span class="sr-only">Inicio</span>
+        </button>
+
+        @* Botón de Inventario *@
+        <button @onclick="()=>GoSection(1)" data-tooltip-target="tooltip-wallet" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-zinc-800 group">
+
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-1 @(Section == 1 ? "fill-current-500 dark:fill-current-600":"fill-zinc-500")  group-hover:fill-current-600 dark:group-hover:fill-slate-500" viewBox="0 0 16 16">
+                <path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3m2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1" />
+            </svg>
+
+            <span class="sr-only">Inventarios</span>
+        </button>
+
+        @* Botón central *@
+        <div class="flex items-center justify-center">
+            <button @onclick="OnCenterClick" data-tooltip-target="tooltip-new" type="button" class="inline-flex items-center justify-center w-10 h-10 font-medium bg-current-500 rounded-full hover:bg-current-700 group focus:ring-4 focus:ring-current-300 focus:outline-none dark:focus:ring-current-800">
+
+                @if (ChildContent == null)
+                {
+                    <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
+                    </svg>
+                }
+                else
+                {
+                    @ChildContent
+                }
+
+                <span class="sr-only">Center</span>
+            </button>
+        </div>
+
+        @* Botón de Contactos *@
+        <button @onclick="()=>GoSection(2)" data-tooltip-target="tooltip-settings" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-zinc-800 group">
+
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" class="w-5 h-5 mb-1 @(Section == 2 ? "fill-current-500 dark:fill-current-600":"fill-zinc-500")  group-hover:fill-current-600 dark:group-hover:fill-slate-500" viewBox="0 0 45.814 45.814" xml:space="preserve">
+                <g>
+                    <g>
+                        <path d="M29.319,17.088c-1.853-1.838-4.846-1.835-6.694,0.013c-1.853,1.851-1.853,4.855,0,6.708    c0.091,0.09,4.485,4.465,6.104,6.074c0.326,0.325,0.855,0.325,1.181,0c1.619-1.609,6.015-5.984,6.104-6.074    c1.853-1.853,1.853-4.856,0-6.708C34.165,15.253,31.173,15.25,29.319,17.088z" />
+                        <path d="M38.003,0H12.767C9.379,0,6.631,2.728,6.621,6.112h2.448c2.458,0,4.458,2.012,4.458,4.47s-2,4.471-4.458,4.471H6.62v3.384    h2.448c2.458,0,4.458,2.012,4.458,4.47s-2,4.47-4.458,4.47H6.62v3.436h2.448c2.458,0,4.458,1.986,4.458,4.444    s-2,4.445-4.458,4.445H6.62c0.024,3.384,2.767,6.112,6.146,6.112h25.236c3.396,0,6.146-2.752,6.146-6.146V6.147    C44.149,2.752,41.397,0,38.003,0z M40.108,39.678c0,1.192-0.953,2.146-2.146,2.146H18.54V3.991h19.422    c1.193,0,2.146,0.979,2.146,2.172V39.678L40.108,39.678z" />
+                        <path d="M4.134,13.033h4.935c1.362,0,2.467-1.087,2.467-2.45c0-1.362-1.104-2.45-2.467-2.45H4.134    c-1.362,0-2.467,1.087-2.467,2.45C1.667,11.945,2.772,13.033,4.134,13.033z" />
+                        <path d="M4.134,25.408h4.935c1.362,0,2.467-1.112,2.467-2.475c0-1.362-1.104-2.475-2.467-2.475H4.134    c-1.362,0-2.467,1.113-2.467,2.475C1.667,24.295,2.772,25.408,4.134,25.408z" />
+                        <path d="M11.535,35.258c0-1.363-1.104-2.475-2.467-2.475H4.134c-1.362,0-2.467,1.111-2.467,2.475c0,1.362,1.104,2.475,2.467,2.475    h4.935C10.431,37.732,11.535,36.62,11.535,35.258z" />
+                    </g>
+                </g>
+            </svg>
+
+            <span class="sr-only">Contactos</span>
+        </button>
+
+        @* Botón de Perfil *@
+        <button @onclick="()=>GoSection(3)" data-tooltip-target="tooltip-profile" type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-zinc-800 group">
+            <svg class="w-5 h-5 mb-1 @(Section == 3 ? "fill-current-500 dark:fill-current-600":"text-zinc-500")  group-hover:text-current-600 dark:group-hover:text-slate-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
+            </svg>
+            <span class="sr-only">Perfil</span>
+        </button>
+
+    </div>
+
+</div>

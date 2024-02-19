@@ -1,0 +1,197 @@
+﻿@page "/new/inflow/{Id}"
+@inject NavigationManager nav
+
+@code {
+
+
+
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+
+
+    string Name { get; set; } = string.Empty;
+
+    string Direction { get; set; } = string.Empty;
+
+    int Category { get; set; }
+
+
+    int section = 0;
+
+    DateOnly date = DateOnly.FromDateTime( DateTime.Now);
+
+
+    List<ProductModel> Selected = [];
+
+    Dictionary<int, int> Values = [];
+
+
+    DrawerProducts DrawerProducts = null!; 
+
+
+
+    void ValueChange(int product, int q)
+    {
+        try
+        {
+            Values[product] = q;
+
+        }
+        catch
+        {
+            Values.Add(product, q);
+        }
+
+    }
+
+
+}
+
+
+<div class="flex flex-grow flex-col w-full h-full overflow-hidden px-4 lg:px-6 items-center">
+
+
+    <LIN.Components.Layout.Header Tittle="Nueva entrada" GoBack="true" />
+
+    <div class="flex flex-grow flex-col h-full w-full max-w-lg overflow-hidden">
+
+
+        @if (section == 0)
+        {
+
+            @* Header. *@
+            <div >
+
+                @* Cartas. *@
+                <div class="mt-3">
+                    <div class="flex flex-col justify-center">
+
+                        <div class="flex  justify-center flex-col w-full">
+
+                            <label class="text-xl text-current-950 font-bold dark:text-current-500">Propiedades</label>
+
+                            <div class="relative w-full mt-2">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                    </svg>
+                                </div>
+                                <input @bind="date" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-current-500 focus:border-current-500 block w-full ps-10 p-2.5 dark:bg-zinc-900 dark:border-zinc-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-current-500 dark:focus:border-current-500" placeholder="Select date">
+                            </div>
+
+                            <div class="w-full mt-3.5">
+                                <select @bind="Category" id="small" class="block w-full p-3 text-sm text-gray-900 border focus:outline-none border-gray-300 rounded-lg bg-gray-50 focus:border-current-500 dark:bg-zinc-900 dark:border-zinc-700 dark:placeholder-gray-400 dark:text-white dark:focus:border-current-500">
+                                    <option selected value="0">Selecciona una categoría</option>
+                                    <option value="1">Compra</option>
+                                    <option value="2">Devolución</option>
+                                    <option value="3">Regalo</option>
+                                    <option value="4">Ajuste</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="mt-3">
+
+                    <button @onclick="()=>DrawerProducts.Show()" type="button" class="flex gap-2  px-3.5 py-2.5 text-xs font-medium text-center text-white bg-current-500 rounded-lg hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                        </svg>
+
+                     Agregar elemento
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            @* Componentes. *@
+            <div class="flex-1 overflow-auto gap-3 mt-2 ">
+
+                @if (Selected?.Count <= 0)
+                {
+                    <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-zinc-300 w-full py-7 mt-3 dark:border-gray-400">
+                        <label class="text-zinc-400 dark:text-gray-200">No tienes ningún detalle de entrada</label>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var e in Selected ?? [])
+                    {
+                        <ProductChoseControl Model="e" Cantidad="GetValue(e.Id)" OnValueChange="ValueChange" />
+                    }
+                }
+
+            </div>
+
+
+            @* Botón. *@
+            <div @onclick="Create" class="flex w-full self-end mt-2 items-end justify-center mb-2">
+                <button  type="button" class="px-3 py-2 w-full text-sm font-medium text-center text-white bg-current-500 rounded-lg hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">
+                    Crear
+                </button>
+            </div>
+
+        }
+        else if (section == 1)
+        {
+            <div class="flex items-center h-full justify-center">
+                <Success></Success>
+            </div>
+        }
+
+        else if (section == 2)
+        {
+            <div class="flex items-center justify-center">
+                <label>Error</label>
+            </div>
+        }
+
+        else if (section == 3)
+        {
+            <div class="flex items-center h-full justify-center">
+                <Loader></Loader>
+            </div>
+        }
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+<DrawerProducts @ref="DrawerProducts" Selected="Selected" OnHide="StateHasChanged" Contexto="Contexto"></DrawerProducts>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

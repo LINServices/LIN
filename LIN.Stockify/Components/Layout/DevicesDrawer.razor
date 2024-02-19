@@ -1,0 +1,56 @@
+﻿@inject IJSRuntime JS
+
+
+<!-- drawer component -->
+<div id="@_id" class="flex items-center justify-center fixed bottom-0 left-0 right-0 z-50 w-full overflow-y-auto transition-transform translate-y-full " tabindex="-1" aria-labelledby="drawer-bottom-label">
+
+    <div class="w-full lg:max-w-lg p-4 bg-white dark:bg-black rounded-t-xl">
+
+        <div class="flex flex-col mt-5 min-h-[70dvh] max-h-[70dvh] px-3">
+
+
+            @* Header. *@
+            <div class="flex flex-col w-full items-center justify-center mt-5">
+
+                <img class="h-10 w-10" src="./img/device.png" />
+                <label class="text-xl mt-2 font-bold dark:text-white">Dispositivos</label>
+
+
+
+            </div>
+
+            @* Componentes. *@
+            <div id="close-all-all" class="flex-1 overflow-y-auto gap-3 mt-2 p-0.5">
+
+                @if (DevicesList == null)
+                {
+                    <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-zinc-300 w-full py-7 mt-3 dark:border-gray-400">
+                        <Loader></Loader>
+                    </div>
+                }
+                else if (DevicesList.Count <= 0)
+                {
+                    <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-zinc-300 w-full py-7 mt-3 dark:border-gray-400">
+                        <label class="text-zinc-400 dark:text-gray-200">Sin resultados</label>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var e in DevicesList)
+                    {
+                        <DeviceControl Model="e" OnClick="OnInvoke" />
+                    }
+                }
+
+
+            </div>
+
+
+            <div @onclick="GetDevices" class="flex w-full self-end mt-2 items-end justify-center mb-2">
+                <button i="btn-close-@_id" type="button" class="px-3 py-2 w-full text-sm font-medium text-center text-white bg-current-500 rounded-lg hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Aceptar</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,82 @@
+﻿@inherits LayoutComponentBase
+
+@code {
+
+
+    public static Action Action = () => { };
+    public static int Section = 0;
+
+
+    @* Popup de nuevo contacto. *@
+    public static bool ShowNavigation { get; set; } = false;
+
+    @* Popup de nuevo contacto. *@
+    public static BottomNavigation Navigation { get; set; } = null!;
+
+    @* Popup de nuevo contacto. *@
+    public static LIN.Components.Popup.NewContactPopup NewContactPopup { get; set; } = null!;
+
+    @* Selector de dispositivos. *@
+    public static LIN.Components.Layout.DevicesDrawer DevicesSelector { get; set; } = null!;
+
+    @* Popup de contacto. *@
+    public static LIN.Components.Popup.ContactPopup ContactPop { get; set; } = null!;
+
+
+    private static MainLayout e = null!;
+
+
+    public MainLayout()
+    {
+        e = this;
+    }
+
+
+    public static void Update()
+    {
+        e.StateHasChanged();
+    }
+
+
+
+    public static void OnCenter(Action action)
+    {
+        Action = action;
+
+
+    }
+
+
+    public static void Configure(Action action, int section)
+    {
+        Action = action;
+        Section = section;
+        MainLayout.Update();
+    }
+
+
+}
+
+<div class="flex flex-grow flex-col w-full h-full overflow-hidden">
+    @Body
+</div>
+
+<div class="w-full min-h-20 h-20 flex items-center justify-center @(ShowNavigation ? "":"hidden")">
+
+   
+    <BottomNavigation @ref="Navigation" OnCenterClick="()=>Action?.Invoke()" Section="Section"/>
+
+
+</div>
+
+
+
+
+@* Selector de dispositivos. *@
+<DevicesDrawer @ref="DevicesSelector" />
+
+@* Popup de nuevo contacto. *@
+<NewContactPopup @ref="NewContactPopup" />
+
+@* Popup de contacto. *@
+<ContactPopup @ref="ContactPop" />

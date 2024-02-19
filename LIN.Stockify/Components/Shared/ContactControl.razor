@@ -1,0 +1,51 @@
+﻿@code{
+
+
+    /// <summary>
+    /// Modelo.
+    /// </summary>
+    [Parameter]
+    public ContactModel? Model { get; set; }
+
+
+    /// <summary>
+    /// Evento al hacer click.
+    /// </summary>
+    [Parameter]
+    public Action<ContactModel?>? OnClick { get; set; }
+
+
+    /// <summary>
+    /// Enviar el evento.
+    /// </summary>
+    private void SendEvent()
+    {
+        OnClick?.Invoke(Model);
+    }
+
+
+    string Img64 => Convert.ToBase64String(Model?.Picture ?? []);
+
+
+}
+
+
+<div @onclick="SendEvent" class="flex items-center bg-white shadow-sm rounded-lg p-3 dark:bg-zinc-900 mt-1.5">
+
+    @if (Model?.Picture == null || Model.Picture.Length <= 0)
+    {
+        <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+            <span class="font-medium text-gray-600 dark:text-gray-300">@LIN.Modules.Text.GetInitials(Model?.Nombre ?? "")</span>
+        </div>
+    }
+    else
+    {
+        <img class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="data:image/png;base64,@Img64" alt="Avatar">
+    }
+  
+    <div class="flex flex-col ml-2">
+        <label class="font-bold text-sm text-zinc-700 dark:text-zinc-300">@(Model?.Nombre ?? "Sin nombre")</label>
+        <label class="text-xs -mt-1 text-zinc-600 dark:text-zinc-400">@(Model?.Type.ToString() ?? "Sin tipo")</label>
+    </div>
+
+</div>
