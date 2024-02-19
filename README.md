@@ -6,6 +6,8 @@ Aplicación para la gestión de inventarios en tiempo real desde las plataformas
 
 - .NET 8
 - Blazor y Maui Hybrid App
+- HTML, CSS y Tailwind
+
 
 ## Caracteristicas
 
@@ -17,12 +19,20 @@ Aplicación para la gestión de inventarios en tiempo real desde las plataformas
 ![Logo](https://lh3.googleusercontent.com/pw/AIL4fc8NiweYwEP0iUU37C5mTRvZcampJqcRY41-MIgVlhY__bG7JpK7novOR6dUeaUSCeUW71HtAFvJe7QIV52DRUsfkjjn-9GElfq3ZwmyVs5VSgkuv_SVqCqD-xKq6HmszdHbhFAfL_IgKN_NfYORxnvm1HcG0l7NdeqsulBf5FOTl_GL2DF_K3iB2OiTpIh_jcQnpoJB2tA1e6iOFBdVBJe4A6zFXsAJrE373KUIBpbfFnFArTEnE9am0T5lJt5pHBTCP9x3pNDJ-sOekOgXaKm1hCay4MW4akZCLTpNK4zv_EGDWnq4UxHfRPVxIVCnUBo3xlmq2PjUPlKImX6DClctSFQLAE9_Itd8_tM69CB1xZBHzLbij2jh7xnBRJDIolY8yj0UzXbMNQZ9thmWhcG4bGmbiD8dBwZSJX_30tuDLAlQzIDDb0fkV5KfUCPcCK4ZQ-nQ8pm-ykjdZfkWGnkDqP4CN9tDDmltkLmYNXQACI8m-LcZlD4M7SCIHsGDSUfbBWrzF7xUqpF-iOLgjvD3APFmp3mvAMtsCv0PD1lr_i5riTSCzfb_BCQaKo1LA1INGyHrJEf8SIyjUpIyhOF5jZFfR8bfz_To2WvsasALi1KX8175fbu2dCBsnUXK4zvWIvR8WSpZKkeutICJIN0lCMH4ecAt4AYTO2VZYEVkPR4_BWQKSWskhc1kyNW1nleK6OZOoan-af5izUT3cfYUXcx7QXZOLo58-ULGFrltoMJejTTxwQvHe7HWLRAb_Ml9f6OoYeStmt7C4FhSyDeiFJuqTs-CZmFFdSJ5J73cV9iu79X7Tk5K4B6Iy4fMIsaMBmkUH7322G_CplA5sIDvxmARES1aFHDXqWGtnUlKo1jaVyLPch7EXpHrtsOqplBhVgOoKtgTMKBBa2IMGHXGrso=w512-h512-s-no?authuser=0)
 
 
-## Capturas de pantalla
+## Login
 
-![App Screenshot](./Img/Login.png)
+![Login en Windows](./Img/Login.png)
+
+![Login en Android](./Img/LoginMobile.jpg)
 
 
-![Descripción de la imagen](https://lh3.googleusercontent.com/pw/AIL4fc86zEq3MExC0VnjOGWhF9FVbGbsL2sLm9ZqXWsEvdhgvRym5kPN6k7qAzqSSezLHI-Ey_aTHeCGkzxcE7_c0eoyWgNuHYKOtcChSBReegUV50i3iAQX6E1iyCugXSO3S_ClMR2FXmWqA_VcvGke5s2YRYFfwqiQKMVk_62-3C8NHcVHjNPn8wgoIv-yUhBEbdZZFMTcLzXrAqAvYFlevC6qduG2wcgDoYVGpWlRQ806b5ekr6aYYRz0X6b4bYHEzJyk9o1Fg6aDjvszsSI_WBbLL7tt_bEjR48AWYPPNgAKsgdyguUSNV9PDrce9XpF_gX7GMvxmgyJNpAGrerGurHwJ5iW7gSoFv8snmGtSn38DfxIFh9jkOhDlg1_vVyoUxGzlz0_glLa9aspe0fEyieSTgzVZM4Tn2Elt5vdS5Z8dJoVLPhTgDm8TKzfrfkTQEHAii1MXArW-ZTXpYnulu1h1XOrLLnrQGmW21Cy5A4uAwYsDZ0wRBUg1dnXl4zqXxk6dBQ6lC4QXpzvmikAPFfTe-qEant-VLb9N-cp-at1bAQ-345wYpAK88OEJaoB-7ulpIDyPlJajDP7HV3Q1ptj_-AewQMB59AsBM4rLh-n1BRnwRsZ46u83zb6XvmrVTPCGBXotYGf2Kd2Vo9A08f443YKvJ-0Sg0aqoIFgazSYLRKVHcRg3Dtj8gR_7eMLwwMYTpLj6OuXBp2RlvKdupg5knTsP7GbSjhyB0pZw0z5DGuDWa2bv8Z9ZJ7rhSmhvtdwx9eMk7wNJZpDv8DcZNpJTVmmcxq8hJ38U9uxnSTQ3UYm4JycTKu3MhjMNo4xptLk583XP2_SKutoVYrB3tsZEOEUExbvZZbCsCchCll9DINqTvrH-ZRjoZH3FuOJo4BBW9FcFulqyHuf4t4M8Ibiyg=w420-h933-s-no?authuser=0)
+## Inventario
+
+![Inventario](./Img/Inventory.jpg)
+
+![Productos](./Img/Products.jpg)
+
+![Vista de producto](./Img/ProductView.jpg)
 
 
 ## Dependecias y otras librerias
