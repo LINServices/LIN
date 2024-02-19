@@ -21,18 +21,18 @@ Aplicación para la gestión de inventarios en tiempo real desde las plataformas
 
 ## Login
 
-![Login en Windows](./Img/Login.png)
+![Login en Windows](./Img/LoginW.png)
 
 ![Login en Android](./Img/LoginMobile.jpg)
 
 
 ## Inventario
 
-![Inventario](./Img/Inventory.jpg)
+![Inventario](./Img/InventoryW.jpg)
 
-![Productos](./Img/Products.jpg)
+![Productos](./Img/ProductsW.jpg)
 
-![Vista de producto](./Img/ProductView.jpg)
+![Vista de producto](./Img/ProductViewW.jpg)
 
 
 ## Dependecias y otras librerias
