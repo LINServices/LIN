@@ -301,8 +301,8 @@ function CharLoad(dates, numbers) {
             gradient: {
                 opacityFrom: 0.55,
                 opacityTo: 0,
-                shade: "#1C64F2",
-                gradientToColors: ["#1C64F2"],
+                shade: "#6e964c",
+                gradientToColors: ["#6e964c"],
             },
         },
         dataLabels: {
@@ -324,7 +324,7 @@ function CharLoad(dates, numbers) {
             {
                 name: "Ganancias",
                 data: numbers,
-                color: "#1A56DB",
+                color: "#6e964c",
             },
         ],
         xaxis: {
@@ -345,7 +345,12 @@ function CharLoad(dates, numbers) {
     }
 
     if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
+
+        document.getElementById("area-chart").innerHTML = "";
+
         const chart = new ApexCharts(document.getElementById("area-chart"), options);
         chart.render();
     }
 }
+
+

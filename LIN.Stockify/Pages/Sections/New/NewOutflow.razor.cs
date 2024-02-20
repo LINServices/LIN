@@ -91,7 +91,7 @@ public partial class NewOutflow
         entry = new()
         {
             Details = details,
-            Date = DateTime.Now,
+            Date = new DateTime(date.Year, date.Month, date.Day),
             Type = type,
             Inventory = new()
             {

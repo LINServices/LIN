@@ -40,6 +40,8 @@ namespace LIN
             builder.Logging.AddDebug();
 #endif
 
+            LIN.Access.Auth.Build.Init();
+            Build.Init();
 
 
 
@@ -48,6 +50,11 @@ namespace LIN
             Realtime.Build();
             return builder.Build();
         }
+
+
+
+
+
         public static void Aa()
         {
 #if ANDROID

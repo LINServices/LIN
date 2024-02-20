@@ -1,23 +1,46 @@
 ﻿@inject IJSRuntime js
 
-<div @onclick="GetData" class=" w-full max-w-96 bg-white rounded-lg shadow dark:bg-zinc-900 p-4 md:p-6">
+<div class="w-full bg-white rounded-lg shadow dark:bg-zinc-900 p-4 md:p-6">
     <div class="flex justify-between">
         <div>
-            <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-1 mt-2">32.4k</h5>
+            <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-1 mt-2">@FormatearNumero(Sales?.Sum(t=>t.Money) ?? 0)</h5>
             <p class="text-base font-normal text-gray-500 dark:text-gray-400">Ventas esta semana</p>
         </div>
-        <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
+        @if (Sales?.Count > 0)
+        {
+            <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
             12%
             <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
             </svg>
         </div>
+        }
+        
     </div>
-    <div id="area-chart"></div>
+    <div id="area-chart">
+
+        @if (Sales == null)
+        {
+            <div class="flex w-full items-center justify-center py-6">
+                <Loader></Loader>
+            </div>
+        }
+        else if (Sales.Count <= 0)
+        {
+            <div class="flex w-full items-center justify-center py-6">
+                <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-gray-400 w-full py-10 mt-3 dark:border-current-500">
+                    <label class="text-gray-400 dark:text-current-500">No hay datos suficientes</label>
+                    </div>
+            </div>
+        }
+
+
+
+
+
+    </div>
     <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
         <div class="flex justify-between items-center pt-5">
-           
-          
             <a href="#"
                class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-current-600 hover:text-current-700 dark:hover:text-current-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
                 Reporte completo
@@ -30,11 +53,11 @@
 </div>
 
 @code{
-   
 
-   
 
-    static List<SalesModel>? Sales = null;
+
+
+    List<SalesModel>? Sales = null;
 
 
     public async void GetData()
@@ -49,14 +72,62 @@
         var session = LIN.Access.Inventory.Session.Instance;
         var sales = await LIN.Access.Inventory.Controllers.Outflows.Sales(session.Informacion.ID, 7);
 
-        Sales = sales.Models;
+        Sales = sales.Models
+            .GroupBy(s => DateOnly.FromDateTime( s.Date))
+            .Select(group => new SalesModel
+            {
+                    Date = new DateTime(group.Key.Year, group.Key.Month, group.Key.Day),
+                Money = group.Sum(s => s.Money)
+            }).ToList();
+
+
+            StateHasChanged();
+
+
+
+        //await Task.Delay(1000);
         Render();
     }
 
 
-    public void Render()
+    protected override void OnInitialized()
     {
-         js.InvokeVoidAsync("CharLoad", Sales?.Select(t => t.Date.ToString()), Sales?.Select(t => t.Money));
+        GetData();
+        base.OnInitialized();
+    }
+
+
+    static string FormatearNumero(decimal numero)
+    {
+        // Definir los límites para las representaciones abreviadas
+        const int mill = 1000000;
+        const int kilo = 1000;
+
+        // Verificar si el número es mayor a un millón
+        if (numero >= mill)
+        {
+            // Representación abreviada en millones
+            return $"{numero / (decimal)mill:F1}M";
+        }
+        // Verificar si el número es mayor a mil
+        else if (numero >= kilo)
+        {
+            // Representación abreviada en miles
+            return $"{numero / (decimal)kilo:F1}K";
+        }
+        // Si el número es menor a mil, no se realiza ninguna abreviatura
+        else
+        {
+            return numero.ToString();
+        }
+    }
+
+
+    public async void Render()
+    {
+
+        if (Sales?.Count > 0)
+        await js.InvokeVoidAsync("CharLoad", Sales?.Select(t => t.Date.ToString()), Sales?.Select(t => t.Money));
     }
 
 

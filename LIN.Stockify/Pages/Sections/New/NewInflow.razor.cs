@@ -71,6 +71,7 @@ public partial class NewInflow
 
             InflowDetailsDataModel model = new()
             {
+             
               Cantidad = Values[control.Id],
               ProductDetail = new()
               {
@@ -94,7 +95,7 @@ public partial class NewInflow
         entry = new()
         {
             Details = details,
-            Date = DateTime.Now,
+            Date = new DateTime(date.Year, date.Month, date.Day),
             Type = type,
             Inventory = new()
             {

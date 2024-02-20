@@ -3,8 +3,8 @@
 
 
 @* Pantalla *@
-<div class="flex w-full justify-center">
-    <div class="flex flex-grow flex-col w-full h-full overflow max-w-lg mx-5">
+<div class="flex w-full justify-center overflow-y-auto overflow-x-hidden">
+    <div class="flex flex-grow flex-col w-full h-full max-w-lg mx-5">
 
 
         <label class="text-4xl font-bold dark:text-zinc-200 mt-8">Tablero</label>
@@ -59,14 +59,24 @@
 
 @code{
 
-        Chart? chart { get=>null; set{
-                value?.Render();
-            }
-        }
+
+
+
+    Chart? chart { get; set; }
 
     void NN()
     {
         nav.NavigateTo("/contacts");
+    }
+
+
+
+
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+
     }
 
 }
