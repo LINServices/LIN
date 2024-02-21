@@ -8,10 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR.Client;
+using LIN.Services.RealTime;
 
 namespace LIN.Pages.Sections.Movements;
 
-public partial class Salidas
+public partial class Salidas: IOutflow, IDisposable
 {
 
 
@@ -27,7 +28,7 @@ public partial class Salidas
     /// <summary>
     /// Respuesta.
     /// </summary>
-    private static ReadAllResponse<OutflowDataModel>? Response { get; set; } = null;
+    private ReadAllResponse<OutflowDataModel>? Response { get; set; } = null;
 
 
 
@@ -47,6 +48,8 @@ public partial class Salidas
 
         // Obtener el contexto.
         Contexto = Services.InventoryContext.Get(int.Parse(Id));
+
+        OutflowObserver.Add(Contexto.Inventory.ID, this);
 
         // Evaluar el contexto.
         if (Contexto != null)
@@ -92,6 +95,18 @@ public partial class Salidas
     }
 
 
+    public void Render()
+    {
+        InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        OutflowObserver.Remove(this);
+    }
 
 
 

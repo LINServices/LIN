@@ -1,10 +1,10 @@
-﻿using LIN.Pages.Sections;
+﻿using LIN.Services.RealTime;
 using LIN.Types.Inventory.Models;
 
 namespace LIN.Components.Layout;
 
 
-public partial class DrawerProducts
+public partial class DrawerProducts : IProduct, IDisposable
 {
 
     /// <summary>
@@ -16,7 +16,7 @@ public partial class DrawerProducts
     /// <summary>
     /// Resultado de búsqueda.
     /// </summary>
-    private List<Types.Inventory.Models.ProductModel> Result =  [];
+    private List<Types.Inventory.Models.ProductModel> Result = [];
 
 
     /// <summary>
@@ -58,6 +58,9 @@ public partial class DrawerProducts
     protected override void OnParametersSet()
     {
         Result = Contexto.Products?.Models ?? [];
+
+        ProductObserver.Add(Contexto.Inventory.ID, this);
+
         base.OnParametersSet();
     }
 
@@ -157,4 +160,30 @@ public partial class DrawerProducts
     }
 
 
+    /// <summary>
+    /// Renderizar.
+    /// </summary>
+    public void Render()
+    {
+        InvokeAsync(() =>
+        {
+            Result = Contexto.Products?.Models ?? [];
+
+            // Eliminar de los seleccionados.
+            var es = Contexto.Products.Models.IntersectBy(Selected.Select(t => t.Id) ?? [], (T) => T.Id).ToList();
+
+            Selected.Clear();
+            Selected.AddRange(es);
+
+            StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        InvokeAsync(() =>
+        {
+            ProductObserver.Remove(this);
+        });
+    }
 }

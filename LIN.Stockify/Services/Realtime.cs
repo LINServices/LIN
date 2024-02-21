@@ -1,5 +1,6 @@
 ﻿using LIN.Access.Inventory.Hubs;
 using LIN.Pages;
+using LIN.Services.RealTime;
 using SILF.Script;
 using SILF.Script.Elements.Functions;
 using SILF.Script.Enums;
@@ -7,11 +8,14 @@ using SILF.Script.Interfaces;
 
 namespace LIN.Services;
 
+
 public class Realtime
 {
 
 
     public static string DeviceName { get; set; }
+
+
 
     public class SILFFunction : IFunction
     {
@@ -106,6 +110,162 @@ public class Realtime
         });
 
 
+
+        Actions.Add(new SILFFunction(async (values) =>
+        {
+
+            // Obtener el parámetro.
+            bool can = int.TryParse((string)values.LastOrDefault(t => t.Name == "id")!.Value ?? "", out int id);
+
+            // Error al convertir.
+            if (!can)
+                return;
+
+            // Producto.
+            var product = await LIN.Access.Inventory.Controllers.Product.Read(id, Session.Instance.Token);
+
+            if (product.Response != Responses.Success)
+                return;
+
+            // Contexto.
+            var context = InventoryContext.Get(product.Model.InventoryId);
+
+            // Si no se encontró.
+            if (context == null)
+                return;
+
+            if (context.Products != null && context.Products.Response == Responses.Success)
+                context.Products.Models.Add(product.Model);
+
+            ProductObserver.Update(context.Inventory.ID);
+
+
+        })
+        // Propiedades
+        {
+            Name = "addProduct",
+            Parameters = new()
+            {
+                new("id", new("number"))
+            }
+        });
+
+
+
+
+
+        Actions.Add(new SILFFunction(async (values) =>
+        {
+
+            // Obtener el parámetro.
+            bool can = int.TryParse((string)values.LastOrDefault(t => t.Name == "id")!.Value ?? "", out int id);
+
+            // Error al convertir.
+            if (!can)
+                return;
+
+            // Producto.
+            var inflow = await LIN.Access.Inventory.Controllers.Inflows.Read(id, Session.Instance.Token, false);
+
+            if (inflow.Response != Responses.Success)
+                return;
+
+            // Contexto.
+            var context = InventoryContext.Get(inflow.Model.InventoryId);
+
+            // Si no se encontró.
+            if (context == null)
+                return;
+
+            if (context.Inflows != null && context.Inflows.Response == Responses.Success)
+                context.Inflows.Models.Insert(0, inflow.Model);
+
+
+            // Actualizar la cantidad.
+            foreach (var item in inflow.Model.Details)
+            {
+                // Detalle.
+                var product = context.Products?.Models.Where(t => t.DetailModel?.Id == item.ProductDetailId).FirstOrDefault();
+
+                // Actualizar la cantidad.
+                if (product != null && product.DetailModel != null)
+                    product.DetailModel.Quantity += item.Cantidad;
+
+            }
+
+
+
+            ProductObserver.Update(context.Inventory.ID);
+            InflowObserver.Update(context.Inventory.ID);
+
+
+        })
+        // Propiedades
+        {
+            Name = "addInflow",
+            Parameters =
+            [
+                new("id", new("number")),
+                new("aument", new("bool"))
+            ]
+        });
+
+
+
+        Actions.Add(new SILFFunction(async (values) =>
+        {
+
+            // Obtener el parámetro.
+            bool can = int.TryParse((string)values.LastOrDefault(t => t.Name == "id")!.Value ?? "", out int id);
+
+            // Error al convertir.
+            if (!can)
+                return;
+
+            // Producto.
+            var outflow = await LIN.Access.Inventory.Controllers.Outflows.Read(id, Session.Instance.Token, false);
+
+            if (outflow.Response != Responses.Success)
+                return;
+
+            // Contexto.
+            var context = InventoryContext.Get(outflow.Model.InventoryId);
+
+            // Si no se encontró.
+            if (context == null)
+                return;
+
+            if (context.Outflows != null && context.Outflows.Response == Responses.Success)
+                context.Outflows.Models.Insert(0, outflow.Model);
+
+            // Actualizar la cantidad.
+            foreach (var item in outflow.Model.Details)
+            {
+                // Detalle.
+                var product = context.Products?.Models.Where(t => t.DetailModel?.Id == item.ProductDetailId).FirstOrDefault();
+
+                // Actualizar la cantidad.
+                if (product != null && product.DetailModel != null)
+                    product.DetailModel.Quantity -= item.Cantidad;
+
+            }
+
+            ProductObserver.Update(context.Inventory.ID);
+            OutflowObserver.Update(context.Inventory.ID);
+
+
+        })
+        // Propiedades
+        {
+            Name = "addOutflow",
+            Parameters = new()
+            {
+                new("id", new("number")),
+                new("decrement", new("bool"))
+            }
+        });
+
+
     }
 
 
@@ -136,6 +296,10 @@ public class Realtime
 
         app.Run();
     }
+
+
+
+
 
 }
 

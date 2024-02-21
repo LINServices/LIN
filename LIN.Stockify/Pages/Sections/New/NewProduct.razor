@@ -50,6 +50,15 @@
 
             section = 1;
             StateHasChanged();
+
+
+         
+                _=Services.Realtime.InventoryAccess.SendCommand(new()
+                    {
+                    Command = $"addProduct({response.LastID})"
+                    });
+           
+
             await Task.Delay(4000);
             section = 0;
             StateHasChanged();

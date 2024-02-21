@@ -76,6 +76,5 @@
       <ProjectReference Include="D:\SILF\SILF\SILF.Script\SILF.Script.csproj" />
     </ItemGroup>
 
-    <ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionLINStockifyHideInfoBar="True" /></VisualStudio></ProjectExtensions>
-
+ 
 </Project>

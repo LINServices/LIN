@@ -1,9 +1,10 @@
 ﻿using LIN.Access.Inventory.Controllers;
+using LIN.Services.RealTime;
 using LIN.Types.Inventory.Models;
 
 namespace LIN.Pages.Sections.Movements;
 
-public partial class Entradas
+public partial class Entradas : IInflow, IDisposable
 {
 
 
@@ -19,7 +20,7 @@ public partial class Entradas
     /// <summary>
     /// Respuesta.
     /// </summary>
-    private static ReadAllResponse<InflowDataModel>? Response { get; set; } = null;
+    private ReadAllResponse<InflowDataModel>? Response => Contexto.Inflows;
 
 
 
@@ -41,9 +42,7 @@ public partial class Entradas
         // Obtener el contexto.
         Contexto = Services.InventoryContext.Get(int.Parse(Id));
 
-        // Evaluar el contexto.
-        if (Contexto != null)
-            Response = Contexto.Inflows;
+        InflowObserver.Add(Contexto.Inventory.ID, this);
 
         // Evaluar la respuesta.
         if (Response == null)
@@ -76,7 +75,7 @@ public partial class Entradas
 
         // Nuevos estados.
         IsLoading = false;
-        Response = result;
+        Contexto.Inflows = result;
 
         if (Contexto != null)
             Contexto.Inflows = Response;
@@ -85,5 +84,16 @@ public partial class Entradas
     }
 
 
+    public void Render()
+    {
+        InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
 
+    public void Dispose()
+    {
+        InflowObserver.Remove(this);
+    }
 }

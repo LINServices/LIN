@@ -1,8 +1,9 @@
-﻿using LIN.Types.Inventory.Models;
+﻿using LIN.Services.RealTime;
+using LIN.Types.Inventory.Models;
 
 namespace LIN.Pages.Sections;
 
-public partial class Products
+public partial class Products : IProduct, IDisposable
 {
 
 
@@ -34,10 +35,13 @@ public partial class Products
         // Evaluar el contexto.
         if (Contexto != null)
             Response = Contexto.Products;
-       
+
         // Evaluar la respuesta.
         if (Response == null)
             GetData();
+
+
+        ProductObserver.Add(Contexto!.Inventory.ID, this);
 
         // Base.
         base.OnParametersSet();
@@ -50,7 +54,7 @@ public partial class Products
     public static ProductModel? Selected { get; set; } = null;
 
 
-   
+
 
 
 
@@ -88,6 +92,17 @@ public partial class Products
         StateHasChanged();
     }
 
+    public void Render()
+    {
+        InvokeAsync(() =>
+        {
+            Response = Contexto.Products;
+            StateHasChanged();
+        });
+    }
 
-
+    public void Dispose()
+    {
+        ProductObserver.Remove(this);
+    }
 }

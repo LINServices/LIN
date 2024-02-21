@@ -66,9 +66,10 @@ public partial class NewOutflow
         foreach (var control in Selected ?? [])
         {
 
+            Values.TryGetValue(control.Id, out int quantity);
             OutflowDetailsDataModel model = new()
             {
-              Cantidad = Values[control.Id],
+              Cantidad = quantity,
               ProductDetail = new()
               {
                   Id = control.DetailModel.Id
@@ -119,6 +120,12 @@ public partial class NewOutflow
 
         section = 1;
         StateHasChanged();
+
+        _ = Services.Realtime.InventoryAccess.SendCommand(new()
+        {
+            Command = $"addOutflow({response.LastID}, true)"
+        });
+
         await Task.Delay(2000);
         section = 0;
         StateHasChanged();

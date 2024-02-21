@@ -68,11 +68,11 @@ public partial class NewInflow
         // Rellena los detalles
         foreach (var control in Selected ?? [])
         {
-
+            Values.TryGetValue(control.Id, out int quantity);
             InflowDetailsDataModel model = new()
             {
              
-              Cantidad = Values[control.Id],
+              Cantidad = quantity,
               ProductDetail = new()
               {
                   Id = control.DetailModel.Id
@@ -123,6 +123,12 @@ public partial class NewInflow
 
         section = 1;
         StateHasChanged();
+
+        _ = Services.Realtime.InventoryAccess.SendCommand(new()
+        {
+            Command = $"addInflow({response.LastID}, true)"
+        });
+
         await Task.Delay(2000);
         section = 0;
         StateHasChanged();

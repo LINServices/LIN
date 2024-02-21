@@ -6,11 +6,11 @@ namespace LIN.Services;
 internal static class InventoryContext
 {
 
+
     /// <summary>
     /// Diccionario.
     /// </summary>
-    private static Dictionary<int, Models.InventoryContextModel> Dictionary = [];
-
+    private readonly static Dictionary<int, Models.InventoryContextModel> Dictionary = [];
 
 
 
