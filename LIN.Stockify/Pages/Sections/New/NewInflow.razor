@@ -125,7 +125,7 @@
                 {
                     @foreach (var e in Selected ?? [])
                     {
-                        <ProductChoseControl Model="e" Cantidad="GetValue(e.Id)" OnValueChange="ValueChange" />
+                        <ProductChoseControl Model="e" Cantidad="GetValue(e.Id)" OnValueChange="ValueChange" IsInflow="true"  />
                     }
                 }
 
