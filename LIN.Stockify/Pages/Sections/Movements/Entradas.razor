@@ -99,7 +99,7 @@
                         {
                             @foreach (var e in Response.Models ?? [])
                             {
-                                <InflowControl Model="e" />
+                                <InflowControl Model="e" OnClick="Go" />
                             }
                         }
                         break;
@@ -129,7 +129,7 @@
     void Go(Types.Inventory.Models.InflowDataModel e)
     {
         Selected = e;
-        nav.NavigateTo("/inflow");
+        nav.NavigateTo($"/inflow/{e.ID}");
     }
 
     void GoNew()

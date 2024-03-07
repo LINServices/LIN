@@ -93,23 +93,24 @@ public partial class Login
 
 
 
-   /// <summary>
-   /// Evento.
-   /// </summary>
+    /// <summary>
+    /// Evento.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
 
-        // Quitar barra inferior.
-        MainLayout.ShowNavigation = false;
-        MainLayout.Update();
-
-        _ = base.OnInitializedAsync();
 
         if (Access.Auth.SessionAuth.IsOpen)
         {
             NavigationManager?.NavigateTo("/home");
             return;
-        }
+        } 
+
+ // Quitar barra inferior.
+        MainLayout.ShowNavigation = false;
+        MainLayout.Update();
+
+        _ = base.OnInitializedAsync();
 
 
         LocalDataBase.Data.UserDB database = new();

@@ -1,19 +1,12 @@
-﻿using LIN.Access.Inventory.Controllers;
-using LIN.Access.Inventory.Hubs;
-using LIN.Access.Inventory;
-using LIN.Types.Inventory.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR.Client;
-using LIN.Pages.Sections.Movements;
+﻿using LIN.Types.Inventory.Models;
 
 namespace LIN.Pages.Sections.Viewer;
 
 public partial class Salida
 {
+
+    [Parameter]
+    public string Id { get; set; }
 
 
     /// <summary>
@@ -24,11 +17,37 @@ public partial class Salida
 
 
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
 
-        Modelo = Salidas.Selected;
-        return base.OnInitializedAsync();
+        var a = Services.InventoryContext.Dictionary
+            .Where(t => t.Value.Outflows.Models.Where(t => t.ID == int.Parse(Id)).Any()).FirstOrDefault();
+
+        if (a.Value != null)
+        {
+            var inflow = a.Value.Outflows.Models.Where(t => t.ID == int.Parse(Id)).FirstOrDefault();
+
+            if (inflow.Details.Count <= 0)
+            {
+                var inflowDetails = await LIN.Access.Inventory.Controllers.Outflows.Read(inflow.ID, LIN.Access.Inventory.Session.Instance.Token, false);
+
+                if (inflowDetails.Response == Responses.Success)
+                    inflow.Details = inflowDetails.Model.Details;
+            
+            }
+            Modelo = inflow;
+
+        }
+        else
+        {
+
+            var inflowDetails = await LIN.Access.Inventory.Controllers.Outflows.Read(int.Parse(Id), LIN.Access.Inventory.Session.Instance.Token, true);
+
+            if (inflowDetails.Response == Responses.Success)
+                Modelo = inflowDetails.Model;
+        }
+
+        await base.OnInitializedAsync();
     }
 
 

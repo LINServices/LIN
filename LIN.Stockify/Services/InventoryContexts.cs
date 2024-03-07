@@ -10,7 +10,7 @@ internal static class InventoryContext
     /// <summary>
     /// Diccionario.
     /// </summary>
-    private readonly static Dictionary<int, Models.InventoryContextModel> Dictionary = [];
+    public readonly static Dictionary<int, Models.InventoryContextModel> Dictionary = [];
 
 
 

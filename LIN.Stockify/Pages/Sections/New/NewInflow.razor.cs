@@ -1,8 +1,5 @@
-﻿
-
-using LIN.Types.Inventory.Enumerations;
+﻿using LIN.Types.Inventory.Enumerations;
 using LIN.Types.Inventory.Models;
-using SILF.Script;
 
 namespace LIN.Pages.Sections.New;
 

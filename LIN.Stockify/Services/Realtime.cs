@@ -73,11 +73,13 @@ public class Realtime
         {
 
             // Obtener el parámetro.
-            bool can = int.TryParse((string)values.LastOrDefault(t => t.Name == "id")!.Value ?? "", out int id);
+            var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
 
-            // Error al convertir.
-            if (!can)
+            if (value is not decimal)
                 return;
+
+            var id = (int)((value as decimal?) ?? 0);
+
 
             // Obtener el contacto.
             ContactModel? contact = Contactos.Response?.Models.FirstOrDefault(t => t.Id == id);
@@ -115,11 +117,14 @@ public class Realtime
         {
 
             // Obtener el parámetro.
-            bool can = int.TryParse((string)values.LastOrDefault(t => t.Name == "id")!.Value ?? "", out int id);
+            var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
 
-            // Error al convertir.
-            if (!can)
+            if (value is not decimal)
                 return;
+
+            var id = (int)((value as decimal?) ?? 0);
+
+
 
             // Producto.
             var product = await LIN.Access.Inventory.Controllers.Product.Read(id, Session.Instance.Token);
@@ -158,12 +163,14 @@ public class Realtime
         {
 
             // Obtener el parámetro.
-            bool can = int.TryParse((string)values.LastOrDefault(t => t.Name == "id")!.Value ?? "", out int id);
+            var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
 
-            // Error al convertir.
-            if (!can)
+            if (value is not decimal)
                 return;
 
+            var id = (int)((value as decimal?) ?? 0);
+
+           
             // Producto.
             var inflow = await LIN.Access.Inventory.Controllers.Inflows.Read(id, Session.Instance.Token, false);
 
@@ -216,11 +223,12 @@ public class Realtime
         {
 
             // Obtener el parámetro.
-            bool can = int.TryParse((string)values.LastOrDefault(t => t.Name == "id")!.Value ?? "", out int id);
+            var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
 
-            // Error al convertir.
-            if (!can)
+            if (value is not decimal)
                 return;
+
+            var id = (int)((value as decimal?) ?? 0);
 
             // Producto.
             var outflow = await LIN.Access.Inventory.Controllers.Outflows.Read(id, Session.Instance.Token, false);
@@ -306,7 +314,9 @@ public class Realtime
 
 class Con : IConsole
 {
-    public void InsertLine(string result, LogLevel logLevel)
+    public void InsertLine(string result, string code, LogLevel logLevel)
     {
     }
+
+
 }

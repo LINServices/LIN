@@ -73,15 +73,40 @@
         var sales = await LIN.Access.Inventory.Controllers.Outflows.Sales(session.Informacion.ID, 7);
 
         Sales = sales.Models
-            .GroupBy(s => DateOnly.FromDateTime( s.Date))
+            .GroupBy(s => DateOnly.FromDateTime(s.Date))
             .Select(group => new SalesModel
-            {
+                {
                     Date = new DateTime(group.Key.Year, group.Key.Month, group.Key.Day),
-                Money = group.Sum(s => s.Money)
-            }).ToList();
+                    Money = group.Sum(s => s.Money)
+                }).ToList();
 
 
-            StateHasChanged();
+        var dateNow = DateOnly.FromDateTime(DateTime.Now);
+
+        var dateOld = DateOnly.FromDateTime(Sales.LastOrDefault()?.Date ?? DateTime.Now);
+
+
+        var diference = dateNow.ToDateTime(TimeOnly.MinValue) - dateOld.ToDateTime(TimeOnly.MinValue);
+
+        if (diference.Days > 0)
+        {
+
+            for(var i = 1; i<= diference.Days; i++)
+            {
+                Sales.Add(new()
+                    {
+                        Date = dateOld.AddDays(i).ToDateTime(TimeOnly.MinValue),
+                        Money =0
+            });
+            }
+
+        }
+
+       
+
+
+
+        StateHasChanged();
 
 
 
