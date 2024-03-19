@@ -16,7 +16,13 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
-        MainLayout.Configure(GoCreate, 1);
+          MainLayout.Configure(new()
+            {
+                OnCenterClick = GoCreate,
+                Section = 1,
+                DockIcon = 0
+            });
+
         base.OnAfterRender(firstRender);
     }
 

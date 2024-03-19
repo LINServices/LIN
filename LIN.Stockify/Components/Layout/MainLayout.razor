@@ -3,8 +3,8 @@
 @code {
 
 
-    public static Action Action = () => { };
-    public static int Section = 0;
+
+    public static DockSettings Settings = new();
 
 
     @* Popup de nuevo contacto. *@
@@ -41,16 +41,15 @@
 
     public static void OnCenter(Action action)
     {
-        Action = action;
+      Settings.OnCenterClick = action;
 
 
     }
 
 
-    public static void Configure(Action action, int section)
+    public static void Configure(DockSettings settings)
     {
-        Action = action;
-        Section = section;
+        Settings = settings;
         MainLayout.Update();
     }
 
@@ -64,7 +63,7 @@
 <div class="w-full min-h-20 h-20 flex items-center justify-center @(ShowNavigation ? "":"hidden")">
 
    
-    <BottomNavigation @ref="Navigation" OnCenterClick="()=>Action?.Invoke()" Section="Section"/>
+    <BottomNavigation @ref="Navigation" Settings="Settings" />
 
 
 </div>

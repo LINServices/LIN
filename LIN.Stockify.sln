@@ -21,6 +21,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SILF.Script", "D:\SILF\SILF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Cloud.Identity", "D:\LIN Services\Tipos\LIN.Types.Cloud.Identity\LIN.Types.Cloud.Identity.csproj", "{30146AC7-14B7-4D14-A35C-0D227E11B9EA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Emma.UI", "..\..\Components\LIN.Emma.UI\LIN.Emma.UI\LIN.Emma.UI.csproj", "{D5265888-1703-4710-B7FC-4A20A600642A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Emma", "..\..\Tipos\LIN.Types.Emma\LIN.Types.Emma.csproj", "{CD5B46AB-E13C-47F8-86A3-02E0540B725E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +69,14 @@ Global
 		{30146AC7-14B7-4D14-A35C-0D227E11B9EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30146AC7-14B7-4D14-A35C-0D227E11B9EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30146AC7-14B7-4D14-A35C-0D227E11B9EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5265888-1703-4710-B7FC-4A20A600642A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5265888-1703-4710-B7FC-4A20A600642A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5265888-1703-4710-B7FC-4A20A600642A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5265888-1703-4710-B7FC-4A20A600642A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD5B46AB-E13C-47F8-86A3-02E0540B725E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD5B46AB-E13C-47F8-86A3-02E0540B725E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD5B46AB-E13C-47F8-86A3-02E0540B725E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD5B46AB-E13C-47F8-86A3-02E0540B725E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

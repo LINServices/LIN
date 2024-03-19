@@ -42,6 +42,7 @@ namespace LIN
 
             LIN.Access.Auth.Build.Init();
             Build.Init();
+            LIN.Access.Search.Build.Init();
 
 
 

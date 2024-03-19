@@ -7,10 +7,23 @@ public partial class Home
 {
 
 
-    protected override void OnInitialized()
-    {  
+
+    EmmaDrawer EmmaOp { get; set; }
+
+    protected override async void OnInitialized()
+    {
+
+        MainLayout.Configure(new()
+        {
+            OnCenterClick = () => { EmmaOp.Show(); },
+            Section = 0,
+            DockIcon = 1
+        });
         MainLayout.ShowNavigation = true;
-        MainLayout.Configure(() => { }, 0);
+
+       await RefreshData();
+
+        StateHasChanged();
         base.OnInitialized();
     }
 

@@ -9,14 +9,8 @@ public partial class BottomNavigation
     /// Sección actual de la barra de navegación.
     /// </summary>
     [Parameter]
-    public int Section { get; set; } = 0;
+    public DockSettings Settings { get; set; } = new();
 
-
-    /// <summary>
-    /// Acción a realizar después de presionar en el botón central.
-    /// </summary>
-    [Parameter]
-    public Action OnCenterClick { get; set; } = () => { };
 
 
     /// <summary>
@@ -49,5 +43,15 @@ public partial class BottomNavigation
 
     }
 
+
+}
+
+public class DockSettings
+{
+
+    public int Section { set; get; }
+    public int DockIcon { set; get; }
+
+    public Action OnCenterClick { get; set; } = () => { };
 
 }

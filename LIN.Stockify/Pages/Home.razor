@@ -50,11 +50,50 @@
             <Chart @ref="chart"></Chart>
 
         </div>
+        
+        
+        <div class="w-full mt-3 mb-2">
+
+            <label class="font-bold text-xl">Notificaciones</label>
+
+            @if (Notifications.Response == Responses.IsLoading)
+            {
+                <LIN.Emma.UI.CircleLoader />
+            }
+            else if (Notifications.Response == Responses.Success)
+            {
+
+                if (Notifications.Models.Count <= 0)
+                {
+                    <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-gray-300 w-full py-10 mt-3 dark:border-zinc-600">
+                        <label class="text-gray-400 dark:text-zinc-400">No tienes ninguna invitación</label>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var e in Notifications.Models)
+                    {
+                        <label>@e.Inventario</label>
+                    }
+                }
+            }
+            else
+            {
+                <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-gray-300 w-full py-10 mt-3 dark:border-zinc-600">
+                    <label class="text-gray-400 dark:text-zinc-400">Hubo un error al obtener</label>
+                </div>
+            }
+
+        </div>
+
+
 
 
     </div>
 
 </div>
+
+<EmmaDrawer @ref="EmmaOp"></EmmaDrawer>
 
 
 @code{
@@ -70,7 +109,32 @@
     }
 
 
+    static ReadAllResponse<Types.Inventory.Transient.Notificacion> Notifications = new()
+        {
+            Response = Responses.IsLoading
+        };
 
+
+    async void Accept(int id)
+    {
+        await LIN.Access.Inventory.Controllers.Inventories.UpdateState(id, InventoryAccessState.Accepted);
+    }
+
+
+    private async Task<bool> RefreshData()
+    {
+
+        if (Notifications.Response == Responses.Success)
+            return true;
+
+        // Items
+        var items = await LIN.Access.Inventory.Controllers.Inventories.ReadNotifications(LIN.Access.Inventory.Session.Instance.Token);
+
+        // Rellena los items
+        Notifications = items;
+        return true;
+
+    }
 
 
     protected override void OnAfterRender(bool firstRender)
@@ -80,3 +144,4 @@
     }
 
 }
+
