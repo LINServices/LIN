@@ -52,7 +52,7 @@
         </div>
         
         
-        <div class="w-full mt-3 mb-2">
+        <div class="flex flex-col w-full mt-3 mb-2 py-1">
 
             <label class="font-bold text-xl">Notificaciones</label>
 
@@ -73,7 +73,7 @@
                 {
                     @foreach (var e in Notifications.Models)
                     {
-                        <label>@e.Inventario</label>
+                        <LIN.Components.Shared.InvitationControl Model="e" Models="Notifications.Models" OnRemove="OnRemove" />
                     }
                 }
             }
@@ -101,6 +101,13 @@
 
 
 
+    void OnRemove()
+    {
+        StateHasChanged();
+    }
+
+
+
     Chart? chart { get; set; }
 
     void NN()
@@ -115,10 +122,7 @@
         };
 
 
-    async void Accept(int id)
-    {
-        await LIN.Access.Inventory.Controllers.Inventories.UpdateState(id, InventoryAccessState.Accepted);
-    }
+   
 
 
     private async Task<bool> RefreshData()
