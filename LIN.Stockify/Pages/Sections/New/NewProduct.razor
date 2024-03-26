@@ -55,7 +55,8 @@
          
                 _=Services.Realtime.InventoryAccess.SendCommand(new()
                     {
-                    Command = $"addProduct({response.LastID})"
+                    Command = $"addProduct({response.LastID})",
+                    Inventory = Contexto.Inventory.ID
                     });
            
 

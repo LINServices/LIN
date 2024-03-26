@@ -123,7 +123,8 @@ public partial class NewOutflow
 
         _ = Services.Realtime.InventoryAccess.SendCommand(new()
         {
-            Command = $"addOutflow({response.LastID}, true)"
+            Command = $"addOutflow({response.LastID}, true)",
+            Inventory = Contexto.Inventory.ID
         });
 
         await Task.Delay(2000);

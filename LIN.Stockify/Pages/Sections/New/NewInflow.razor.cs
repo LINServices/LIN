@@ -123,7 +123,8 @@ public partial class NewInflow
 
         _ = Services.Realtime.InventoryAccess.SendCommand(new()
         {
-            Command = $"addInflow({response.LastID}, true)"
+            Command = $"addInflow({response.LastID}, true)",
+            Inventory = Contexto.Inventory.ID
         });
 
         await Task.Delay(2000);

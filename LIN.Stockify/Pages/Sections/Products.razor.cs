@@ -40,8 +40,9 @@ public partial class Products : IProduct, IDisposable
         if (Response == null)
             GetData();
 
-
         ProductObserver.Add(Contexto!.Inventory.ID, this);
+
+        _ = Services.Realtime.InventoryAccess.JoinInventory(int.Parse(Id));
 
         // Base.
         base.OnParametersSet();
@@ -100,6 +101,7 @@ public partial class Products : IProduct, IDisposable
             StateHasChanged();
         });
     }
+
 
     public void Dispose()
     {

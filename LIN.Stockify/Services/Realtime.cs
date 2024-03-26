@@ -301,7 +301,8 @@ public class Realtime
 
     private static void InventoryAccess_On(object? sender, Types.Inventory.Transient.CommandModel e)
     {
-        var app = new SILF.Script.App(e.Command, new Con());
+
+        var app = new SILF.Script.App(e.Command);
 
         app.AddDefaultFunctions(Actions);
 
@@ -310,16 +311,6 @@ public class Realtime
 
 
 
-
-
-}
-
-
-class Con : IConsole
-{
-    public void InsertLine(string result, string code, LogLevel logLevel)
-    {
-    }
 
 
 }
