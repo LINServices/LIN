@@ -1,33 +1,36 @@
 ﻿using LIN.Access.Inventory.Controllers;
-using LIN.Access.Inventory.Hubs;
-using LIN.Access.Inventory;
-using LIN.Types.Inventory.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR.Client;
 
 namespace LIN.Pages.Sections;
 
 public partial class Settings
 {
 
+    /// <summary>
+    /// Parámetro Id.
+    /// </summary>
+
+    [Parameter]
+    public string Id { get; set; }
+
+
 
     /// <summary>
-    /// Lista de modelos
+    /// Esta cargando.
+    /// </summary>
+    private bool IsLoading = false;
+
+
+
+    /// <summary>
+    /// Lista de modelos.
     /// </summary>
     private ReadAllResponse<IntegrantDataModel>? Response { get; set; } = null;
 
 
 
-    bool IsLoading = false;
-
-
-
-
-
+    /// <summary>
+    /// Evento al inicializar.
+    /// </summary>
     protected override Task OnInitializedAsync()
     {
         Reload();
@@ -37,21 +40,18 @@ public partial class Settings
 
 
     /// <summary>
-    /// Operacion de cargar
+    /// Operación de cargar.
     /// </summary>
     public async void Reload()
     {
-
         // Rellena los datos
         await RetrieveData();
-
-
     }
 
 
 
     /// <summary>
-    /// Obtiene informaci�n desde el servidor
+    /// Obtiene información desde el servidor
     /// </summary>
     private async Task RetrieveData(bool force = false)
     {
@@ -73,5 +73,6 @@ public partial class Settings
         StateHasChanged();
 
     }
+
 
 }

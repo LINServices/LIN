@@ -113,4 +113,20 @@ public partial class Entradas : IInflow, IDisposable
 
 
 
+    void Go(Types.Inventory.Models.InflowDataModel e)
+    {
+        Selected = e;
+        nav.NavigateTo($"/inflow/{e.ID}");
+    }
+
+    void GoNew()
+    {
+        nav.NavigateTo($"/new/inflow/{Contexto?.Inventory.ID}");
+    }
+
+
+
+
+
+
 }

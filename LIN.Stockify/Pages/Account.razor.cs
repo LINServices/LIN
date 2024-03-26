@@ -1,50 +1,32 @@
-﻿using LIN.Components.Layout;
-using LIN.Types.Inventory.Models;
+﻿namespace LIN.Pages;
 
-namespace LIN.Pages;
 
 public partial class Account
 {
 
 
-
-
-    async void SendCo(string devices)
-    {
-        Services.Realtime.InventoryAccess.SendToDevice(devices, new()
-        {
-            Command = "updateCt()"
-        });
-    }
-
+    /// <summary>
+    /// Cerrar sesión.
+    /// </summary>
     async void Close()
     {
-        LIN.Access.Inventory.Session.CloseSession();
+
+        // Cerrar la sesión.
+        Session.CloseSession();
+
+        // Eliminar cuentas.
         await new LIN.LocalDataBase.Data.UserDB().DeleteUsers();
 
+        // Navegar al inicio.
         nav.NavigateTo("/", true, true);
 
     }
 
-    List<DeviceModel> Devices = null;
-    private async Task<bool> GetDevices()
-    {
 
 
-        // Items
-        var items = await LIN.Access.Inventory.Controllers.Profile.ReadDevices(LIN.Access.Inventory.Session.Instance.Token);
-
-        // Analisis de respuesta
-        if (items.Response != Responses.Success)
-            return false;
-
-        // Rellena los items
-        Devices = items.Models.ToList();
-        return true;
-
-    }
-
-
+    /// <summary>
+    /// Evento: Al inicializar.
+    /// </summary>
     protected override void OnInitialized()
     {
 
@@ -57,5 +39,6 @@ public partial class Account
 
         base.OnInitialized();
     }
+
 
 }

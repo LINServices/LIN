@@ -1,18 +1,26 @@
-﻿using LIN.Access.Inventory.Controllers;
-using LIN.Components.Layout;
-using LIN.Types.Inventory.Models;
-
-namespace LIN.Pages;
+﻿namespace LIN.Pages;
 
 
 public partial class Contactos
 {
 
+    /// <summary>
+    /// Esta cargando.
+    /// </summary>
+    private bool IsLoading = false;
 
 
-    public static Contactos? _instance = null;
+
+    /// <summary>
+    /// Instancia.
+    /// </summary>
+    private static Contactos? _instance = null;
 
 
+
+    /// <summary>
+    /// Constructor.
+    /// </summary>
     public Contactos()
     {
         _instance = this;
@@ -29,25 +37,21 @@ public partial class Contactos
 
 
 
-
-
-
-    public static ContactModel? Selected { get; set; } = null;
-
-
-
+    /// <summary>
+    /// Actualizar.
+    /// </summary>
     public static void ToUpdate()
     {
         Response = null;
-        _instance?.A();
+        _instance?.Refresh();
     }
 
 
 
-
-
-
-    void A()
+    /// <summary>
+    /// Actualizar los datos.
+    /// </summary>
+    void Refresh()
     {
         InvokeAsync(() =>
         {
@@ -56,19 +60,11 @@ public partial class Contactos
     }
 
 
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
 
-        GetData();
-    }
-
-
-
-
-
-    bool IsLoading = false;
-
+    /// <summary>
+    /// Obtener los datos.
+    /// </summary>
+    /// <param name="force">Es forzado.</param>
     private async void GetData(bool force = false)
     {
 
@@ -92,9 +88,25 @@ public partial class Contactos
 
 
 
+    /// <summary>
+    /// Abrir el contacto.
+    /// </summary>
+    /// <param name="e">Modelo.</param>
+    private static void Go(ContactModel e)
+    {
+        MainLayout.ContactPop.Model = e;
+        MainLayout.ContactPop.Show();
+    }
 
 
 
+    /// <summary>
+    /// Abrir el popup de crear.
+    /// </summary>
+    private static void OpenCreate()
+    {
+        MainLayout.NewContactPopup.Show();
+    }
 
 
 
@@ -102,9 +114,20 @@ public partial class Contactos
     //******** Eventos ********//
 
 
+    /// <summary>
+    /// Evento: Al inicializar.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        GetData();
+        base.OnInitialized();
+    }
 
 
 
+    /// <summary>
+    /// Evento después de renderizar.
+    /// </summary>
     protected override void OnAfterRender(bool firstRender)
     {
 
@@ -119,18 +142,5 @@ public partial class Contactos
     }
 
 
-
-
-    void Go(Types.Contacts.Models.ContactModel e)
-    {
-        LIN.Components.Layout.MainLayout.ContactPop.Model = e;
-        LIN.Components.Layout.MainLayout.ContactPop.Show();
-    }
-
-
-    void OpenCreate()
-    {
-        LIN.Components.Layout.MainLayout.NewContactPopup.Show();
-    }
 
 }

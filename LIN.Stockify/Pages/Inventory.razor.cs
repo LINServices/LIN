@@ -1,12 +1,15 @@
 ﻿using LIN.Access.Inventory.Controllers;
-using LIN.Access.Inventory.Hubs;
-using LIN.Components.Layout;
-using LIN.Types.Inventory.Models;
 
 namespace LIN.Pages;
 
 public partial class Inventory
 {
+
+    /// <summary>
+    /// Esta cargando.
+    /// </summary>
+    private bool IsLoading = false;
+
 
 
     /// <summary>
@@ -16,21 +19,20 @@ public partial class Inventory
 
 
 
-
+    /// <summary>
+    /// Evento al inicializar.
+    /// </summary>
     protected override void OnInitialized()
     {
-        base.OnInitialized();
         GetData();
+        base.OnInitialized();
     }
 
 
 
-
-
-
-
-    bool IsLoading = false;
-
+    /// <summary>
+    /// Obtener la data.
+    /// </summary>
     private async void GetData(bool force = false)
     {
 
@@ -48,7 +50,7 @@ public partial class Inventory
 
         foreach (var item in result.Models)
             Services.InventoryContext.Post(item);
-        
+
         // Nuevos estados.
         IsLoading = false;
         Response = result;
@@ -57,7 +59,11 @@ public partial class Inventory
 
 
 
-    void Go(Types.Inventory.Models.InventoryDataModel? e)
+    /// <summary>
+    /// Abrir un producto.
+    /// </summary>
+    /// <param name="e">Modelo.</param>
+    private void Go(InventoryDataModel? e)
     {
         if (e == null)
             return;
@@ -66,6 +72,10 @@ public partial class Inventory
     }
 
 
+
+    /// <summary>
+    /// Evento al renderizar.
+    /// </summary>
     protected override void OnAfterRender(bool firstRender)
     {
         MainLayout.Configure(new()
@@ -80,11 +90,13 @@ public partial class Inventory
 
 
 
-
-
-    void GoCreate()
+    /// <summary>
+    /// Abrir pantalla de crear.
+    /// </summary>
+    private void GoCreate()
     {
         nav.NavigateTo("/new/inventory");
     }
+
 
 }

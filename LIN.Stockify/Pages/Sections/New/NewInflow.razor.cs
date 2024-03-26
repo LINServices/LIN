@@ -134,4 +134,47 @@ public partial class NewInflow
     }
 
 
+
+
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+
+
+    string Name { get; set; } = string.Empty;
+
+    string Direction { get; set; } = string.Empty;
+
+    int Category { get; set; }
+
+
+    int section = 0;
+
+    DateOnly date = DateOnly.FromDateTime(DateTime.Now);
+
+
+    List<ProductModel> Selected = [];
+
+    Dictionary<int, int> Values = [];
+
+
+    DrawerProducts DrawerProducts = null!;
+
+
+
+    void ValueChange(int product, int q)
+    {
+        try
+        {
+            Values[product] = q;
+
+        }
+        catch
+        {
+            Values.Add(product, q);
+        }
+
+    }
+
+
 }

@@ -1,6 +1,4 @@
-﻿using LIN.Components.Layout;
-
-namespace LIN.Pages;
+﻿namespace LIN.Pages;
 
 
 public partial class Login
@@ -104,9 +102,9 @@ public partial class Login
         {
             NavigationManager?.NavigateTo("/home");
             return;
-        } 
+        }
 
- // Quitar barra inferior.
+        // Quitar barra inferior.
         MainLayout.ShowNavigation = false;
         MainLayout.Update();
 

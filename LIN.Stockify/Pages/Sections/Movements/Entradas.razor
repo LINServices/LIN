@@ -122,26 +122,3 @@
 
 
 </div>
-
-@{
-    MainLayout.OnCenter(GoNew);
-}
-
-@code {
-
-    void Go(Types.Inventory.Models.InflowDataModel e)
-    {
-        Selected = e;
-        nav.NavigateTo($"/inflow/{e.ID}");
-    }
-
-    void GoNew()
-    {
-        nav.NavigateTo($"/new/inflow/{Contexto?.Inventory.ID}");
-    }
-
-
-}
-
-
-

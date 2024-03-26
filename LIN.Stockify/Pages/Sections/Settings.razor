@@ -1,28 +1,11 @@
 ﻿@page "/members/{Id}"
 
 
-
-@code {
-
-
-
-    [Parameter]
-    public string Id { get; set; }
-
-
-
-
-}
-
-
-
 @* Pantalla *@
 <div class="flex flex-grow flex-col w-full h-full overflow-hidden px-4 lg:px-6">
 
-    <LIN.Components.Layout.Header Tittle="Integrantes" GoBack="true">
-
-    </LIN.Components.Layout.Header>
-
+    @* Header. *@
+    <LIN.Components.Layout.Header Tittle="Integrantes" GoBack="true" />
 
 
     @* Header. *@

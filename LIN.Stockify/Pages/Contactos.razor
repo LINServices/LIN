@@ -7,7 +7,7 @@
 
 
     @* Cabeceras *@
-    <LIN.Components.Layout.Header Tittle="Contactos" GoBack="false" >
+    <LIN.Components.Layout.Header Tittle="Contactos" GoBack="false">
 
         @* Actualizar. *@
         <button @onclick="()=>GetData(true)" type="button" class="h-9 w-9 rounded-full p-2">
@@ -89,7 +89,7 @@
                         {
                             @foreach (var e in Response.Models ?? [])
                             {
-                                <ContactControl OnClick=Go Model="e" />
+                                <ContactControl OnClick=Contactos.Go Model="e" />
                             }
                         }
                         break;
@@ -110,17 +110,4 @@
 
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
-

@@ -1,5 +1,4 @@
 ﻿@page "/account"
-
 @inject NavigationManager nav
 
 
@@ -10,6 +9,7 @@
 
         <div class="flex flex-col items-center mb-8">
 
+            @* Imagen. *@
             <div class="mt-5">
                 @if (@LIN.Access.Inventory.Session.Instance.Account.Profile.Length <= 0)
                 {
@@ -33,7 +33,7 @@
 
 
         </div>
+
     </div>
-
-
+    
 </div>

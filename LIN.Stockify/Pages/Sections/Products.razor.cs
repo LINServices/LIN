@@ -1,5 +1,4 @@
 ﻿using LIN.Services.RealTime;
-using LIN.Types.Inventory.Models;
 
 namespace LIN.Pages.Sections;
 
@@ -7,19 +6,39 @@ public partial class Products : IProduct, IDisposable
 {
 
 
+    /// <summary>
+    /// Id.
+    /// </summary>
     [Parameter]
     public string Id { get; set; } = string.Empty;
 
 
 
+    /// <summary>
+    /// Esta cargando.
+    /// </summary>
+    private bool IsLoading = false;
+
+
+
+    /// <summary>
+    /// Producto seleccionado.
+    /// </summary>
+    public static ProductModel? Selected { get; set; } = null;
+
+
+
+    /// <summary>
+    /// Contexto del inventario.
+    /// </summary>
     Services.Models.InventoryContextModel? Contexto { get; set; }
+
 
 
     /// <summary>
     /// Respuesta.
     /// </summary>
     private ReadAllResponse<ProductModel>? Response { get; set; } = null;
-
 
 
 
@@ -51,24 +70,9 @@ public partial class Products : IProduct, IDisposable
 
 
 
-
-    public static ProductModel? Selected { get; set; } = null;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    bool IsLoading = false;
-
+    /// <summary>
+    /// Obtener la data.
+    /// </summary>
     private async void GetData(bool force = false)
     {
 
@@ -93,6 +97,11 @@ public partial class Products : IProduct, IDisposable
         StateHasChanged();
     }
 
+
+
+    /// <summary>
+    /// Renderizar.
+    /// </summary>
     public void Render()
     {
         InvokeAsync(() =>
@@ -103,8 +112,83 @@ public partial class Products : IProduct, IDisposable
     }
 
 
+
+    /// <summary>
+    /// Evento Dispose.
+    /// </summary>
     public void Dispose()
     {
         ProductObserver.Remove(this);
     }
+
+
+
+    /// <summary>
+    /// Evento después de renderizar.
+    /// </summary>
+    protected override void OnAfterRender(bool firstRender)
+    {
+        MainLayout.Configure(new()
+        {
+            OnCenterClick = GoCreate,
+            Section = 1,
+            DockIcon = 0
+        });
+
+        base.OnAfterRender(firstRender);
+    }
+
+
+
+    /// <summary>
+    /// Abrir el producto.
+    /// </summary>
+    /// <param name="e">Modelo.</param>
+    void Go(ProductModel e)
+    {
+        Selected = e;
+        nav.NavigateTo("/product");
+    }
+
+
+
+    /// <summary>
+    /// Abrir la entradas.
+    /// </summary>
+    void GoEntradas()
+    {
+        nav.NavigateTo($"/inflows/{Contexto?.Inventory.ID}");
+    }
+
+
+
+    /// <summary>
+    /// Abrir integrantes.
+    /// </summary>
+    void GoMembers()
+    {
+        nav.NavigateTo($"/members/{Contexto?.Inventory.ID}");
+    }
+
+
+
+    /// <summary>
+    /// Abrir las salidas.
+    /// </summary>
+    void GoSalidas()
+    {
+        nav.NavigateTo($"/outflows/{Contexto?.Inventory.ID}");
+    }
+
+
+
+    /// <summary>
+    /// Abrir crear.
+    /// </summary>
+    void GoCreate()
+    {
+        nav.NavigateTo($"/new/product/{Contexto?.Inventory.ID}");
+    }
+
+
 }

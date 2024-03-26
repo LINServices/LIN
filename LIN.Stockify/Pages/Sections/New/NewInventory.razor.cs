@@ -74,4 +74,19 @@ public partial class NewInventory
 
 
 
+    string Name { get; set; } = string.Empty;
+    string Direction { get; set; } = string.Empty;
+
+
+    int section = 0;
+
+
+    LIN.Components.Layout.DrawerPeople Drawer = null!;
+
+    /// <summary>
+    /// Lista de participantes
+    /// </summary>
+    private readonly List<LIN.Types.Cloud.Identity.Abstracts.SessionModel<LIN.Types.Inventory.Models.ProfileModel>> Participantes = new();
+
+
 }

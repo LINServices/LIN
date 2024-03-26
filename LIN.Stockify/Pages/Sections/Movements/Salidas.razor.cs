@@ -123,5 +123,21 @@ public partial class Salidas: IOutflow, IDisposable
 
 
 
+    void Go(Types.Inventory.Models.OutflowDataModel e)
+    {
+        Selected = e;
+        nav.NavigateTo($"/outflow/{e.ID}");
+    }
+
+
+    void GoNew()
+    {
+        nav.NavigateTo($"/new/outflow/{Contexto?.Inventory.ID}");
+    }
+
+
+
+
+
 
 }
