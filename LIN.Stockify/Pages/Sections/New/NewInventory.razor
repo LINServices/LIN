@@ -27,7 +27,7 @@
 
     <LIN.Components.Layout.Header Tittle="Nuevo Inventario" GoBack="true" />
 
-    <div class="flex flex-grow flex-col h-full w-full max-w-lg overflow-hidden">
+    <div class="flex flex-grow flex-col h-full w-full max-w-lg overflow-hidden px-1">
 
 
         @if (section == 0)
@@ -75,7 +75,7 @@
 
 
             @* Componentes. *@
-            <div class="flex-1 overflow-auto gap-3 mt-2">
+            <div class="flex-1 overflow-auto gap-3 mt-2 UIScroll">
 
                 @if (Participantes.Count <= 0)
                 {

@@ -74,7 +74,7 @@
 
 
     @* Componentes. *@
-    <div class="flex-1 overflow-auto gap-2">
+    <div class="flex-1 overflow-auto gap-2 UIScroll">
 
 
         @* Cargando *@
@@ -136,11 +136,20 @@
 @code {
 
 
+
     protected override void OnAfterRender(bool firstRender)
     {
-        MainLayout.OnCenter(GoCreate);
+        MainLayout.Configure(new()
+            {
+                OnCenterClick = GoCreate,
+                Section = 1,
+                DockIcon = 0
+            });
+
         base.OnAfterRender(firstRender);
     }
+
+
 
 
     void Go(Types.Inventory.Models.ProductModel e)

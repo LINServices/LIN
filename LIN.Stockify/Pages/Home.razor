@@ -3,7 +3,7 @@
 
 
 @* Pantalla *@
-<div class="flex w-full justify-center overflow-y-auto overflow-x-hidden">
+<div class="flex w-full justify-center overflow-y-auto overflow-x-hidden UIScroll">
     <div class="flex flex-grow flex-col w-full h-full max-w-lg mx-5">
 
 
@@ -54,7 +54,7 @@
         
         <div class="flex flex-col w-full mt-3 mb-2 py-1">
 
-            <label class="font-bold text-xl">Notificaciones</label>
+            <label class="font-bold text-xl dark:text-zinc-100">Notificaciones</label>
 
             @if (Notifications.Response == Responses.IsLoading)
             {

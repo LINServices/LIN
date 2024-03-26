@@ -1,4 +1,5 @@
 ﻿using LIN.Access.Inventory.Controllers;
+using LIN.Components.Layout;
 using LIN.Services.RealTime;
 using LIN.Types.Inventory.Models;
 
@@ -96,4 +97,20 @@ public partial class Entradas : IInflow, IDisposable
     {
         InflowObserver.Remove(this);
     }
+
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        MainLayout.Configure(new()
+        {
+            OnCenterClick = GoNew,
+            Section = 1,
+            DockIcon = 0
+        });
+
+        base.OnAfterRender(firstRender);
+    }
+
+
+
 }

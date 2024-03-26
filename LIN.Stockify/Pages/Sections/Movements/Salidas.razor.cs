@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR.Client;
 using LIN.Services.RealTime;
+using LIN.Components.Layout;
 
 namespace LIN.Pages.Sections.Movements;
 
@@ -106,6 +107,18 @@ public partial class Salidas: IOutflow, IDisposable
     public void Dispose()
     {
         OutflowObserver.Remove(this);
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        MainLayout.Configure(new()
+        {
+            OnCenterClick = GoNew,
+            Section = 1,
+            DockIcon = 0
+        });
+
+        base.OnAfterRender(firstRender);
     }
 
 
