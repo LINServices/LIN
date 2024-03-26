@@ -1,5 +1,6 @@
 ﻿using LIN.Access.Inventory.Controllers;
 using LIN.Access.Inventory.Hubs;
+using LIN.Components.Layout;
 using LIN.Types.Inventory.Models;
 
 namespace LIN.Pages;
@@ -12,18 +13,6 @@ public partial class Inventory
     /// Respuesta.
     /// </summary>
     private static ReadAllResponse<InventoryDataModel>? Response { get; set; } = null;
-
-
-
-
-
-
-
-
-
-
-    private InventoryAccessHub? ActualHub { get; set; }
-
 
 
 
@@ -67,5 +56,35 @@ public partial class Inventory
     }
 
 
+
+    void Go(Types.Inventory.Models.InventoryDataModel? e)
+    {
+        if (e == null)
+            return;
+
+        nav.NavigateTo($"/products/{e.ID}");
+    }
+
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        MainLayout.Configure(new()
+        {
+            OnCenterClick = GoCreate,
+            Section = 1,
+            DockIcon = 0
+        });
+
+        base.OnAfterRender(firstRender);
+    }
+
+
+
+
+
+    void GoCreate()
+    {
+        nav.NavigateTo("/new/inventory");
+    }
 
 }

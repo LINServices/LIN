@@ -1,35 +1,4 @@
-﻿@code{
-
-
-    /// <summary>
-    /// Modelo.
-    /// </summary>
-    [Parameter]
-    public ContactModel? Model { get; set; }
-
-
-    /// <summary>
-    /// Evento al hacer click.
-    /// </summary>
-    [Parameter]
-    public Action<ContactModel?>? OnClick { get; set; }
-
-
-    /// <summary>
-    /// Enviar el evento.
-    /// </summary>
-    private void SendEvent()
-    {
-        OnClick?.Invoke(Model);
-    }
-
-
-    string Img64 => Convert.ToBase64String(Model?.Picture ?? []);
-
-
-}
-
-
+﻿
 <div @onclick="SendEvent" class="flex items-center bg-white shadow-sm rounded-lg p-3 dark:bg-zinc-900 mt-1.5">
 
     @if (Model?.Picture == null || Model.Picture.Length <= 0)

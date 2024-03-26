@@ -1,4 +1,5 @@
 ﻿using LIN.Access.Inventory.Controllers;
+using LIN.Components.Layout;
 using LIN.Types.Inventory.Models;
 
 namespace LIN.Pages;
@@ -102,5 +103,34 @@ public partial class Contactos
 
 
 
+
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+
+        MainLayout.Configure(new()
+        {
+            OnCenterClick = OpenCreate,
+            Section = 2,
+            DockIcon = 0
+        });
+
+        base.OnAfterRender(firstRender);
+    }
+
+
+
+
+    void Go(Types.Contacts.Models.ContactModel e)
+    {
+        LIN.Components.Layout.MainLayout.ContactPop.Model = e;
+        LIN.Components.Layout.MainLayout.ContactPop.Show();
+    }
+
+
+    void OpenCreate()
+    {
+        LIN.Components.Layout.MainLayout.NewContactPopup.Show();
+    }
 
 }

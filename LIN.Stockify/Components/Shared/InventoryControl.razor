@@ -1,34 +1,4 @@
-﻿@code{
-
-
-    /// <summary>
-    /// Modelo de inventario.
-    /// </summary>
-    [Parameter]
-    public InventoryDataModel? Model { get; set; }
-
-
-
-    /// <summary>
-    /// Evento al hacer click.
-    /// </summary>
-    [Parameter]
-    public Action<InventoryDataModel?>? OnClick { get; set; }
-
-
-
-    /// <summary>
-    /// Enviar el evento.
-    /// </summary>
-    private void SendEvent()
-    {
-        OnClick?.Invoke(Model);
-    }
-
-
-}
-
-
+﻿
 <div @onclick="SendEvent" class="flex items-center bg-white shadow-sm rounded-lg p-3 dark:bg-zinc-900 mt-2">
 
     <div class="h-10 w-10 p-2 rounded-lg  ring-1 ring-zinc-300 bg-ring-100 dark:ring-zinc-600 ">
