@@ -18,10 +18,11 @@ public partial class Settings
     /// <summary>
     /// Lista de modelos
     /// </summary>
-    private List<IntegrantDataModel>? Modelos { get; set; } = null;
+    private ReadAllResponse<IntegrantDataModel>? Response { get; set; } = null;
 
 
 
+    bool IsLoading = false;
 
 
 
@@ -42,23 +43,7 @@ public partial class Settings
     {
 
         // Rellena los datos
-        var dataRes = await RetrieveData();
-
-        StateHasChanged();
-        // Comprueba si se rellenaron los datos
-        switch (dataRes)
-        {
-            // Correcto
-            case Responses.Success:
-                break;
-
-            // Sin permisos
-            case Responses.Unauthorized:
-                return;
-
-            default:
-                return;
-        }
+        await RetrieveData();
 
 
     }
@@ -68,19 +53,24 @@ public partial class Settings
     /// <summary>
     /// Obtiene informaci�n desde el servidor
     /// </summary>
-    private async Task<Responses> RetrieveData()
+    private async Task RetrieveData(bool force = false)
     {
 
-        //var response = await Inventories.GetIntegrants(Inventory.Select.ID, Session.Instance.Token, Session.Instance.AccountToken);
+        // Validación.
+        if ((!force && (Response != null)) || IsLoading)
+            return;
 
-        //// An�lisis de respuesta
-        //if (response.Response != Responses.Success)
-        //    return response.Response;
+        IsLoading = true;
+        StateHasChanged();
 
-        //// Rellena los items
-        //Modelos = response.Models;
+        var response = await Inventories.GetIntegrants(int.Parse(Id), Session.Instance.Token, Session.Instance.AccountToken);
 
-        return Responses.Success;
+        IsLoading = false;
+        StateHasChanged();
+
+        // Rellena los items
+        Response = response;
+        StateHasChanged();
 
     }
 
