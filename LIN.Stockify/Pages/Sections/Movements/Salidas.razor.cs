@@ -1,17 +1,9 @@
 ﻿using LIN.Access.Inventory.Controllers;
-using LIN.Access.Inventory.Hubs;
-using LIN.Access.Inventory;
-using LIN.Types.Inventory.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR.Client;
 using LIN.Services.RealTime;
-using LIN.Components.Layout;
+
 
 namespace LIN.Pages.Sections.Movements;
+
 
 public partial class Salidas: IOutflow, IDisposable
 {
