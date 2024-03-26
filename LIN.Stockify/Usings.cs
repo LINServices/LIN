@@ -12,3 +12,4 @@ global using LIN.Types.Inventory.Transient;
 
 global using LIN.Components.Layout;
 global using LIN.Types.Inventory.Models;
+global using LIN.Types.Inventory.Enumerations;

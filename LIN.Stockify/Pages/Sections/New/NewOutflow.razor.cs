@@ -1,14 +1,63 @@
-﻿using LIN.Types.Inventory.Enumerations;
-using LIN.Types.Inventory.Models;
-using SILF.Script;
+﻿namespace LIN.Pages.Sections.New;
 
-namespace LIN.Pages.Sections.New;
 
 public partial class NewOutflow
 {
 
+    /// <summary>
+    /// Id.
+    /// </summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
 
-    Services.Models.InventoryContextModel? Contexto { get; set; }
+
+
+    /// <summary>
+    /// Categoría.
+    /// </summary>
+    private int Category { get; set; }
+
+
+
+    /// <summary>
+    /// Sección actual.
+    /// </summary>
+    int section = 0;
+
+
+
+    /// <summary>
+    /// Fecha.
+    /// </summary>
+    private DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+
+
+
+    /// <summary>
+    /// Productos seleccionados.
+    /// </summary>
+    private List<ProductModel> Selected { get; set; } = [];
+
+
+
+    /// <summary>
+    /// Valores
+    /// </summary>
+    private Dictionary<int, int> Values = [];
+
+
+
+    /// <summary>
+    /// Drawer de productos.
+    /// </summary>
+    private DrawerProducts DrawerProducts { get; set; } = null!;
+
+
+
+    /// <summary>
+    /// Contexto del inventario.
+    /// </summary>
+    private Services.Models.InventoryContextModel? Contexto { get; set; }
 
 
 
@@ -27,17 +76,20 @@ public partial class NewOutflow
 
 
 
+    /// <summary>
+    /// Obtener valor.
+    /// </summary>
     int GetValue(int product)
     {
-        try
-        {
-           return Values[product];
-        }
-        catch { }
-
-        return 0;
+        Values.TryGetValue(product, out var value);
+        return value;
     }
 
+
+
+    /// <summary>
+    /// Crear.
+    /// </summary>
     private async void Create()
     {
 
@@ -69,12 +121,12 @@ public partial class NewOutflow
             Values.TryGetValue(control.Id, out int quantity);
             OutflowDetailsDataModel model = new()
             {
-              Cantidad = quantity,
-              ProductDetail = new()
-              {
-                  Id = control.DetailModel.Id
-              },
-              ProductDetailId = control.DetailModel.Id
+                Cantidad = quantity,
+                ProductDetail = new()
+                {
+                    Id = control.DetailModel?.Id ?? 0
+                },
+                ProductDetailId = control.DetailModel?.Id ?? 0
             };
             details.Add(model);
         }
@@ -92,13 +144,13 @@ public partial class NewOutflow
         entry = new()
         {
             Details = details,
-            Date = new DateTime(date.Year, date.Month, date.Day),
+            Date = new DateTime(Date.Year, Date.Month, Date.Day),
             Type = type,
             Inventory = new()
             {
-                ID = Contexto.Inventory.ID
+                ID = Contexto?.Inventory.ID ?? 0
             },
-            InventoryId = Contexto.Inventory.ID,
+            InventoryId = Contexto?.Inventory.ID ?? 0,
             ProfileID = Session.Instance.Informacion.ID
         };
 
@@ -133,38 +185,16 @@ public partial class NewOutflow
 
     }
 
-    [Parameter]
-    public string Id { get; set; } = string.Empty;
 
 
-
-    string Name { get; set; } = string.Empty;
-
-    string Direction { get; set; } = string.Empty;
-
-    int Category { get; set; }
-
-
-    int section = 0;
-
-    DateOnly date = DateOnly.FromDateTime(DateTime.Now);
-
-
-    List<ProductModel> Selected = [];
-
-    Dictionary<int, int> Values = [];
-
-
-    DrawerProducts DrawerProducts;
-
-
-
+    /// <summary>
+    /// Cambio del valor.
+    /// </summary>
     void ValueChange(int product, int q)
     {
         try
         {
             Values[product] = q;
-
         }
         catch
         {
@@ -172,5 +202,6 @@ public partial class NewOutflow
         }
 
     }
+
 
 }

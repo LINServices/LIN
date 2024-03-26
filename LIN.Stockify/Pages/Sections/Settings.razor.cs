@@ -10,7 +10,7 @@ public partial class Settings
     /// </summary>
 
     [Parameter]
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 
 
 

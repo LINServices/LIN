@@ -106,7 +106,7 @@ public partial class Products : IProduct, IDisposable
     {
         InvokeAsync(() =>
         {
-            Response = Contexto.Products;
+            Response = Contexto?.Products;
             StateHasChanged();
         });
     }

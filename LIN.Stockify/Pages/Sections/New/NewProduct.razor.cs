@@ -1,12 +1,53 @@
-﻿using LIN.Types.Inventory.Enumerations;
+﻿namespace LIN.Pages.Sections.New;
 
-namespace LIN.Pages.Sections.New;
 
 public partial class NewProduct
 {
 
 
-    Services.Models.InventoryContextModel? Contexto { get; set; }
+    /// <summary>
+    /// Id.
+    /// </summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+
+
+    /// <summary>
+    /// Modelo del producto.
+    /// </summary>
+    public ProductModel Product { get; set; } = new()
+    {
+        Details = [new()]
+    };
+
+
+
+    /// <summary>
+    /// Imagen.
+    /// </summary>
+    public byte[] Photo { get; set; } = [];
+
+
+
+    /// <summary>
+    /// Categoría.
+    /// </summary>
+    public int Category { get; set; }
+
+
+
+    /// <summary>
+    /// Sección actual.
+    /// </summary>
+    private int Section { get; set; }
+
+
+
+    /// <summary>
+    /// Contexto del inventario.
+    /// </summary>
+    private Services.Models.InventoryContextModel? Contexto { get; set; }
 
 
 
@@ -25,33 +66,19 @@ public partial class NewProduct
 
 
 
-    [Parameter]
-    public string Id { get; set; } = string.Empty;
-
-
-
-    int section = 0;
-
-    public byte[] Photo = [];
-
-    public ProductModel Product { get; set; } = new()
-    {
-        Details = [new()]
-    };
-
-    public int Category { get; set; }
-
-
-    async void Create()
+    /// <summary>
+    /// Crear.
+    /// </summary>
+    private async void Create()
     {
         try
         {
 
-            section = 3;
+            Section = 3;
             StateHasChanged();
 
             //Product.Provider = 1;
-            Product.InventoryId = Contexto.Inventory.ID;
+            Product.InventoryId = Contexto?.Inventory.ID ?? 0;
             Product.Category = (ProductCategories)Category;
             Product.Statement = ProductBaseStatements.Normal;
             Product.Image = Photo;
@@ -62,13 +89,13 @@ public partial class NewProduct
 
             if (response.Response != Responses.Success)
             {
-                section = 2;
+                Section = 2;
                 StateHasChanged();
                 return;
             }
 
 
-            section = 1;
+            Section = 1;
             StateHasChanged();
 
 
@@ -76,25 +103,20 @@ public partial class NewProduct
             _ = Services.Realtime.InventoryAccess.SendCommand(new()
             {
                 Command = $"addProduct({response.LastID})",
-                Inventory = Contexto.Inventory.ID
+                Inventory = Contexto?.Inventory.ID ?? 0
             });
 
 
-            await Task.Delay(4000);
-            section = 0;
+            await Task.Delay(3000);
+            Section = 0;
             StateHasChanged();
 
-
-
-
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            var s = "";
         }
 
     }
-
 
 
 

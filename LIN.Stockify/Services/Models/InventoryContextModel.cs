@@ -1,6 +1,4 @@
-﻿using LIN.Types.Inventory.Models;
-
-namespace LIN.Services.Models;
+﻿namespace LIN.Services.Models;
 
 
 public class InventoryContextModel

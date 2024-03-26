@@ -1,12 +1,64 @@
-﻿using LIN.Types.Inventory.Enumerations;
-using LIN.Types.Inventory.Models;
+﻿namespace LIN.Pages.Sections.New;
 
-namespace LIN.Pages.Sections.New;
 
 public partial class NewInflow
 {
 
-    Services.Models.InventoryContextModel? Contexto { get; set; }
+
+    /// <summary>
+    /// Id.
+    /// </summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+
+
+    /// <summary>
+    /// Categoría.
+    /// </summary>
+    private int Category { get; set; }
+
+
+
+    /// <summary>
+    /// Sección.
+    /// </summary>
+    private int section = 0;
+
+
+
+    /// <summary>
+    /// Fecha.
+    /// </summary>
+    private DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+
+
+
+    /// <summary>
+    /// Productos seleccionados.
+    /// </summary>
+    private List<ProductModel> Selected { get; set; } = [];
+
+
+
+    /// <summary>
+    /// Valores.
+    /// </summary>
+    private Dictionary<int, int> Values { get; set; } = [];
+
+
+
+    /// <summary>
+    /// Drawer de productos.
+    /// </summary>
+    DrawerProducts DrawerProducts = null!;
+
+
+
+    /// <summary>
+    /// Contexto del inventario.
+    /// </summary>
+    private Services.Models.InventoryContextModel? Contexto { get; set; }
 
 
 
@@ -26,18 +78,20 @@ public partial class NewInflow
 
 
 
-
-    int GetValue(int product)
+    /// <summary>
+    /// Obtener el valor.
+    /// </summary>
+    private int GetValue(int product)
     {
-        try
-        {
-           return Values[product];
-        }
-        catch { }
-
-        return 0;
+        Values.TryGetValue(product, out var value);
+        return value;
     }
 
+
+
+    /// <summary>
+    /// Crear.
+    /// </summary>
     private async void Create()
     {
 
@@ -68,13 +122,13 @@ public partial class NewInflow
             Values.TryGetValue(control.Id, out int quantity);
             InflowDetailsDataModel model = new()
             {
-             
-              Cantidad = quantity,
-              ProductDetail = new()
-              {
-                  Id = control.DetailModel.Id
-              },
-              ProductDetailId = control.DetailModel.Id
+
+                Cantidad = quantity,
+                ProductDetail = new()
+                {
+                    Id = control?.DetailModel?.Id ?? 0
+                },
+                ProductDetailId = control?.DetailModel?.Id ?? 0
             };
             details.Add(model);
         }
@@ -92,13 +146,13 @@ public partial class NewInflow
         entry = new()
         {
             Details = details,
-            Date = new DateTime(date.Year, date.Month, date.Day),
+            Date = new DateTime(Date.Year, Date.Month, Date.Day),
             Type = type,
             Inventory = new()
             {
-                ID = Contexto.Inventory.ID
+                ID = Contexto?.Inventory.ID ?? 0
             },
-            InventoryId = Contexto.Inventory.ID,
+            InventoryId = Contexto?.Inventory.ID ?? 0,
             ProfileID = Session.Instance.Informacion.ID
         };
 
@@ -124,7 +178,7 @@ public partial class NewInflow
         _ = Services.Realtime.InventoryAccess.SendCommand(new()
         {
             Command = $"addInflow({response.LastID}, true)",
-            Inventory = Contexto.Inventory.ID
+            Inventory = Contexto?.Inventory.ID ?? 0
         });
 
         await Task.Delay(2000);
@@ -135,41 +189,16 @@ public partial class NewInflow
 
 
 
-
-    [Parameter]
-    public string Id { get; set; } = string.Empty;
-
-
-
-    string Name { get; set; } = string.Empty;
-
-    string Direction { get; set; } = string.Empty;
-
-    int Category { get; set; }
-
-
-    int section = 0;
-
-    DateOnly date = DateOnly.FromDateTime(DateTime.Now);
-
-
-    List<ProductModel> Selected = [];
-
-    Dictionary<int, int> Values = [];
-
-
-    DrawerProducts DrawerProducts = null!;
-
-
-
+    /// <summary>
+    /// Obtener el valor.
+    /// </summary>
     void ValueChange(int product, int q)
     {
         try
         {
             Values[product] = q;
-
         }
-        catch
+        catch (Exception)
         {
             Values.Add(product, q);
         }

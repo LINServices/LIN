@@ -1,24 +1,57 @@
-﻿using LIN.Access.Inventory;
-using LIN.Access.Inventory.Controllers;
-using LIN.Access.Inventory.Hubs;
-using LIN.Types.Inventory.Enumerations;
-using LIN.Types.Inventory.Models;
-using System.Xml.Linq;
+﻿using LIN.Access.Inventory.Controllers;
 
 namespace LIN.Pages.Sections.New;
+
 
 public partial class NewInventory
 {
 
+    /// <summary>
+    /// Nombre.
+    /// </summary>
+    private string Name { get; set; } = string.Empty;
 
 
+
+    /// <summary>
+    /// Dirección.
+    /// </summary>
+    private string Direction { get; set; } = string.Empty;
+
+
+
+    /// <summary>
+    /// Sección.
+    /// </summary>
+    private int section = 0;
+
+
+
+    /// <summary>
+    /// Drawer de integrantes.
+    /// </summary>
+    private DrawerPeople Drawer = null!;
+
+
+
+    /// <summary>
+    /// Lista de participantes
+    /// </summary>
+    private readonly List<Types.Cloud.Identity.Abstracts.SessionModel<LIN.Types.Inventory.Models.ProfileModel>> Participantes = new();
+
+
+
+    /// <summary>
+    /// Crear inventario.
+    /// </summary>
     async void Create()
     {
 
+        // Sección.
         section = 3;
         StateHasChanged();
 
-        // Creacion del modelo
+        // Creación del modelo
         var modelo = new InventoryDataModel()
         {
             Nombre = Name,
@@ -55,38 +88,22 @@ public partial class NewInventory
         // Respuesta del controlador
         var response = await Inventories.Create(modelo, Session.Instance.Token);
 
-
+        // Correcto.
         if (response.Response == Responses.Success)
         {
             section = 1;
             StateHasChanged();
-            await Task.Delay(4000);
+            await Task.Delay(3000);
             nav.NavigateTo("/inventory");
             return;
         }
 
+        // Sección.
         section = 0;
-
         StateHasChanged();
-
 
     }
 
-
-
-    string Name { get; set; } = string.Empty;
-    string Direction { get; set; } = string.Empty;
-
-
-    int section = 0;
-
-
-    LIN.Components.Layout.DrawerPeople Drawer = null!;
-
-    /// <summary>
-    /// Lista de participantes
-    /// </summary>
-    private readonly List<LIN.Types.Cloud.Identity.Abstracts.SessionModel<LIN.Types.Inventory.Models.ProfileModel>> Participantes = new();
 
 
 }
