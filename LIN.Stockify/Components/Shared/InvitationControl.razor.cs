@@ -1,4 +1,4 @@
-﻿using LIN.Types.Inventory.Enumerations;
+﻿using LIN.Services;
 
 namespace LIN.Components.Shared;
 
@@ -36,6 +36,7 @@ public partial class InvitationControl
         OnRemove();
 
         section = 1;
+        UpRealTime();
         StateHasChanged();
 
     }
@@ -57,10 +58,19 @@ public partial class InvitationControl
         OnRemove();
 
         section = 1;
+        UpRealTime();
         StateHasChanged();
 
     }
 
 
+    async void UpRealTime()
+    {
+        await Realtime.InventoryAccessHub!.SendCommand(new CommandModel()
+        {
+            Command = $"newStateInvitation({Model.ID})",
+            Inventory = 0
+        });
+    }
 
 }

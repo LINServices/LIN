@@ -1,6 +1,5 @@
-﻿using LIN.Types.Inventory.Models;
+﻿namespace LIN.Components.Shared;
 
-namespace LIN.Components.Shared;
 
 public partial class DeviceControl
 {

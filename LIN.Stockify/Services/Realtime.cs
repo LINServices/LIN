@@ -1,6 +1,5 @@
 ﻿using LIN.Access.Inventory.Hubs;
 using LIN.Pages;
-using LIN.Services.Observers;
 using LIN.Services.Runtime;
 using SILF.Script.Interfaces;
 
@@ -157,10 +156,10 @@ internal class Realtime
         // Propiedades
         {
             Name = "addProduct",
-            Parameters = new()
-            {
+            Parameters =
+            [
                 new("id", new("number"))
-            }
+            ]
         };
 
 
@@ -272,16 +271,75 @@ internal class Realtime
         // Propiedades
         {
             Name = "addOutflow",
-            Parameters = new()
-            {
+            Parameters =
+            [
                 new("id", new("number")),
                 new("decrement", new("bool"))
-            }
+            ]
+        };
+
+
+        // Agregar salida.
+        SILFFunction newInvitation = new(async (values) =>
+        {
+
+            // Obtener el parámetro.
+            var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
+
+            if (value is not decimal)
+                return;
+
+            var id = (int)((value as decimal?) ?? 0);
+
+
+            // Modelo.
+            var notification = await Access.Inventory.Controllers.Inventories.ReadNotification(id, Session.Instance.Token);
+
+
+            if (notification == null || notification.Response != Responses.Success)
+                return;
+
+
+            NotificationObserver.Append(notification.Model);
+
+        })
+        // Propiedades
+        {
+            Name = "newInvitation",
+            Parameters =
+            [
+                new("id", new("number"))
+            ]
+        };
+
+
+        // Agregar salida.
+        SILFFunction newStateInvitation = new((values) =>
+        {
+
+            // Obtener el parámetro.
+            var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
+
+            if (value is not decimal)
+                return;
+
+            var id = (int)((value as decimal?) ?? 0);
+
+            NotificationObserver.Delete(id);
+
+        })
+        // Propiedades
+        {
+            Name = "newStateInvitation",
+            Parameters =
+            [
+                new("id", new("number"))
+            ]
         };
 
 
         // Guardar métodos.
-        Actions = [updateContacts, viewContact, addProduct, addInflow, addOutflow];
+        Actions = [updateContacts, viewContact, addProduct, addInflow, addOutflow, newInvitation, newStateInvitation];
 
     }
 

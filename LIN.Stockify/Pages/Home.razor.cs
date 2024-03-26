@@ -1,7 +1,7 @@
 ﻿namespace LIN.Pages;
 
 
-public partial class Home
+public partial class Home : IDisposable, INotificationObserver
 {
 
 
@@ -77,6 +77,69 @@ public partial class Home
         Notifications = items;
         return true;
 
+    }
+
+
+    /// <summary>
+    /// Renderizar.
+    /// </summary>
+    public void Render()
+    {
+        this.InvokeAsync(StateHasChanged);
+    }
+
+
+
+    /// <summary>
+    /// Evento al establecer los parámetros.
+    /// </summary>
+    protected override void OnParametersSet()
+    {
+        NotificationObserver.Add(this);
+        base.OnParametersSet();
+    }
+
+
+
+    /// <summary>
+    /// Agregar modelo de notificación.
+    /// </summary>
+    /// <param name="modelo">Modelo.</param>
+    public void Add(Notificacion modelo)
+    {
+        InvokeAsync(() =>
+        {
+            var exist = Notifications.Models.Any(t => t.ID == modelo.ID);
+            if (!exist)
+                Notifications.Models.Add(modelo);
+
+            StateHasChanged();
+        });
+    }
+
+
+
+    /// <summary>
+    /// Eliminar un modelo de notificación.
+    /// </summary>
+    /// <param name="id">Id de la notificación.</param>
+    public void Remove(int id)
+    {
+        InvokeAsync(() =>
+        {
+            Notifications.Models.RemoveAll(t => t.ID == id);
+            StateHasChanged();
+        });
+    }
+
+
+
+    /// <summary>
+    /// Evento dispose.
+    /// </summary>
+    public void Dispose()
+    {
+        NotificationObserver.Remove(this);
     }
 
 
