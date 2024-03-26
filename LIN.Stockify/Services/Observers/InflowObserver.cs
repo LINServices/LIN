@@ -1,16 +1,14 @@
-﻿using LIN.Access.Inventory.Controllers;
-
-namespace LIN.Services.RealTime;
+﻿namespace LIN.Services.Observers;
 
 
-public class OutflowObserver
+public class InflowObserver
 {
 
 
     /// <summary>
     /// Valores.
     /// </summary>
-    private readonly static Dictionary<int, List<IOutflow>> Values = [];
+    private readonly static Dictionary<int, List<IInflow>> Values = [];
 
 
 
@@ -19,11 +17,11 @@ public class OutflowObserver
     /// </summary>
     /// <param name="id">Id del inventario.</param>
     /// <param name="product">Observable.</param>
-    public static void Add(int id, IOutflow product)
+    public static void Add(int id, IInflow product)
     {
 
         // Si existe la lista.
-        if (!Values.TryGetValue(id, out List<IOutflow>? products))
+        if (!Values.TryGetValue(id, out List<IInflow>? products))
         {
             // Nueva lista.
             products = [];
@@ -47,7 +45,7 @@ public class OutflowObserver
     {
 
         // Recorrer los valores.
-        if (Values.TryGetValue(id, out List<IOutflow>? products))
+        if (Values.TryGetValue(id, out List<IInflow>? products))
             foreach (var product in products)
                 product.Render();
 
@@ -59,7 +57,7 @@ public class OutflowObserver
     /// Remover observable.
     /// </summary>
     /// <param name="product">Observable.</param>
-    public static void Remove(IOutflow product)
+    public static void Remove(IInflow product)
     {
         // Obtener elemento.
         var items = Values.FirstOrDefault(t => t.Value.Contains(product));
@@ -77,7 +75,7 @@ public class OutflowObserver
 /// <summary>
 /// Interfaz observable de entradas.
 /// </summary>
-public interface IOutflow
+public interface IInflow
 {
 
     /// <summary>

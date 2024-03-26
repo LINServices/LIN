@@ -1,6 +1,4 @@
-﻿using LIN.Services.RealTime;
-
-namespace LIN.Pages.Sections;
+﻿namespace LIN.Pages.Sections;
 
 public partial class Products : IProduct, IDisposable
 {
@@ -61,7 +59,7 @@ public partial class Products : IProduct, IDisposable
 
         ProductObserver.Add(Contexto!.Inventory.ID, this);
 
-        _ = Services.Realtime.InventoryAccess.JoinInventory(int.Parse(Id));
+        _ = Services.Realtime.InventoryAccessHub?.JoinInventory(int.Parse(Id));
 
         // Base.
         base.OnParametersSet();

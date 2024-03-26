@@ -1,19 +1,31 @@
 ﻿using LIN.Access.Inventory.Controllers;
-using LIN.Services.RealTime;
 
 
 namespace LIN.Pages.Sections.Movements;
 
 
-public partial class Salidas: IOutflow, IDisposable
+public partial class Salidas : IOutflow, IDisposable
 {
 
 
+    /// <summary>
+    /// Id del inventario.
+    /// </summary>
     [Parameter]
     public string Id { get; set; } = string.Empty;
 
 
 
+    /// <summary>
+    /// Esta cargando.
+    /// </summary>
+    private bool IsLoading = false;
+
+
+
+    /// <summary>
+    /// Contexto del inventario.
+    /// </summary>
     Services.Models.InventoryContextModel? Contexto { get; set; }
 
 
@@ -25,12 +37,13 @@ public partial class Salidas: IOutflow, IDisposable
 
 
 
-
-
+    /// <summary>
+    /// Salida seleccionada.
+    /// </summary>
     public static OutflowDataModel? Selected { get; set; } = null;
 
 
-  
+
 
 
     /// <summary>
@@ -42,7 +55,7 @@ public partial class Salidas: IOutflow, IDisposable
         // Obtener el contexto.
         Contexto = Services.InventoryContext.Get(int.Parse(Id));
 
-        OutflowObserver.Add(Contexto.Inventory.ID, this);
+        OutflowObserver.Add(Contexto?.Inventory.ID ?? 0, this);
 
         // Evaluar el contexto.
         if (Contexto != null)
@@ -60,8 +73,10 @@ public partial class Salidas: IOutflow, IDisposable
 
 
 
-    bool IsLoading = false;
-
+    /// <summary>
+    /// Obtener la data.
+    /// </summary>
+    /// <param name="force">Es forzado.</param>
     private async void GetData(bool force = false)
     {
 
@@ -88,19 +103,29 @@ public partial class Salidas: IOutflow, IDisposable
     }
 
 
+    /// <summary>
+    /// Renderizar.
+    /// </summary>
     public void Render()
     {
-        InvokeAsync(() =>
-        {
-            StateHasChanged();
-        });
+        InvokeAsync(StateHasChanged);
     }
 
+
+
+    /// <summary>
+    /// Evento Dispose.
+    /// </summary>
     public void Dispose()
     {
         OutflowObserver.Remove(this);
     }
 
+
+
+    /// <summary>
+    /// Evento después de renderizar.
+    /// </summary>
     protected override void OnAfterRender(bool firstRender)
     {
         MainLayout.Configure(new()
@@ -115,6 +140,10 @@ public partial class Salidas: IOutflow, IDisposable
 
 
 
+    /// <summary>
+    /// Abrir salida.
+    /// </summary>
+    /// <param name="e"></param>
     void Go(Types.Inventory.Models.OutflowDataModel e)
     {
         Selected = e;
@@ -122,14 +151,14 @@ public partial class Salidas: IOutflow, IDisposable
     }
 
 
+
+    /// <summary>
+    /// Abrir new.
+    /// </summary>
     void GoNew()
     {
         nav.NavigateTo($"/new/outflow/{Contexto?.Inventory.ID}");
     }
-
-
-
-
 
 
 }

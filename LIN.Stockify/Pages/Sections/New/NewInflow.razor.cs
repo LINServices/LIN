@@ -175,7 +175,7 @@ public partial class NewInflow
         section = 1;
         StateHasChanged();
 
-        _ = Services.Realtime.InventoryAccess.SendCommand(new()
+        _ = Services.Realtime.InventoryAccessHub.SendCommand(new()
         {
             Command = $"addInflow({response.LastID}, true)",
             Inventory = Contexto?.Inventory.ID ?? 0

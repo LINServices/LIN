@@ -74,7 +74,7 @@ public partial class ContactPopup
         // Nuevo onInvoque.
         Layout.MainLayout.DevicesSelector.OnInvoke = (e) =>
         {
-            Services.Realtime.InventoryAccess.SendToDevice(e.Id, new()
+            Services.Realtime.InventoryAccessHub.SendToDevice(e.Id, new()
             {
                 Command = $"viewContact({_data?.Id})"
             });

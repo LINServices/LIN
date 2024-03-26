@@ -100,7 +100,7 @@ public partial class NewProduct
 
 
 
-            _ = Services.Realtime.InventoryAccess.SendCommand(new()
+            _ = Services.Realtime.InventoryAccessHub.SendCommand(new()
             {
                 Command = $"addProduct({response.LastID})",
                 Inventory = Contexto?.Inventory.ID ?? 0

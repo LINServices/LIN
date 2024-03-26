@@ -1,14 +1,14 @@
-﻿namespace LIN.Services.RealTime;
+﻿namespace LIN.Services.Observers;
 
 
-public class InflowObserver
+public class ProductObserver
 {
 
 
     /// <summary>
     /// Valores.
     /// </summary>
-    private readonly static Dictionary<int, List<IInflow>> Values = [];
+    private readonly static Dictionary<int, List<IProduct>> Values = [];
 
 
 
@@ -17,11 +17,11 @@ public class InflowObserver
     /// </summary>
     /// <param name="id">Id del inventario.</param>
     /// <param name="product">Observable.</param>
-    public static void Add(int id, IInflow product)
+    public static void Add(int id, IProduct product)
     {
 
         // Si existe la lista.
-        if (!Values.TryGetValue(id, out List<IInflow>? products))
+        if (!Values.TryGetValue(id, out List<IProduct>? products))
         {
             // Nueva lista.
             products = [];
@@ -45,7 +45,7 @@ public class InflowObserver
     {
 
         // Recorrer los valores.
-        if (Values.TryGetValue(id, out List<IInflow>? products))
+        if (Values.TryGetValue(id, out List<IProduct>? products))
             foreach (var product in products)
                 product.Render();
 
@@ -57,7 +57,7 @@ public class InflowObserver
     /// Remover observable.
     /// </summary>
     /// <param name="product">Observable.</param>
-    public static void Remove(IInflow product)
+    public static void Remove(IProduct product)
     {
         // Obtener elemento.
         var items = Values.FirstOrDefault(t => t.Value.Contains(product));
@@ -73,9 +73,9 @@ public class InflowObserver
 
 
 /// <summary>
-/// Interfaz observable de entradas.
+/// Interfaz observable de productos.
 /// </summary>
-public interface IInflow
+public interface IProduct
 {
 
     /// <summary>

@@ -1,7 +1,4 @@
 ﻿using LIN.Access.Inventory.Controllers;
-using LIN.Components.Layout;
-using LIN.Services.RealTime;
-using LIN.Types.Inventory.Models;
 
 namespace LIN.Pages.Sections.Movements;
 
@@ -9,28 +6,39 @@ public partial class Entradas : IInflow, IDisposable
 {
 
 
+    /// <summary>
+    /// Id del inventario.
+    /// </summary>
     [Parameter]
     public string Id { get; set; } = string.Empty;
 
 
 
-    Services.Models.InventoryContextModel? Contexto { get; set; }
+    /// <summary>
+    /// Esta cargando.
+    /// </summary>
+    private bool IsLoading = false;
+
+
+
+    /// <summary>
+    /// Contexto del inventario.
+    /// </summary>
+    private Services.Models.InventoryContextModel? Contexto { get; set; }
 
 
 
     /// <summary>
     /// Respuesta.
     /// </summary>
-    private ReadAllResponse<InflowDataModel>? Response => Contexto.Inflows;
+    private ReadAllResponse<InflowDataModel>? Response => Contexto?.Inflows;
 
 
 
-
+    /// <summary>
+    /// Entrada seleccionada.
+    /// </summary>
     public static InflowDataModel? Selected { get; set; } = null;
-
-
-
-
 
 
 
@@ -43,7 +51,7 @@ public partial class Entradas : IInflow, IDisposable
         // Obtener el contexto.
         Contexto = Services.InventoryContext.Get(int.Parse(Id));
 
-        InflowObserver.Add(Contexto.Inventory.ID, this);
+        InflowObserver.Add(Contexto?.Inventory.ID ?? 0, this);
 
         // Evaluar la respuesta.
         if (Response == null)
@@ -54,12 +62,11 @@ public partial class Entradas : IInflow, IDisposable
     }
 
 
-
-
-
-
-    bool IsLoading = false;
-
+    
+    /// <summary>
+    /// Obtener la data.
+    /// </summary>
+    /// <param name="force">Forzado.</param>
     private async void GetData(bool force = false)
     {
 
@@ -76,6 +83,10 @@ public partial class Entradas : IInflow, IDisposable
 
         // Nuevos estados.
         IsLoading = false;
+
+        if (Contexto == null)
+            return;
+
         Contexto.Inflows = result;
 
         if (Contexto != null)
@@ -85,20 +96,30 @@ public partial class Entradas : IInflow, IDisposable
     }
 
 
+
+    /// <summary>
+    /// Renderizar.
+    /// </summary>
     public void Render()
     {
-        InvokeAsync(() =>
-        {
-            StateHasChanged();
-        });
+        InvokeAsync(StateHasChanged);
     }
 
+
+
+    /// <summary>
+    /// Evento dispose.
+    /// </summary>
     public void Dispose()
     {
         InflowObserver.Remove(this);
     }
 
 
+
+    /// <summary>
+    /// Evento: Al renderizar.
+    /// </summary>
     protected override void OnAfterRender(bool firstRender)
     {
         MainLayout.Configure(new()
@@ -113,18 +134,25 @@ public partial class Entradas : IInflow, IDisposable
 
 
 
+    /// <summary>
+    /// Ir a una entrada.
+    /// </summary>
+    /// <param name="e">Modelo de la entrada.</param>
     void Go(Types.Inventory.Models.InflowDataModel e)
     {
         Selected = e;
         nav.NavigateTo($"/inflow/{e.ID}");
     }
 
+
+
+    /// <summary>
+    /// Abrir new.
+    /// </summary>
     void GoNew()
     {
         nav.NavigateTo($"/new/inflow/{Contexto?.Inventory.ID}");
     }
-
-
 
 
 

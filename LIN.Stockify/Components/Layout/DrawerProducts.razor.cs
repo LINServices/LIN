@@ -1,7 +1,4 @@
-﻿using LIN.Services.RealTime;
-using LIN.Types.Inventory.Models;
-
-namespace LIN.Components.Layout;
+﻿namespace LIN.Components.Layout;
 
 
 public partial class DrawerProducts : IProduct, IDisposable
@@ -51,7 +48,7 @@ public partial class DrawerProducts : IProduct, IDisposable
     /// Evento al mostrar.
     /// </summary>
     [Parameter]
-    public Services.Models.InventoryContextModel Contexto { get; set; }
+    public Services.Models.InventoryContextModel Contexto { get; set; } = null!;
 
 
 
@@ -70,11 +67,11 @@ public partial class DrawerProducts : IProduct, IDisposable
     /// Buscar.
     /// </summary>
     /// <param name="e">evento.</param>
-    public async void Search(ChangeEventArgs e)
+    public void Search(ChangeEventArgs e)
     {
 
         // Si es null o vacío.
-        if (e.Value?.ToString()?.Trim() == "")
+        if (string.IsNullOrWhiteSpace(e.Value?.ToString()))
         {
             Result = Contexto.Products?.Models ?? [];
             StateHasChanged();
@@ -83,7 +80,7 @@ public partial class DrawerProducts : IProduct, IDisposable
 
 
         // Encuentra el usuario
-        var products = Contexto.Products?.Models.Where(t => t.Name.Contains(e.Value.ToString())).ToList();
+        var products = Contexto.Products?.Models.Where(t => t.Name.Contains(e.Value!.ToString()!)).ToList();
 
         Result = products ?? [];
         StateHasChanged();
@@ -170,10 +167,10 @@ public partial class DrawerProducts : IProduct, IDisposable
             Result = Contexto.Products?.Models ?? [];
 
             // Eliminar de los seleccionados.
-            var es = Contexto.Products.Models.IntersectBy(Selected.Select(t => t.Id) ?? [], (T) => T.Id).ToList();
+            var es = Contexto.Products?.Models.IntersectBy(Selected.Select(t => t.Id) ?? [], (T) => T.Id).ToList();
 
             Selected.Clear();
-            Selected.AddRange(es);
+            Selected.AddRange(es ?? []);
 
             StateHasChanged();
         });

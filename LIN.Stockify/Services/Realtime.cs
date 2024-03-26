@@ -1,88 +1,93 @@
 ﻿using LIN.Access.Inventory.Hubs;
 using LIN.Pages;
-using LIN.Services.RealTime;
-using SILF.Script;
-using SILF.Script.Elements;
-using SILF.Script.Elements.Functions;
-using SILF.Script.Enums;
+using LIN.Services.Observers;
+using LIN.Services.Runtime;
 using SILF.Script.Interfaces;
-using SILF.Script.Runtime;
 
 namespace LIN.Services;
 
 
-public class Realtime
+internal class Realtime
 {
 
 
-    public static string DeviceName { get; set; }
+    /// <summary>
+    /// Id del dispositivo.
+    /// </summary>
+    public static string DeviceName { get; set; } = string.Empty;
 
-
-
-    public class SILFFunction : IFunction
-    {
-        public Tipo? Type { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public List<Parameter> Parameters { get; set; } = new();
-        public Context Context { get ; set; }
-
-        Action<List<SILF.Script.Elements.ParameterValue>> Action;
-
-        public SILFFunction(Action<List<SILF.Script.Elements.ParameterValue>> action)
-        {
-            this.Action = action;
-        }
-
-        public FuncContext Run(Instance instance, List<SILF.Script.Elements.ParameterValue> values, ObjectContext @object)
-        {
-            Action.Invoke(values);
-            return new();
-        }
-
-    }
 
 
     /// <summary>
     /// Funciones
     /// </summary>
-    public static List<IFunction> Actions { get; set; } = new();
-
-
+    public static List<IFunction> Actions { get; set; } = [];
 
 
 
     /// <summary>
-    /// Construye las funciones
+    /// Hub de tiempo real.
+    /// </summary>
+    public static InventoryAccessHub? InventoryAccessHub { get; set; } = null;
+
+
+
+    /// <summary>
+    /// Iniciar el servicio.
+    /// </summary>
+    public static void Start()
+    {
+
+        // Validar si ya existe el hub.
+        if (InventoryAccessHub != null)
+            return;
+
+        // Generar nuevo hub.
+        InventoryAccessHub = new(Session.Instance.Token, 0, new()
+        {
+            Name = DeviceName,
+            Platform = MauiProgram.GetPlatform()
+        });
+
+        // Evento.
+        InventoryAccessHub.On += OnReceiveCommand;
+
+    }
+
+
+
+    /// <summary>
+    /// Construye las funciones.
     /// </summary>
     public static void Build()
     {
 
-        // Ve
-        Actions.Add(new SILFFunction((values) =>
+
+        // Función de actualizar contactos.
+        SILFFunction updateContacts = new((values) =>
         {
             Contactos.ToUpdate();
         })
         // Propiedades
         {
             Name = "updateCt",
-            Parameters = new()
-            {
-            }
-        });
+            Parameters = []
+        };
 
 
-        // Ver contacto.
-        Actions.Add(new SILFFunction(async (values) =>
+        // Visualizar un contacto.
+        SILFFunction viewContact = new(async (values) =>
         {
 
             // Obtener el parámetro.
             var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
 
+            // Validar el tipo.
             if (value is not decimal)
                 return;
 
+            // Id.
             var id = (int)((value as decimal?) ?? 0);
-
 
             // Obtener el contacto.
             ContactModel? contact = Contactos.Response?.Models.FirstOrDefault(t => t.Id == id);
@@ -102,21 +107,21 @@ public class Realtime
             }
 
             // Abrir el pop.
-            LIN.Components.Layout.MainLayout.ContactPop.Show(contact);
+            MainLayout.ContactPop.Show(contact);
 
         })
         // Propiedades
         {
             Name = "viewContact",
-            Parameters = new()
-            {
+            Parameters =
+            [
                 new("id", new("number"))
-            }
-        });
+            ]
+        };
 
 
-
-        Actions.Add(new SILFFunction(async (values) =>
+        // Agregar producto.
+        SILFFunction addProduct = new(async (values) =>
         {
 
             // Obtener el parámetro.
@@ -156,13 +161,11 @@ public class Realtime
             {
                 new("id", new("number"))
             }
-        });
+        };
 
 
-
-
-
-        Actions.Add(new SILFFunction(async (values) =>
+        // Agregar entrada.
+        SILFFunction addInflow = new(async (values) =>
         {
 
             // Obtener el parámetro.
@@ -173,7 +176,7 @@ public class Realtime
 
             var id = (int)((value as decimal?) ?? 0);
 
-           
+
             // Producto.
             var inflow = await LIN.Access.Inventory.Controllers.Inflows.Read(id, Session.Instance.Token, false);
 
@@ -216,13 +219,13 @@ public class Realtime
             Parameters =
             [
                 new("id", new("number")),
-                new("aument", new("bool"))
+                new("increase", new("bool"))
             ]
-        });
+        };
 
 
-
-        Actions.Add(new SILFFunction(async (values) =>
+        // Agregar salida.
+        SILFFunction addOutflow = new(async (values) =>
         {
 
             // Obtener el parámetro.
@@ -274,43 +277,33 @@ public class Realtime
                 new("id", new("number")),
                 new("decrement", new("bool"))
             }
-        });
+        };
 
 
-    }
-
-
-
-    public static InventoryAccessHub InventoryAccess { get; set; }
-
-
-    public static void Start()
-    {
-        if (InventoryAccess != null)
-            return;
-
-        InventoryAccess = new(LIN.Access.Inventory.Session.Instance.Token, 0, new()
-        {
-            Name = DeviceName,
-            Platform = MauiProgram.GetPlatform()
-        });
-
-        InventoryAccess.On += InventoryAccess_On;
+        // Guardar métodos.
+        Actions = [updateContacts, viewContact, addProduct, addInflow, addOutflow];
 
     }
 
-    private static void InventoryAccess_On(object? sender, Types.Inventory.Transient.CommandModel e)
+
+
+    /// <summary>
+    /// Evento al recibir un comando.
+    /// </summary>
+    /// <param name="e">Comando</param>
+    private static void OnReceiveCommand(object? sender, CommandModel e)
     {
 
+        // Generar la app.
         var app = new SILF.Script.App(e.Command);
 
+        // Agregar funciones del framework de Inventory.
         app.AddDefaultFunctions(Actions);
 
+        // Ejecutar app.
         app.Run();
+
     }
-
-
-
 
 
 }
