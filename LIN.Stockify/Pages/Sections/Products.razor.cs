@@ -57,14 +57,13 @@ public partial class Products : IProduct, IDisposable
         if (Response == null)
             GetData();
 
-        ProductObserver.Add(Contexto!.Inventory.ID, this);
+        ProductObserver.Add(Contexto?.Inventory.ID ?? 0, this);
 
         _ = Services.Realtime.InventoryAccessHub?.JoinInventory(int.Parse(Id));
 
         // Base.
         base.OnParametersSet();
     }
-
 
 
 

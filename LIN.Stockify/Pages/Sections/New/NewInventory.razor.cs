@@ -1,4 +1,5 @@
 ﻿using LIN.Access.Inventory.Controllers;
+using LIN.Services;
 
 namespace LIN.Pages.Sections.New;
 
@@ -44,7 +45,7 @@ public partial class NewInventory
     /// <summary>
     /// Crear inventario.
     /// </summary>
-    async void Create()
+    private async void Create()
     {
 
         // Sección.
@@ -60,7 +61,8 @@ public partial class NewInventory
         };
 
 
-        List<int> notificationList = new();
+        List<int> notificationList = [];
+
         // Selected
         {
 
@@ -81,9 +83,7 @@ public partial class NewInventory
                     Rol = InventoryRoles.Member
                 });
             }
-
         }
-
 
         // Respuesta del controlador
         var response = await Inventories.Create(modelo, Session.Instance.Token);
@@ -91,6 +91,7 @@ public partial class NewInventory
         // Correcto.
         if (response.Response == Responses.Success)
         {
+            _ = Notification(response.LastID);
             section = 1;
             StateHasChanged();
             await Task.Delay(3000);
@@ -104,6 +105,19 @@ public partial class NewInventory
 
     }
 
+
+    /// <summary>
+    /// Notificar a los nuevos integrantes.
+    /// </summary>
+    /// <param name="id">Id.</param>
+    private static async Task Notification(int id)
+    {
+        // Si es null.
+        if (Realtime.InventoryAccessHub == null)
+            return;
+
+        await Realtime.InventoryAccessHub.Notification(id);
+    }
 
 
 }

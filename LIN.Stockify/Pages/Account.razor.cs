@@ -1,4 +1,6 @@
-﻿namespace LIN.Pages;
+﻿using LIN.Services;
+
+namespace LIN.Pages;
 
 
 public partial class Account
@@ -16,6 +18,17 @@ public partial class Account
 
         // Eliminar cuentas.
         await new LIN.LocalDataBase.Data.UserDB().DeleteUsers();
+
+        // Limpiar error.
+        LIN.Services.InventoryContext.Dictionary.Clear();
+
+        // Limpiar.
+        Inventory.Clean();
+        Contactos.Response = null;
+        Home.Clean();
+
+        // Limpiar Hub.
+        Realtime.InventoryAccessHub = null;
 
         // Navegar al inicio.
         nav.NavigateTo("/", true, true);

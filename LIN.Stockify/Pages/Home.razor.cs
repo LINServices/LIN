@@ -54,7 +54,7 @@ public partial class Home : IDisposable, INotificationObserver
     /// <summary>
     /// Notificaciones.
     /// </summary>
-    static ReadAllResponse<Notificacion> Notifications = new()
+    private static ReadAllResponse<Notificacion> Notifications = new()
     {
         Response = Responses.IsLoading
     };
@@ -125,11 +125,8 @@ public partial class Home : IDisposable, INotificationObserver
     /// <param name="id">Id de la notificación.</param>
     public void Remove(int id)
     {
-        InvokeAsync(() =>
-        {
-            Notifications.Models.RemoveAll(t => t.ID == id);
-            StateHasChanged();
-        });
+        Notifications.Models.RemoveAll(t => t.ID == id);
+        InvokeAsync(StateHasChanged);
     }
 
 
@@ -140,6 +137,19 @@ public partial class Home : IDisposable, INotificationObserver
     public void Dispose()
     {
         NotificationObserver.Remove(this);
+    }
+
+
+
+    /// <summary>
+    /// Limpiar.
+    /// </summary>
+    public static void Clean()
+    {
+        Notifications = new()
+        {
+            Response = Responses.IsLoading
+        };
     }
 
 

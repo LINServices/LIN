@@ -99,4 +99,13 @@ public partial class Inventory
     }
 
 
+
+    /// <summary>
+    /// Limpiar.
+    /// </summary>
+    public static void Clean()
+    {
+        Response = null;
+    }
+
 }

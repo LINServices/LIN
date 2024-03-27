@@ -1,6 +1,4 @@
-﻿using LIN.Components.Layout;
-
-namespace LIN.Components.Popup;
+﻿namespace LIN.Components.Popup;
 
 
 public partial class ContactPopup

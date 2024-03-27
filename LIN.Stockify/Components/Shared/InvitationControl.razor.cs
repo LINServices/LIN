@@ -22,9 +22,10 @@ public partial class InvitationControl
 
     async void Accept()
     {
+        int id = Model.ID;
         section = 0;
         StateHasChanged();
-        var response = await LIN.Access.Inventory.Controllers.Inventories.UpdateState(Model.ID, InventoryAccessState.Accepted);
+        var response = await LIN.Access.Inventory.Controllers.Inventories.UpdateState(Session.Instance.Token, id, InventoryAccessState.Accepted);
 
         if (response.Response != Responses.Success)
         {
@@ -36,7 +37,7 @@ public partial class InvitationControl
         OnRemove();
 
         section = 1;
-        UpRealTime();
+        UpRealTime(id);
         StateHasChanged();
 
     }
@@ -44,9 +45,12 @@ public partial class InvitationControl
 
     async void Decline()
     {
+
+        int id = Model.ID;
+
         section = 0;
         StateHasChanged();
-        var response = await LIN.Access.Inventory.Controllers.Inventories.UpdateState(Model.ID, InventoryAccessState.Deleted);
+        var response = await LIN.Access.Inventory.Controllers.Inventories.UpdateState(Session.Instance.Token, id, InventoryAccessState.Deleted);
 
         if (response.Response != Responses.Success)
         {
@@ -58,17 +62,17 @@ public partial class InvitationControl
         OnRemove();
 
         section = 1;
-        UpRealTime();
+        UpRealTime(id);
         StateHasChanged();
 
     }
 
 
-    async void UpRealTime()
+    async static void UpRealTime(int id)
     {
         await Realtime.InventoryAccessHub!.SendCommand(new CommandModel()
         {
-            Command = $"newStateInvitation({Model.ID})",
+            Command = $"newStateInvitation({id})",
             Inventory = 0
         });
     }
