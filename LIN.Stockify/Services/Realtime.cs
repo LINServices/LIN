@@ -313,7 +313,7 @@ internal class Realtime
 
 
             // Producto.
-            var inflow = await LIN.Access.Inventory.Controllers.Inflows.Read(id, Session.Instance.Token, false);
+            var inflow = await LIN.Access.Inventory.Controllers.Inflows.Read(id, Session.Instance.Token, true);
 
             if (inflow.Response != Responses.Success)
                 return;
@@ -372,7 +372,7 @@ internal class Realtime
             var id = (int)((value as decimal?) ?? 0);
 
             // Producto.
-            var outflow = await LIN.Access.Inventory.Controllers.Outflows.Read(id, Session.Instance.Token, false);
+            var outflow = await LIN.Access.Inventory.Controllers.Outflows.Read(id, Session.Instance.Token, true);
 
             if (outflow.Response != Responses.Success)
                 return;
