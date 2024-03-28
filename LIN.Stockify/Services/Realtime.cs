@@ -18,6 +18,13 @@ internal class Realtime
 
 
     /// <summary>
+    /// Id del dispositivo.
+    /// </summary>
+    public static string DeviceKey { get; private set; } = string.Empty;
+
+
+
+    /// <summary>
     /// Funciones
     /// </summary>
     public static List<IFunction> Actions { get; set; } = [];
@@ -41,11 +48,16 @@ internal class Realtime
         if (InventoryAccessHub != null)
             return;
 
+        // Llave.
+        if (string.IsNullOrWhiteSpace( DeviceKey))
+            DeviceKey = Guid.NewGuid().ToString();
+
         // Generar nuevo hub.
-        InventoryAccessHub = new(Session.Instance.Token, 0, new()
+        InventoryAccessHub = new(Session.Instance.Token, new()
         {
             Name = DeviceName,
-            Platform = MauiProgram.GetPlatform()
+            Platform = MauiProgram.GetPlatform(),
+            LocalId = DeviceKey
         });
 
         // Evento.
@@ -293,7 +305,7 @@ internal class Realtime
 
 
             // Modelo.
-            var notification = await Access.Inventory.Controllers.Inventories.ReadNotification(id, Session.Instance.Token);
+            var notification = await Access.Inventory.Controllers.InventoryAccess.ReadNotification(id, Session.Instance.Token);
 
 
             if (notification == null || notification.Response != Responses.Success)
@@ -361,6 +373,18 @@ internal class Realtime
         // Ejecutar app.
         app.Run();
 
+    }
+
+
+
+    /// <summary>
+    /// Cerrar conexión.
+    /// </summary>
+    public static void Close()
+    {
+        DeviceKey = string.Empty;
+        InventoryAccessHub?.Dispose();
+        InventoryAccessHub = null;
     }
 
 

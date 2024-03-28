@@ -63,7 +63,7 @@ public partial class Settings
         IsLoading = true;
         StateHasChanged();
 
-        var response = await Inventories.GetIntegrants(int.Parse(Id), Session.Instance.Token, Session.Instance.AccountToken);
+        var response = await InventoryAccess.GetMembers(int.Parse(Id), Session.Instance.Token, Session.Instance.AccountToken);
 
         IsLoading = false;
         StateHasChanged();

@@ -54,7 +54,7 @@ public partial class Salida
         if (outflow?.Details.Count <= 0)
         {
             // Obtener los detalles.
-            var outflowDetails = await Access.Inventory.Controllers.Outflows.Read(outflow.ID, Session.Instance.Token, false);
+            var outflowDetails = await Access.Inventory.Controllers.Outflows.Read(outflow.ID, Session.Instance.Token, true);
 
             if (outflowDetails.Response == Responses.Success)
                 outflow.Details = outflowDetails.Model.Details;

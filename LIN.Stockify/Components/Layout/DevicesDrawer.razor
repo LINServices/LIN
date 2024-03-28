@@ -17,7 +17,7 @@
             </div>
 
             @* Componentes. *@
-            <div id="close-all-all" class="flex-1 overflow-y-auto gap-3 mt-2 p-0.5">
+            <div id="close-all-all" class="flex-1 overflow-y-auto gap-3 mt-2 p-0.5 h-full">
 
                 @if (DevicesList == null)
                 {
@@ -27,7 +27,7 @@
                 }
                 else if (DevicesList.Count <= 0)
                 {
-                    <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-zinc-300 w-full py-7 mt-3 dark:border-gray-400">
+                    <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-zinc-300 w-full py-10 mt-3 dark:border-gray-400">
                         <label class="text-zinc-400 dark:text-gray-200">Sin resultados</label>
                     </div>
                 }
@@ -42,8 +42,9 @@
             </div>
 
             @* Obtener dispositivos. *@
-            <div @onclick="GetDevices" class="flex w-full self-end mt-2 items-end justify-center mb-2">
-                <button i="btn-close-@_id" type="button" class="px-3 py-2 w-full text-sm font-medium text-center text-white bg-current-500 rounded-lg hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Aceptar</button>
+            <div class="flex w-full self-end mt-2 items-end justify-center mb-2 gap-2">
+                <button @onclick="GetDevices" type="button" class="px-3 py-2 w-full text-sm font-medium text-center text-white bg-current-500 rounded-lg hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Actualizar</button>
+                <button id="btn-close-@_id" type="button" class="px-3 py-2 w-full text-sm font-medium text-center text-white bg-current-500 rounded-lg hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Aceptar</button>
             </div>
 
         </div>

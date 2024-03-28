@@ -71,7 +71,7 @@ public partial class Home : IDisposable, INotificationObserver
             return true;
 
         // Items
-        var items = await LIN.Access.Inventory.Controllers.Inventories.ReadNotifications(LIN.Access.Inventory.Session.Instance.Token);
+        var items = await LIN.Access.Inventory.Controllers.InventoryAccess.ReadNotifications(LIN.Access.Inventory.Session.Instance.Token);
 
         // Rellena los items
         Notifications = items;

@@ -54,7 +54,7 @@ public partial class Entrada
         if (inflow?.Details.Count <= 0)
         {
             // Obtener los detalles.
-            var inflowDetails = await Access.Inventory.Controllers.Inflows.Read(inflow.ID, Session.Instance.Token, false);
+            var inflowDetails = await Access.Inventory.Controllers.Inflows.Read(inflow.ID, Session.Instance.Token, true);
 
             if (inflowDetails.Response == Responses.Success)
                 inflow.Details = inflowDetails.Model.Details;

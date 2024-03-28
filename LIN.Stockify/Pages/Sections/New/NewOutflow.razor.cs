@@ -156,7 +156,7 @@ public partial class NewOutflow
 
 
         // Envía al servidor
-        var response = await Access.Inventory.Controllers.Outflows.CreateAsync(entry, LIN.Access.Inventory.Session.Instance.Token);
+        var response = await Access.Inventory.Controllers.Outflows.Create(entry, LIN.Access.Inventory.Session.Instance.Token);
 
 
         // Si hubo un error

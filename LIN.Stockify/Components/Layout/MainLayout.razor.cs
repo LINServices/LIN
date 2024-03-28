@@ -1,4 +1,6 @@
-﻿namespace LIN.Components.Layout;
+﻿using System.Runtime.CompilerServices;
+
+namespace LIN.Components.Layout;
 
 
 public partial class MainLayout
@@ -48,10 +50,15 @@ public partial class MainLayout
 
     public static void Update()
     {
-        e.StateHasChanged();
+        e.State();
     }
 
 
+
+    void State()
+    {
+        this.InvokeAsync(StateHasChanged);
+    }
 
     public static void OnCenter(Action action)
     {

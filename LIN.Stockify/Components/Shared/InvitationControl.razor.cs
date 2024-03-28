@@ -25,7 +25,7 @@ public partial class InvitationControl
         int id = Model.ID;
         section = 0;
         StateHasChanged();
-        var response = await LIN.Access.Inventory.Controllers.Inventories.UpdateState(Session.Instance.Token, id, InventoryAccessState.Accepted);
+        var response = await LIN.Access.Inventory.Controllers.InventoryAccess.UpdateState(Session.Instance.Token, id, InventoryAccessState.Accepted);
 
         if (response.Response != Responses.Success)
         {
@@ -50,7 +50,7 @@ public partial class InvitationControl
 
         section = 0;
         StateHasChanged();
-        var response = await LIN.Access.Inventory.Controllers.Inventories.UpdateState(Session.Instance.Token, id, InventoryAccessState.Deleted);
+        var response = await LIN.Access.Inventory.Controllers.InventoryAccess.UpdateState(Session.Instance.Token, id, InventoryAccessState.Deleted);
 
         if (response.Response != Responses.Success)
         {

@@ -1,4 +1,6 @@
-﻿namespace LIN.Components.Layout;
+﻿using LIN.Services;
+
+namespace LIN.Components.Layout;
 
 
 public partial class DevicesDrawer
@@ -65,7 +67,7 @@ public partial class DevicesDrawer
             return false;
 
         // Rellena los items
-        DevicesList = [.. items.Models];
+        DevicesList = [.. items.Models.Where(t => t.LocalId != Realtime.DeviceKey)];
         StateHasChanged();
         return true;
 

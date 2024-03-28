@@ -28,7 +28,7 @@ public partial class Account
         Home.Clean();
 
         // Limpiar Hub.
-        Realtime.InventoryAccessHub = null;
+        Realtime.Close();
 
         // Navegar al inicio.
         nav.NavigateTo("/", true, true);

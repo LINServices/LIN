@@ -1,5 +1,5 @@
-﻿
-namespace LIN.Services;
+﻿namespace LIN.Services;
+
 
 internal class File
 {
@@ -11,15 +11,14 @@ internal class File
     public static async Task<byte[]> OpenImage()
     {
 
-        // Carga el archivo
+        // Carga el archivo.
         var result = await FilePicker.Default.PickAsync();
 
-        // analisa el resultado
+        // Analiza el resultado.
         if (result == null)
             return [];
 
-
-        // Extension del archivo
+        // Extension del archivo.
         if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) || result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
         {
 
@@ -32,13 +31,11 @@ internal class File
 
 
             return bytes;
-
-
         }
-
 
         return [];
 
     }
+
 
 }
