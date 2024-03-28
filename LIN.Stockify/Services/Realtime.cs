@@ -1,5 +1,7 @@
 ﻿using LIN.Access.Inventory.Hubs;
 using LIN.Pages;
+using LIN.Pages.Sections;
+using LIN.Pages.Sections.Viewer;
 using LIN.Services.Runtime;
 using SILF.Script.Interfaces;
 
@@ -37,6 +39,7 @@ internal class Realtime
     public static InventoryAccessHub? InventoryAccessHub { get; set; } = null;
 
 
+  
 
     /// <summary>
     /// Iniciar el servicio.
@@ -49,7 +52,7 @@ internal class Realtime
             return;
 
         // Llave.
-        if (string.IsNullOrWhiteSpace( DeviceKey))
+        if (string.IsNullOrWhiteSpace(DeviceKey))
             DeviceKey = Guid.NewGuid().ToString();
 
         // Generar nuevo hub.
@@ -127,6 +130,127 @@ internal class Realtime
             Parameters =
             [
                 new("id", new("number"))
+            ]
+        };
+
+
+
+        // Visualizar un producto.
+        SILFFunction viewProduct = new(async (values) =>
+        {
+
+            // Obtener el parámetro.
+            var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
+
+            // Validar el tipo.
+            if (value is not decimal)
+                return;
+
+            // Id.
+            var id = (int)((value as decimal?) ?? 0);
+
+
+            // Obtener el parámetro.
+            value = values.FirstOrDefault(t => t.Name == "inventory")?.Objeto.GetValue();
+
+            // Validar el tipo.
+            if (value is not decimal)
+                return;
+
+            // Id.
+            var inventory = (int)((value as decimal?) ?? 0);
+
+
+
+            var context = InventoryContext.Get(inventory);
+
+            var find = context?.FindProduct(id);
+
+            if (context == null || find == null)
+            {
+                var xx = await LIN.Access.Inventory.Controllers.Product.Read(id, Session.Instance.Token);
+
+                if (xx.Response != Responses.Success)
+                    return;
+
+
+                find = xx.Model;
+
+            }
+
+            Products.Selected = find;
+
+            Product.Show();
+
+
+
+
+
+        })
+        // Propiedades
+        {
+            Name = "viewProduct",
+            Parameters =
+            [
+                new("inventory", new("number")),
+                new("id", new("number")),
+            ]
+        };
+
+
+        // Visualizar un inflow.
+        SILFFunction viewInflow = new(async (values) =>
+        {
+
+            // Obtener el parámetro.
+            var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
+
+            // Validar el tipo.
+            if (value is not decimal)
+                return;
+
+            // Id.
+            var id = (int)((value as decimal?) ?? 0);
+
+
+            Entrada.Show(id);
+
+        })
+        // Propiedades
+        {
+            Name = "viewInflow",
+            Parameters =
+            [
+                new("id", new("number")),
+            ]
+        };
+
+
+
+        // Visualizar un outflow.
+        SILFFunction viewOutflow = new(async (values) =>
+        {
+
+            // Obtener el parámetro.
+            var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
+
+            // Validar el tipo.
+            if (value is not decimal)
+                return;
+
+            // Id.
+            var id = (int)((value as decimal?) ?? 0);
+
+
+            Salida.Show(id);
+
+        })
+        // Propiedades
+        {
+            Name = "viewOutflow",
+            Parameters =
+            [
+                new("id", new("number")),
             ]
         };
 
@@ -351,7 +475,7 @@ internal class Realtime
 
 
         // Guardar métodos.
-        Actions = [updateContacts, viewContact, addProduct, addInflow, addOutflow, newInvitation, newStateInvitation];
+        Actions = [updateContacts, viewContact, viewProduct, addProduct, addInflow, addOutflow, newInvitation, newStateInvitation, viewInflow, viewOutflow];
 
     }
 

@@ -39,7 +39,7 @@ public partial class MainLayout
     public static LIN.Components.Popup.ContactPopup ContactPop { get; set; } = null!;
 
 
-    private static MainLayout e = null!;
+    public static MainLayout e = null!;
 
 
     public MainLayout()
@@ -54,6 +54,10 @@ public partial class MainLayout
     }
 
 
+    public static void Navigate(string url)
+    {
+        e.Nav.NavigateTo(url);
+    }
 
     void State()
     {
@@ -70,6 +74,7 @@ public partial class MainLayout
 
     public static void Configure(DockSettings settings)
     {
+        
         Settings = settings;
         MainLayout.Update();
     }

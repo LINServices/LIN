@@ -28,4 +28,17 @@ public class InventoryContextModel
     public ReadAllResponse<OutflowDataModel>? Outflows { get; set; } = null;
 
 
+
+
+    /// <summary>
+    /// Encontrar un producto por Id.
+    /// </summary>
+    /// <param name="id">Id del producto.</param>
+    public ProductModel? FindProduct(int id)
+    {
+        return Products?.Models.Where(t => t.Id == id).FirstOrDefault();
+    }
+
+
+
 }

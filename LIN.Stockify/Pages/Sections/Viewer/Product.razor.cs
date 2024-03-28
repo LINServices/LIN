@@ -4,11 +4,15 @@
 public partial class Product
 {
 
+    static Product Instance;
+
+    ProductModel? _modelo { get; set; } = new();
+
 
     /// <summary>
     /// Lista de modelos
     /// </summary>
-    private ProductModel? Modelo { get; set; } = new();
+    private ProductModel? Modelo => Products.Selected;
 
 
 
@@ -17,8 +21,48 @@ public partial class Product
     /// </summary>
     protected override Task OnInitializedAsync()
     {
-        Modelo = Products.Selected;
+        Instance = this;
+        MainLayout.Configure(new()
+        {
+            OnCenterClick = Send,
+            Section = 1,
+            DockIcon = 2
+        });
+
         return base.OnInitializedAsync();
+    }
+
+
+    /// <summary>
+    /// Enviar el comando al selector.
+    /// </summary>
+    void Send()
+    {
+        // Nuevo onInvoque.
+        MainLayout.DevicesSelector.OnInvoke = (e) =>
+        {
+            Services.Realtime.InventoryAccessHub.SendToDevice(e.Id, new()
+            {
+                Command = $"viewProduct({Modelo?.InventoryId},{Modelo?.Id})"
+            });
+        };
+
+        Components.Layout.MainLayout.DevicesSelector.Show();
+    }
+
+
+
+    void Render()
+    {
+        this.InvokeAsync(StateHasChanged);
+    }
+
+
+  
+    public static void Show()
+    {
+        MainLayout.Navigate("/product");
+        Instance?.Render();
     }
 
 

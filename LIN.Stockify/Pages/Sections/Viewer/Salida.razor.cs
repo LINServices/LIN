@@ -1,10 +1,13 @@
-﻿namespace LIN.Pages.Sections.Viewer;
+﻿using SILF.Script;
+
+namespace LIN.Pages.Sections.Viewer;
 
 
 public partial class Salida
 {
 
 
+    
     /// <summary>
     /// Id de la entrada.
     /// </summary>
@@ -21,11 +24,10 @@ public partial class Salida
 
 
     /// <summary>
-    /// Evento al iniciar.
+    /// Evento al establecer los parámetros.
     /// </summary>
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-
         // Obtener el Contexto.
         var inventoryContext = (from context in Services.InventoryContext.Dictionary
                                 where (context.Value.Outflows ?? new()).Models.Any(t => t.ID == int.Parse(Id))
@@ -62,9 +64,53 @@ public partial class Salida
 
         // Establecer el modelo.
         Modelo = outflow;
+        await base.OnParametersSetAsync();
+    }
+
+
+
+    /// <summary>
+    /// Evento al iniciar.
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+
+        MainLayout.Configure(new()
+        {
+            OnCenterClick = Send,
+            Section = 1,
+            DockIcon = 2
+        });
 
         await base.OnInitializedAsync();
     }
 
+
+    /// <summary>
+    /// Enviar el comando al selector.
+    /// </summary>
+    void Send()
+    {
+        // Nuevo onInvoque.
+        MainLayout.DevicesSelector.OnInvoke = (e) =>
+        {
+            Services.Realtime.InventoryAccessHub.SendToDevice(e.Id, new()
+            {
+                Command = $"viewOutflow({Modelo?.ID})"
+            });
+        };
+
+        Components.Layout.MainLayout.DevicesSelector.Show();
+    }
+
+
+
+   
+
+
+    public static void Show(int id)
+    {
+        MainLayout.Navigate($"/outflow/{id}");
+    }
 
 }

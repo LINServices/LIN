@@ -20,11 +20,9 @@ public partial class Entrada
 
 
 
-    /// <summary>
-    /// Evento al iniciar.
-    /// </summary>
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
+
 
         // Obtener el Contexto.
         var inventoryContext = (from context in Services.InventoryContext.Dictionary
@@ -47,8 +45,8 @@ public partial class Entrada
 
         // Obtener la salida.
         var inflow = (from inflowModel in (inventoryContext.Inflows ?? new()).Models
-                       where inflowModel.ID == int.Parse(Id)
-                       select inflowModel).FirstOrDefault();
+                      where inflowModel.ID == int.Parse(Id)
+                      select inflowModel).FirstOrDefault();
 
         // Si no hay detalles.
         if (inflow?.Details.Count <= 0)
@@ -63,9 +61,55 @@ public partial class Entrada
         // Establecer el modelo.
         Modelo = inflow;
 
+
+
+        await base.OnParametersSetAsync();
+
+
+    }
+    /// <summary>
+    /// Evento al iniciar.
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+
+        MainLayout.Configure(new()
+        {
+            OnCenterClick = Send,
+            Section = 1,
+            DockIcon = 2
+        });
+
         await base.OnInitializedAsync();
 
     }
 
+
+    /// <summary>
+    /// Enviar el comando al selector.
+    /// </summary>
+    void Send()
+    {
+        // Nuevo onInvoque.
+        MainLayout.DevicesSelector.OnInvoke = (e) =>
+        {
+            Services.Realtime.InventoryAccessHub.SendToDevice(e.Id, new()
+            {
+                Command = $"viewInflow({Modelo?.ID})"
+            });
+        };
+
+        Components.Layout.MainLayout.DevicesSelector.Show();
+    }
+
+
+
+
+
+
+    public static void Show(int id)
+    {
+        MainLayout.Navigate($"/inflow/{id}");
+    }
 
 }
