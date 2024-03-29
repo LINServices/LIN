@@ -123,6 +123,7 @@ public partial class EditProduct
 
             if (!NeedUpdateDetail())
             {
+                ProductBase.Details = Product.Details;
                 Product.Details = [];
             }
 
@@ -132,7 +133,7 @@ public partial class EditProduct
             // Respuesta del controlador
             var response = await Access.Inventory.Controllers.Product.Update(Product, LIN.Access.Inventory.Session.Instance.Token);
 
-            Product = ProductBase;
+            Product.Details = ProductBase.Details;
 
             if (response.Response != Responses.Success)
             {
