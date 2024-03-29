@@ -1,6 +1,4 @@
-﻿using SILF.Script;
-
-namespace LIN.Pages.Sections.Edits;
+﻿namespace LIN.Pages.Sections.Edits;
 
 
 public partial class EditProduct
@@ -13,12 +11,15 @@ public partial class EditProduct
     [Parameter]
     public string Id { get; set; } = string.Empty;
 
+    public ProductModel ProductBase { get; set; }
+
 
 
     /// <summary>
     /// Modelo del producto.
     /// </summary>
     public ProductModel Product { get; set; } = new()
+
     {
         Details = [new()]
     };
@@ -62,8 +63,32 @@ public partial class EditProduct
             return;
         }
 
-        Product = result;
+        Product = new()
+        {
+            Category = result.Category,
+            Statement = result.Statement,
+            Code = result.Code,
+            Description = result.Description,
+            Name = result.Name,
+            Inventory = result.Inventory,
+            InventoryId = result.InventoryId,
+            Id = result.Id,
+            Image = result.Image,
+            Details = [
+                new ProductDetailModel(){
+                    Estado = result.DetailModel.Estado,
+                    Id = result.DetailModel.Id,
+                    PrecioCompra = result.DetailModel.PrecioCompra,
+                    PrecioVenta = result.DetailModel.PrecioVenta,
+                    Quantity = result.DetailModel.Quantity
+                }
+                ],
+        };
+
+
         Category = (int)Product.Category;
+
+        ProductBase = result;
 
         // Base.
         base.OnParametersSet();
@@ -92,20 +117,22 @@ public partial class EditProduct
         try
         {
 
-            return;
-
             Section = 3;
             StateHasChanged();
 
-            //Product.Provider = 1;
-           // Product.InventoryId = Contexto?.Inventory.ID ?? 0;
+
+            if (!NeedUpdateDetail())
+            {
+                Product.Details = [];
+            }
+
             Product.Category = (ProductCategories)Category;
-            Product.Statement = ProductBaseStatements.Normal;
-            Product.Image = Photo;
+
 
             // Respuesta del controlador
-            var response = await Access.Inventory.Controllers.Product.Create(Product, LIN.Access.Inventory.Session.Instance.Token);
+            var response = await Access.Inventory.Controllers.Product.Update(Product, LIN.Access.Inventory.Session.Instance.Token);
 
+            Product = ProductBase;
 
             if (response.Response != Responses.Success)
             {
@@ -119,14 +146,6 @@ public partial class EditProduct
             StateHasChanged();
 
 
-
-            _ = Services.Realtime.InventoryAccessHub.SendCommand(new()
-            {
-                Command = $"addProduct({response.LastID})",
-                //Inventory = Contexto?.Inventory.ID ?? 0
-            });
-
-
             await Task.Delay(3000);
             Section = 0;
             StateHasChanged();
@@ -138,6 +157,35 @@ public partial class EditProduct
 
     }
 
+
+
+
+
+
+    bool NeedUpdateDetail()
+    {
+
+        try
+        {
+            if (ProductBase.DetailModel.PrecioCompra != Product.DetailModel.PrecioCompra)
+                return true;
+
+
+            if (ProductBase.DetailModel.PrecioVenta != Product.DetailModel.PrecioVenta)
+                return true;
+
+
+            return false;
+        }
+        catch
+        {
+
+        }
+
+        return false;
+
+
+    }
 
 
 }
