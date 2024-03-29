@@ -141,6 +141,20 @@ public partial class EditProduct
                 return;
             }
 
+            // Actualizar modelo existente.
+            ProductBase.Category = Product.Category;
+            ProductBase.Code = Product.Code;
+            ProductBase.Description = Product.Description;
+            ProductBase.Name = Product.Name;
+
+            if (Product.DetailModel != null && ProductBase.DetailModel != null)
+            {
+                ProductBase.DetailModel.PrecioCompra = Product.DetailModel.PrecioCompra;
+                ProductBase.DetailModel.PrecioVenta = Product.DetailModel.PrecioVenta;
+            }
+
+
+
 
             Section = 1;
             StateHasChanged();
