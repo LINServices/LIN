@@ -1,4 +1,5 @@
 ﻿using LIN.Access.Inventory.Controllers;
+using LIN.Services;
 
 namespace LIN.Pages;
 
@@ -107,5 +108,22 @@ public partial class Inventory
     {
         Response = null;
     }
+
+
+
+    /// <summary>
+    /// Agregar modelo.
+    /// </summary>
+    /// <param name="model">Modelo de inventario.</param>
+    public static void AddData(InventoryDataModel model)
+    {
+        if (Response?.Response != Responses.Success)
+            return;
+
+        InventoryContext.Post(model);
+        Response.Models.Add(model);
+
+    }
+
 
 }

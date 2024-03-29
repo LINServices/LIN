@@ -89,21 +89,42 @@ public partial class NewInventory
         var response = await Inventories.Create(modelo, Session.Instance.Token);
 
         // Correcto.
-        if (response.Response == Responses.Success)
-        {
-            _ = Notification(response.LastID);
-            section = 1;
+        if (response.Response != Responses.Success)
+        { 
+            // Sección.
+            section = 0;
             StateHasChanged();
-            await Task.Delay(3000);
-            nav.NavigateTo("/inventory");
-            return;
         }
 
-        // Sección.
-        section = 0;
+        _ = Notification(response.LastID);
+
+
+        var x = await LIN.Access.Inventory.Controllers.Inventories.Read(response.LastID, Session.Instance.Token);
+
+
+        if (x.Response == Responses.Success)
+        {
+            Pages.Inventory.AddData(x.Model);
+
+
+        }
+
+
+
+        section = 1;
         StateHasChanged();
+        await Task.Delay(3000);
+
+
+
+
+        
+
+        nav.NavigateTo("/inventory");
+        return;
 
     }
+
 
 
     /// <summary>

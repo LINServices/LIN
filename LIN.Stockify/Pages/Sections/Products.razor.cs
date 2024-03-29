@@ -52,6 +52,14 @@ public partial class Products : IProduct, IDisposable
         // Evaluar el contexto.
         if (Contexto != null)
             Response = Contexto.Products;
+        else
+            Contexto = new()
+            {
+                Inventory = new()
+                {
+                    ID = int.Parse(Id),
+                }
+            };
 
         // Evaluar la respuesta.
         if (Response == null)
