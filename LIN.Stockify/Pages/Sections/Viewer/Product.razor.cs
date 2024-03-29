@@ -6,8 +6,7 @@ public partial class Product
 
     static Product Instance;
 
-    ProductModel? _modelo { get; set; } = new();
-
+  
 
     /// <summary>
     /// Lista de modelos
@@ -63,6 +62,11 @@ public partial class Product
     {
         MainLayout.Navigate("/product");
         Instance?.Render();
+    }
+
+    public void Edit()
+    {
+        nav.NavigateTo($"/edit/product/{Modelo?.Id ?? 0}");
     }
 
 

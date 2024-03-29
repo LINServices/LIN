@@ -25,6 +25,31 @@ internal static class InventoryContext
 
 
     /// <summary>
+    /// Tratar de obtener el Inventario.
+    /// </summary>
+    /// <param name="id">Id del inventario.</param>
+    public static ProductModel? GetProduct(int id)
+    {
+
+        ProductModel? product = null;
+        foreach (var inv in Dictionary.Values)
+        {
+            var model = inv.FindProduct(id);
+            if (model != null)
+            {
+                product = model;
+                break;
+            }
+
+        }
+
+        return product;
+
+    }
+
+
+
+    /// <summary>
     /// Tratar de poner el Inventario.
     /// </summary>
     public static void Post(InventoryDataModel model)

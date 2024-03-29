@@ -1,4 +1,6 @@
-﻿namespace LIN.Pages.Sections.Edits;
+﻿using SILF.Script;
+
+namespace LIN.Pages.Sections.Edits;
 
 
 public partial class EditProduct
@@ -6,7 +8,7 @@ public partial class EditProduct
 
 
     /// <summary>
-    /// Id.
+    /// Id del producto.
     /// </summary>
     [Parameter]
     public string Id { get; set; } = string.Empty;
@@ -45,20 +47,23 @@ public partial class EditProduct
 
 
     /// <summary>
-    /// Contexto del inventario.
-    /// </summary>
-    private Services.Models.InventoryContextModel? Contexto { get; set; }
-
-
-
-    /// <summary>
     /// Evento al establecer los parámetros.
     /// </summary>
     protected override void OnParametersSet()
     {
 
         // Obtener el contexto.
-        Contexto = Services.InventoryContext.Get(int.Parse(Id));
+        var result = Services.InventoryContext.GetProduct(int.Parse(Id));
+
+
+        if (result == null)
+        {
+            nav.NavigateTo("/home");
+            return;
+        }
+
+        Product = result;
+        Category = (int)Product.Category;
 
         // Base.
         base.OnParametersSet();
@@ -66,19 +71,34 @@ public partial class EditProduct
 
 
 
+    protected override void OnInitialized()
+    {
+        MainLayout.Configure(new()
+        {
+            OnCenterClick = Update,
+            Section = 1,
+            DockIcon = 3
+        });
+
+        base.OnInitialized();
+    }
+
+
     /// <summary>
     /// Crear.
     /// </summary>
-    private async void Create()
+    private async void Update()
     {
         try
         {
+
+            return;
 
             Section = 3;
             StateHasChanged();
 
             //Product.Provider = 1;
-            Product.InventoryId = Contexto?.Inventory.ID ?? 0;
+           // Product.InventoryId = Contexto?.Inventory.ID ?? 0;
             Product.Category = (ProductCategories)Category;
             Product.Statement = ProductBaseStatements.Normal;
             Product.Image = Photo;
@@ -103,7 +123,7 @@ public partial class EditProduct
             _ = Services.Realtime.InventoryAccessHub.SendCommand(new()
             {
                 Command = $"addProduct({response.LastID})",
-                Inventory = Contexto?.Inventory.ID ?? 0
+                //Inventory = Contexto?.Inventory.ID ?? 0
             });
 
 
