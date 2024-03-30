@@ -70,7 +70,6 @@
       <ProjectReference Include="D:\LIN Services\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj" />
       <ProjectReference Include="D:\LIN Services\AccesoAPI\LIN.Access.Inventory\LIN.Access.Inventory.csproj" />
       <ProjectReference Include="D:\LIN Services\Clientes\LIN\LIN.LocalDataBase\LIN.LocalDataBase.csproj" />
-      <ProjectReference Include="D:\LIN Services\Tipos\LIN.Modules\LIN.Modules.csproj" />
       <ProjectReference Include="D:\LIN Services\Tipos\LIN.Types.Cloud.Identity\LIN.Types.Cloud.Identity.csproj" />
       <ProjectReference Include="D:\LIN Services\Tipos\LIN.Types.Inventory\LIN.Types.Inventory.csproj" />
       <ProjectReference Include="D:\LIN Services\Tipos\LIN.Types\LIN.Types.csproj" />
