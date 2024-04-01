@@ -30,7 +30,7 @@ public partial class NewInflow
     /// <summary>
     /// Fecha.
     /// </summary>
-    private DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+    private DateTime Date { get; set; } = DateTime.Now;
 
 
 
@@ -146,7 +146,7 @@ public partial class NewInflow
         entry = new()
         {
             Details = details,
-            Date = new DateTime(Date.Year, Date.Month, Date.Day),
+            Date = Date,
             Type = type,
             Inventory = new()
             {

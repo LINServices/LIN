@@ -113,4 +113,23 @@ public partial class Salida
         MainLayout.Navigate($"/outflow/{id}");
     }
 
+
+    bool edit = false;
+
+    void ControllerDate()
+    {
+        edit = !edit;
+        StateHasChanged();
+    }
+
+
+    async void Update()
+    {
+        var newdate = Modelo?.Date;
+
+        await LIN.Access.Inventory.Controllers.Outflows.Update(Modelo.ID, newdate.Value, Session.Instance.Token);
+        edit = false;
+        await this.InvokeAsync(StateHasChanged);
+    }
+
 }

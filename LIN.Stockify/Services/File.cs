@@ -29,7 +29,6 @@ internal class File
             stream.CopyTo(ms);
             var bytes = ms.ToArray();
 
-
             return bytes;
         }
 

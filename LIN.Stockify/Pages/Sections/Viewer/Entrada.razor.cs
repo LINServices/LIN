@@ -12,6 +12,8 @@ public partial class Entrada
     public string Id { get; set; } = string.Empty;
 
 
+    bool edit = false;
+
 
     /// <summary>
     /// Modelo
@@ -112,4 +114,19 @@ public partial class Entrada
         MainLayout.Navigate($"/inflow/{id}");
     }
 
+    void ControllerDate()
+    {
+        edit = !edit;
+        StateHasChanged();
+    }
+
+
+    async void Update()
+    {
+        var newdate = Modelo?.Date;
+
+        await LIN.Access.Inventory.Controllers.Inflows.Update(Modelo.ID, newdate.Value, Session.Instance.Token);
+        edit = false;
+        await this.InvokeAsync(StateHasChanged);
+    }
 }
