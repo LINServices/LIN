@@ -1,32 +1,29 @@
 <div align="center">
-  <h1 align="center">
+  <p align="center">
     <img alt="heyform logo" height="60" src="./Img/icono.png">
-  </h1>
+  </p>
   <p>LIN Inventory es un proyecto de gestion de inventarios disponible para todos con el objetivo de ser confiable, seguro y multiplataforma.</p>
- <h1 align="center">
-    <img alt="heyform logo" height="30" src="./Img/computer.png">
-    <img alt="heyform logo" height="30" src="./Img/android.png">
-  </h1>
+ <p align="center">
+    <img alt="heyform logo" height="20" src="./Img/computer.png">
+    <img alt="heyform logo" height="20" src="./Img/android.png">
+  </p>
 </div>
-
-
-
-
-
-
-## Tecnologías
-
-- .NET 8
-- Blazor y Maui Hybrid App
-- HTML, CSS y Tailwind
 
 
 ## Características
 
-- Actualización en tiempo real. (SignalR)
-- Passkey para iniciar con huella digital. (Usando el proyecto LIN Vault) 
+- Actualización de datos en tiempo real.
+- Passkey para iniciar con huella digital. (Usando LIN Vault) 
 - Multiplataforma. (Android y Windows)
+- Multi-Inventario. (Compartir inventarios con otras personas)
 
+
+## Tecnologías
+
+- .NET 8.
+- MAUI & Blazor Hybrid App.
+- HTML, CSS y JavaScript.
+- Tailwind CSS.
 
 
 ## Home
@@ -48,15 +45,13 @@
 ![Vista de producto](./Img/ProductViewW.jpg)
 
 
-## Dependecias y otras librerias
+# Codigo Fuente
 
-- Necesita LIN.Server (Servidor)
-- Necesita LIN.Developer (Servidor)
-- Necesita LIN.Shared (Dependecia)
-- Necesita LIN.Access (Dependecia)
-- Necesita LIN.Access.Developer (Dependecia)
+Puedes revisar el codigo fuente de LIN Inventory, sin embargo no puedes realizar ninguna difurcación al mismo o venderlo.
 
-## Soporte
+
+
+# Soporte
 
 Para soporte, correo giraldojhong4@gmail.com
 
