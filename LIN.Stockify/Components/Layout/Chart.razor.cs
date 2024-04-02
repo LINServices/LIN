@@ -16,14 +16,14 @@ public partial class Chart
     /// <summary>
     /// Ventas de esta semana.
     /// </summary>
-    public string Value { get; set; } = "VILIES";
+    public string Value { get; set; } = "0";
 
 
 
     /// <summary>
     /// Ventas de esta semana.
     /// </summary>
-    public string Percent { get; set; } = "PERCENT%";
+    public string Percent { get; set; } = "0";
 
 
 
@@ -106,7 +106,7 @@ public partial class Chart
             if (HomeDto == null)
                 return "nullo";
 
-            return ((HomeDto.LastWeekSalesTotal - HomeDto.WeekSalesTotal) / HomeDto.WeekSalesTotal * 100).ToString("0.#");
+            return ((HomeDto.WeekSalesTotal - HomeDto.LastWeekSalesTotal) / HomeDto.LastWeekSalesTotal * 100).ToString("0.#");
         }
         catch (Exception ex)
         {
@@ -155,7 +155,42 @@ public partial class Chart
                 return;
 
             // Invocar ApexChart.
-            await js.InvokeVoidAsync("CharLoad", HomeDto.WeekSales.Select(t => t.Date.ToString()), HomeDto.WeekSales?.Select(t => t.Money));
+
+            var x = HomeDto.WeekSales
+            .GroupBy(s => DateOnly.FromDateTime(s.Date))
+            .Select(group => new SalesModel
+            {
+                Date = new DateTime(group.Key.Year, group.Key.Month, group.Key.Day),
+                Money = group.Sum(s => s.Money)
+            }).ToList();
+
+
+            var dateNow = DateOnly.FromDateTime(DateTime.Now);
+
+            var dateOld = DateOnly.FromDateTime(HomeDto.WeekSales.LastOrDefault()?.Date ?? DateTime.Now);
+
+
+            var diference = dateNow.ToDateTime(TimeOnly.MinValue) - dateOld.ToDateTime(TimeOnly.MinValue);
+
+            if (diference.Days > 0)
+            {
+
+                for (var i = 1; i <= diference.Days; i++)
+                {
+                    x.Add(new()
+                    {
+                        Date = dateOld.AddDays(i).ToDateTime(TimeOnly.MinValue),
+                        Money = 0
+                    });
+                }
+
+            }
+
+
+
+
+
+            await js.InvokeVoidAsync("CharLoad", x.Select(t => t.Date.ToString()), x.Select(t => t.Money));
 
         }
         catch (Exception) { }

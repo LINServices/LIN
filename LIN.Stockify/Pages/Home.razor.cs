@@ -228,4 +228,25 @@ public partial class Home : IDisposable, INotificationObserver
         base.OnAfterRender(firstRender);
     }
 
+
+
+
+
+    public string Calcular()
+    {
+        try
+        {
+
+            if (HomeDTO == null)
+                return "0";
+
+            var result = ((HomeDTO.Model.TodaySalesTotal - HomeDTO.Model.YesterdaySalesTotal) / HomeDTO.Model.YesterdaySalesTotal * 100);
+            return result.ToString("0.#");
+        }
+        catch (Exception )
+        {
+        }
+        return "error";
+    }
+
 }
