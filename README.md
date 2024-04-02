@@ -2,16 +2,17 @@
   <h1 align="center">
     <img alt="heyform logo" height="60" src="./Img/icono.png">
   </h1>
-  <p>LIN Inventory es un proyecto de inventario disponible para todos con el objetico de ser confiable, seguro y multiplataforma.</p>
+  <p>LIN Inventory es un proyecto de gestion de inventarios disponible para todos con el objetivo de ser confiable, seguro y multiplataforma.</p>
+ <h1 align="center">
+    <img alt="heyform logo" height="30" src="./Img/computer.png">
+    <img alt="heyform logo" height="30" src="./Img/android.png">
+  </h1>
 </div>
 
 
 
 
 
-# LIN Inventory
-
-Aplicación para la gestión de inventarios en tiempo real desde las plataformas Android y Windows
 
 ## Tecnologías
 
@@ -32,7 +33,6 @@ Aplicación para la gestión de inventarios en tiempo real desde las plataformas
 
 <img alt="heyform logo" height="500" src="./Img/HomeA.jpg">
 
-![Android](./Img/HomeA.jpg)
 
 ## Login
 
