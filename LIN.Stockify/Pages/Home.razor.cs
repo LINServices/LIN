@@ -101,7 +101,7 @@ public partial class Home : IDisposable, INotificationObserver
                 return true;
 
             // Items
-            var items = await LIN.Access.Inventory.Controllers.Inventories.Home(LIN.Access.Inventory.Session.Instance.Token);
+            var items = await LIN.Access.Inventory.Controllers.Statistics.HomeStatistics(LIN.Access.Inventory.Session.Instance.Token);
 
             // Rellena los items
             HomeDTO = items;
