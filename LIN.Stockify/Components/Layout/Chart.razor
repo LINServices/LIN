@@ -3,30 +3,30 @@
 
 <div class="w-full bg-white rounded-lg shadow dark:bg-zinc-900 p-4 md:p-6">
     <div class="flex justify-between">
-        <div>
-            <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-1 mt-2">@FormatearNumero(Sales?.Sum(t => t.Money) ?? 0)</h5>
+        <div @onclick="StateHasChanged">
+            <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-1 mt-2">@Value</h5>
             <p class="text-base font-normal text-gray-500 dark:text-gray-400">Ventas esta semana</p>
         </div>
-        @if (Sales?.Count > 0)
-        {
-            <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
-                12%
-                <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
-                </svg>
-            </div>
-        }
+
+        <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
+
+            @(Percent)
+            <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
+            </svg>
+        </div>
+
 
     </div>
     <div id="area-chart">
 
-        @if (Sales == null)
+        @if (HomeDto?.WeekSales == null)
         {
             <div class="flex w-full items-center justify-center py-6">
                 <Loader></Loader>
             </div>
         }
-        else if (Sales.Count <= 0)
+        else if (HomeDto?.WeekSales.Count <= 0)
         {
             <div class="flex w-full items-center justify-center py-6">
                 <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-gray-400 w-full py-10 mt-3 dark:border-current-500">

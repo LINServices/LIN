@@ -60,6 +60,13 @@ public partial class Home : IDisposable, INotificationObserver
     };
 
 
+    /// <summary>
+    /// Notificaciones.
+    /// </summary>
+    private static ReadOneResponse<HomeDto>? HomeDTO = null;
+
+
+
 
     /// <summary>
     /// Refrescar los datos de notificaciones.
@@ -76,6 +83,40 @@ public partial class Home : IDisposable, INotificationObserver
         // Rellena los items
         Notifications = items;
         return true;
+
+    }
+
+
+
+
+    /// <summary>
+    /// Refrescar los datos de notificaciones.
+    /// </summary>
+    private async Task<bool> RefreshDataHome()
+    {
+
+        try
+        {
+            if (HomeDTO != null && HomeDTO.Response == Responses.Success)
+                return true;
+
+            // Items
+            var items = await LIN.Access.Inventory.Controllers.Inventories.Home(LIN.Access.Inventory.Session.Instance.Token);
+
+            // Rellena los items
+            HomeDTO = items;
+            Chart?.Set(HomeDTO.Model);
+
+            StateHasChanged();
+            return true;
+
+        }
+        catch (Exception ex) { }
+
+
+
+        return false;
+
 
     }
 
@@ -152,5 +193,39 @@ public partial class Home : IDisposable, INotificationObserver
         };
     }
 
+
+    static string FormatearNumero(decimal numero)
+    {
+        // Definir los límites para las representaciones abreviadas
+        const int mill = 1000000;
+        const int kilo = 1000;
+
+        // Verificar si el número es mayor a un millón
+        if (numero >= mill)
+        {
+            // Representación abreviada en millones
+            return $"{numero / (decimal)mill:F1}M";
+        }
+        // Verificar si el número es mayor a mil
+        else if (numero >= kilo)
+        {
+            // Representación abreviada en miles
+            return $"{numero / (decimal)kilo:F1}K";
+        }
+        // Si el número es menor a mil, no se realiza ninguna abreviatura
+        else
+        {
+            return numero.ToString();
+        }
+    }
+
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+            _ = RefreshDataHome();
+
+        base.OnAfterRender(firstRender);
+    }
 
 }

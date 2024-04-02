@@ -5,69 +5,119 @@ public partial class Chart
 {
 
 
-    List<SalesModel>? Sales = null;
+    /// <summary>
+    /// Home DTO.
+    /// </summary>
+    [Parameter]
+    public HomeDto? HomeDto { get; set; } = null;
 
 
-    public async void GetData()
+
+    /// <summary>
+    /// Ventas de esta semana.
+    /// </summary>
+    public string Value { get; set; } = "VILIES";
+
+
+
+    /// <summary>
+    /// Ventas de esta semana.
+    /// </summary>
+    public string Percent { get; set; } = "PERCENT%";
+
+
+
+    /// <summary>
+    /// Esta cargado.
+    /// </summary>
+    private bool IsLoad = false;
+
+
+
+    /// <summary>
+    /// Después de renderizar.
+    /// </summary>
+    /// <param name="firstRender">Primer renderizado.</param>
+    protected override void OnAfterRender(bool firstRender)
     {
 
-        if (Sales != null)
+        if ((firstRender || !IsLoad) && HomeDto != null)
         {
-            Render();
-            return;
+            Value = FormatearNumero(HomeDto?.WeekSales?.Sum(t => t.Money) ?? 0);
+            Percent = Calcular();
+            _ = Render();
+            IsLoad = true;
+            StateHasChanged();
         }
 
-        var session = LIN.Access.Inventory.Session.Instance;
-        var sales = await LIN.Access.Inventory.Controllers.Outflows.Sales(session.Informacion.ID, 7);
-
-        Sales = sales.Models
-            .GroupBy(s => DateOnly.FromDateTime(s.Date))
-            .Select(group => new SalesModel
-            {
-                Date = new DateTime(group.Key.Year, group.Key.Month, group.Key.Day),
-                Money = group.Sum(s => s.Money)
-            }).ToList();
-
-
-        var dateNow = DateOnly.FromDateTime(DateTime.Now);
-
-        var dateOld = DateOnly.FromDateTime(Sales.LastOrDefault()?.Date ?? DateTime.Now);
-
-
-        var diference = dateNow.ToDateTime(TimeOnly.MinValue) - dateOld.ToDateTime(TimeOnly.MinValue);
-
-        if (diference.Days > 0)
-        {
-
-            for (var i = 1; i <= diference.Days; i++)
-            {
-                Sales.Add(new()
-                {
-                    Date = dateOld.AddDays(i).ToDateTime(TimeOnly.MinValue),
-                    Money = 0
-                });
-            }
-
-        }
-
-
-
-
-
-        StateHasChanged();
-
-
-
-        //await Task.Delay(1000);
-        Render();
+        base.OnAfterRender(firstRender);
     }
 
 
-    protected override void OnInitialized()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public string Calcular()
     {
-        GetData();
-        base.OnInitialized();
+        try
+        {
+
+            if (HomeDto == null)
+                return "nullo";
+
+            return ((HomeDto.LastWeekSalesTotal - HomeDto.WeekSalesTotal) / HomeDto.WeekSalesTotal * 100).ToString("0.#");
+        }
+        catch (Exception ex)
+        {
+            var s = "";
+        }
+        return "error";
     }
+
+
+
+
 
 
     static string FormatearNumero(decimal numero)
@@ -96,12 +146,37 @@ public partial class Chart
     }
 
 
-    public async void Render()
+    public async Task Render()
     {
+        try
+        {
+            // Validar.
+            if (HomeDto == null || HomeDto.WeekSales.Count <= 0)
+                return;
 
-        if (Sales?.Count > 0)
-            await js.InvokeVoidAsync("CharLoad", Sales?.Select(t => t.Date.ToString()), Sales?.Select(t => t.Money));
+            // Invocar ApexChart.
+            await js.InvokeVoidAsync("CharLoad", HomeDto.WeekSales.Select(t => t.Date.ToString()), HomeDto.WeekSales?.Select(t => t.Money));
+
+        }
+        catch (Exception) { }
     }
+
+
+
+    public async void Set(HomeDto dto)
+    {
+        try
+        {
+
+            HomeDto = dto;
+            StateHasChanged();
+        }
+        catch
+        {
+        }
+
+    }
+
 
 
 }
