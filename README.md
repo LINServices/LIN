@@ -2,34 +2,11 @@
   <h1 align="center">
     <img alt="heyform logo" height="60" src="./Img/icono.png">
   </h1>
-  <p>HeyForm is an open-source form builder that allows anyone to create engaging conversational forms for surveys, questionnaires, quizzes, and polls. No coding skills required.</p>
+  <p>LIN Inventory es un proyecto de inventario disponible para todos con el objetico de ser confiable, seguro y multiplataforma.</p>
 </div>
-<p align="center">
-  <a target="_blank" href="https://heyform.net">Website</a> | <a target="_blank" href="https://docs.heyform.net">Documentation</a> | <a target="_blank" href="https://heyform.net/blog">Blog</a> | <a target="_blank" href="https://twitter.com/HeyformHQ">Twitter</a>
-</p>
-
-<img src="./assets/images/screenshot.png" alt="HeyForm" />
 
 
 
-<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 200px; margin-top: 200px; margin-bottom: 50px">
-  <div style="flex: 1;margin-top:20px">
-  <img alt="LIN Inventory logo" height="60" src="./Img/icono.png">
-  </div>
-  <div style="display:flex; width:100%; justify-content: center; align-items: center">
-    <label style="font-size: 30px; font-weight:bold">Inventario</label>
-  </div>
-  <div style="display:flex; width:100%; justify-content: center; align-items: center">
-    <label style="font-size: 17px; text-align:center">
-        LIN Inventory es un proyecto de inventario disponible para todos con el objetico de ser confiable, seguro y multiplataforma.
-    </label>
-  </div>
-   <div style="display:flex; width:100%; justify-content: center; align-items: center">
-    <div style="display:flex; justify-content: center; align-items: center; padding: 5px; font-size:12px; font-weight:bold; height: 20px; background:#3b82f6; width:150px; border-radius: 10px; margin-top: 10px">
-       En Desarrollo Continuo
-    </div>
-  </div>
-</div>
 
 
 # LIN Inventory
@@ -50,10 +27,10 @@ Aplicación para la gestión de inventarios en tiempo real desde las plataformas
 - Multiplataforma. (Android y Windows)
 
 
-![Logo](./Img/icono.png)
-
 
 ## Home
+
+<img alt="heyform logo" height="500" src="./Img/HomeA.jpg">
 
 ![Android](./Img/HomeA.jpg)
 
