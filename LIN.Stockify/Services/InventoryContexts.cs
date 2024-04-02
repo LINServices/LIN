@@ -69,4 +69,26 @@ internal static class InventoryContext
 
 
 
+    /// <summary>
+    /// Tratar de poner el Inventario.
+    /// </summary>
+    public static void PostAndReplace(InventoryDataModel model)
+    {
+        Dictionary.TryGetValue(model.ID, out Models.InventoryContextModel? res);
+
+        if (res != null)
+        {
+            res.Inventory = model;
+            return;
+        }
+
+        Dictionary.Add(model.ID, new()
+        {
+            Inventory = model
+        });
+
+    }
+
+
+
 }

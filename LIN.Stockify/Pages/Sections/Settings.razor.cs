@@ -14,6 +14,11 @@ public partial class Settings
 
 
 
+    string Name = "";
+    string Description = "";
+
+
+
     /// <summary>
     /// Esta cargando.
     /// </summary>
@@ -29,10 +34,23 @@ public partial class Settings
 
 
     /// <summary>
+    /// Contexto de inventario.
+    /// </summary>
+    Services.Models.InventoryContextModel? InventoryContext { get; set; }
+
+
+    /// <summary>
     /// Evento al inicializar.
     /// </summary>
     protected override Task OnInitializedAsync()
     {
+        MainLayout.Configure(new()
+        {
+            OnCenterClick = Save,
+            Section = 1,
+            DockIcon = 3
+        });
+
         Reload();
         return base.OnInitializedAsync();
     }
@@ -44,8 +62,20 @@ public partial class Settings
     /// </summary>
     public async void Reload()
     {
+
+        InventoryContext = Services.InventoryContext.Get(int.Parse(Id));
+
+
+        if (InventoryContext == null)
+            return;
+
+        Name = InventoryContext.Inventory.Nombre;
+        Description = InventoryContext.Inventory.Direction;
+
         // Rellena los datos
         await RetrieveData();
+
+        StateHasChanged();
     }
 
 
@@ -73,6 +103,28 @@ public partial class Settings
         StateHasChanged();
 
     }
+
+
+
+    async void Save()
+    {
+
+
+        if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Description))
+            return;
+
+
+        var response = await LIN.Access.Inventory.Controllers.Inventories.Update(int.Parse(Id), Name, Description, Session.Instance.Token);
+
+
+        if (InventoryContext == null || response.Response != Responses.Success)
+            return;
+
+        InventoryContext.Inventory.Nombre = Name;
+        InventoryContext.Inventory.Direction = Description;
+        StateHasChanged();
+    }
+
 
 
 }

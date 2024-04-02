@@ -50,7 +50,7 @@ public partial class Inventory
 
 
         foreach (var item in result.Models)
-            Services.InventoryContext.Post(item);
+            Services.InventoryContext.PostAndReplace(item);
 
         // Nuevos estados.
         IsLoading = false;

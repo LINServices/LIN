@@ -5,7 +5,7 @@
 <div class="flex flex-grow flex-col w-full h-full overflow-hidden px-4 lg:px-6">
 
     @* Header. *@
-    <LIN.Components.Layout.Header Tittle="Integrantes" GoBack="true" />
+    <LIN.Components.Layout.Header Tittle="Configuración" GoBack="true" />
 
 
     @* Header. *@
@@ -13,8 +13,25 @@
 
         @* Cartas. *@
         <div class="mt-3">
-           
+            <div class="flex flex-col justify-center py-4">
+
+                <div class="flex items-center justify-center flex-col w-full">
+
+                    <div class="w-full">
+                        <label for="small-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                        <input @bind=Name type="text" id="small-input" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 p-2 text-gray-900 placeholder-gray-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 sm:text-xs dark:bg-zinc-900 focus:dark:bg-[#323232] dark:border-zinc-700 dark:text-gray-100">
+                    </div>
+
+                    <div class="w-full mt-3.5">
+                        <label for="small-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
+                        <input @bind=Description type="text" id="small-input" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 p-2 text-gray-900 placeholder-gray-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 sm:text-xs dark:bg-zinc-900 focus:dark:bg-[#323232] dark:border-zinc-700 dark:text-gray-100">
+                    </div>
+
+                </div>
+
+            </div>
         </div>
+
 
         @* Total de resultados. *@
         <label class="text-zinc-400 text-sm">Se encontraron @(Response?.Models.Count ?? 0) resultados</label>
@@ -59,7 +76,7 @@
                             {
                                 <div class="flex items-center bg-white shadow-sm rounded-lg p-3 dark:bg-zinc-900">
 
-                                    <div class="h-10 w-10 p-2 rounded-lg  ring-1 ring-zinc-300 bg-ring-100 dark:ring-zinc-600 ">
+                                    <div class="h-10 w-10 p-2  ring-1 ring-zinc-300 bg-ring-100 dark:ring-zinc-600 rounded-full">
                                         <img class="h-full w-full" src="./img/inventory.png" />
                                     </div>
 
