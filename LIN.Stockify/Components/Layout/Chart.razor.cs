@@ -104,15 +104,14 @@ public partial class Chart
         {
 
             if (HomeDto == null)
-                return "nullo";
+                return "0";
 
             return ((HomeDto.WeekSalesTotal - HomeDto.LastWeekSalesTotal) / HomeDto.LastWeekSalesTotal * 100).ToString("0.#");
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            var s = "";
         }
-        return "error";
+        return "0";
     }
 
 
