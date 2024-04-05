@@ -2,7 +2,7 @@
 <div @onclick="SendEvent" class="flex items-center shadow-sm bg-white rounded-lg p-3 dark:bg-zinc-900 mt-2 justify-between">
 
     <div class="flex items-center">
-        <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+        <div class="flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-zinc-800">
             <span class="font-medium text-gray-600 dark:text-gray-300">@Global.Utilities.Strings.GetInitials(Model.Nombre ?? "")</span>
         </div>
 
@@ -28,7 +28,7 @@
         }
         else
         {
-            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-3 py-1 rounded-2xl dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">No invitado</span>
+            <span class=" text-yellow-800 text-xs font-medium me-2 px-3 py-1 rounded-2xl dark:text-yellow-300 border border-yellow-300">No invitado</span>
         }
 
     </div>
