@@ -246,7 +246,7 @@ public partial class Home : IDisposable, INotificationObserver
         catch (Exception )
         {
         }
-        return "error";
+        return "0";
     }
 
 }

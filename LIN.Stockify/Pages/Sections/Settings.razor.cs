@@ -5,6 +5,22 @@ namespace LIN.Pages.Sections;
 public partial class Settings
 {
 
+
+    /// <summary>
+    /// Drawer de integrantes.
+    /// </summary>
+    private DrawerPeople Drawer = null!;
+
+
+
+    /// <summary>
+    /// Lista de participantes
+    /// </summary>
+    private readonly List<Types.Cloud.Identity.Abstracts.SessionModel<LIN.Types.Inventory.Models.ProfileModel>> Participantes = new();
+
+
+
+
     /// <summary>
     /// Parámetro Id.
     /// </summary>
@@ -109,6 +125,8 @@ public partial class Settings
     async void Save()
     {
 
+        if (Participantes.Count > 0)
+            await SaveParticipants();
 
         if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Description))
             return;
@@ -125,6 +143,25 @@ public partial class Settings
         StateHasChanged();
     }
 
+
+
+    async Task SaveParticipants()
+    {
+
+
+        foreach(var e in Participantes)
+        {
+            var model = new InventoryAcessDataModel
+            {
+                Inventario = int.Parse(Id),
+                ProfileID = e.Profile.ID,
+                Rol = InventoryRoles.Member
+            };
+            await LIN.Access.Inventory.Controllers.InventoryAccess.Create(model, Session.Instance.Token);
+        }
+
+
+    }
 
 
 }
