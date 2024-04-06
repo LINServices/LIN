@@ -110,7 +110,7 @@
                             @foreach (var e in Response.Models ?? [])
                             {
 
-                                <MemberControl Model="e"  State=true></MemberControl>
+                                <MemberControl Model="e"  State=true  OnClick="OpenMember" ></MemberControl>
                                
                             }
                         }
@@ -138,3 +138,5 @@
 
 
 <DrawerPeople @ref="Drawer" OnHide="StateHasChanged" Selected="Participantes" />
+
+<MemberPopup @ref="MemberPopup" OnSuccess="()=>InvokeAsync(StateHasChanged)" />

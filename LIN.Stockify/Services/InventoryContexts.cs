@@ -25,9 +25,9 @@ internal static class InventoryContext
 
 
     /// <summary>
-    /// Tratar de obtener el Inventario.
+    /// Tratar de obtener un producto.
     /// </summary>
-    /// <param name="id">Id del inventario.</param>
+    /// <param name="id">Id del producto.</param>
     public static ProductModel? GetProduct(int id)
     {
 

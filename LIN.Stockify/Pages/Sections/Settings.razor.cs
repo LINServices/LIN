@@ -1,4 +1,5 @@
 ﻿using LIN.Access.Inventory.Controllers;
+using LIN.Components.Popup;
 
 namespace LIN.Pages.Sections;
 
@@ -10,6 +11,13 @@ public partial class Settings
     /// Drawer de integrantes.
     /// </summary>
     private DrawerPeople Drawer = null!;
+
+
+
+    /// <summary>
+    /// Popup del integrante.
+    /// </summary>
+    private MemberPopup MemberPopup { get; set; } = null!;
 
 
 
@@ -161,6 +169,12 @@ public partial class Settings
         }
 
 
+    }
+
+
+    void OpenMember(IntegrantDataModel member)
+    {
+        MemberPopup.Show(member);
     }
 
 

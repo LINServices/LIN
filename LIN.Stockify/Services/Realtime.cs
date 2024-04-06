@@ -199,7 +199,7 @@ internal class Realtime
 
 
         // Visualizar un inflow.
-        SILFFunction viewInflow = new(async (values) =>
+        SILFFunction viewInflow = new((values) =>
         {
 
             // Obtener el parámetro.
@@ -228,7 +228,7 @@ internal class Realtime
 
 
         // Visualizar un outflow.
-        SILFFunction viewOutflow = new(async (values) =>
+        SILFFunction viewOutflow = new( (values) =>
         {
 
             // Obtener el parámetro.

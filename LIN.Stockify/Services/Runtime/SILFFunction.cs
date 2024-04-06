@@ -12,10 +12,10 @@ internal class SILFFunction(Action<List<SILF.Script.Elements.ParameterValue>> ac
 
     public Tipo? Type { get; set; }
     public string Name { get; set; } = string.Empty;
-    public List<Parameter> Parameters { get; set; } = new();
+    public List<Parameter> Parameters { get; set; } = [];
     public Context Context { get; set; } = null!;
 
-    Action<List<SILF.Script.Elements.ParameterValue>> Action = action;
+    readonly Action<List<SILF.Script.Elements.ParameterValue>> Action = action;
 
     public FuncContext Run(Instance instance, List<SILF.Script.Elements.ParameterValue> values, ObjectContext @object)
     {
