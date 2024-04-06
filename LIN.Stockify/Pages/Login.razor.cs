@@ -380,7 +380,7 @@ public partial class Login
         await Task.Delay(4000);
 
         // Esperar la respuesta de login.
-        var (session, response) = await logIn;
+        var (_, response) = await logIn;
 
         // Segun la respuesta.
         switch (response)
