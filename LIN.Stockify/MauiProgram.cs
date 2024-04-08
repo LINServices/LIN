@@ -69,11 +69,13 @@ namespace LIN
             if (currentTheme == AppTheme.Light)
             {
                 currentActivity.Window.SetStatusBarColor(new(247, 248, 253));
+                currentActivity.Window.SetNavigationBarColor(new(247, 248, 253));
                 currentActivity.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)SystemUiFlags.LightStatusBar;
             }
             else
             {
                 currentActivity.Window.SetStatusBarColor(new(0, 0, 0));
+                currentActivity.Window.SetNavigationBarColor(new(0, 0, 0));
                 currentActivity.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)SystemUiFlags.LightStatusBar;
             }
 
