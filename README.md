@@ -28,7 +28,11 @@
 
 ## Home
 
-<img alt="heyform logo" height="500" src="./Img/HomeA.jpg">
+#### Modo claro
+![.Modo claro](./Img/light.png)
+
+#### Modo oscuro
+![.Modo oscuro](./Img/dark.png)
 
 
 ## Login
@@ -59,6 +63,5 @@ Para soporte, correo giraldojhong4@gmail.com
 ![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
 ![Blazor](https://img.shields.io/badge/blazor-%235C2D91.svg?style=for-the-badge&logo=blazor&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
-
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
