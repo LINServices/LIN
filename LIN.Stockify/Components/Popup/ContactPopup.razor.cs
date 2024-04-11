@@ -5,65 +5,51 @@ public partial class ContactPopup
 {
 
     /// <summary>
-    /// Modelo de contacto.
-    /// </summary>
-    private ContactModel? _data;
-
-
-
-    string Img64 => Convert.ToBase64String(Model?.Picture ?? []);
-
-
-
-    /// <summary>
-    /// Obtener / Establecer el modelo.
+    /// Acción al presionar sobre el botón de editar.
     /// </summary>
     [Parameter]
-    public ContactModel? Model
+    public Action<ContactModel> OnEdit { get; set; } = (e) => { };
+
+
+
+    /// <summary>
+    /// Key.
+    /// </summary>
+    private string Key { get; init; } = Guid.NewGuid().ToString();
+
+
+
+    /// <summary>
+    /// Modelo del contacto.
+    /// </summary>
+    public ContactModel? Modelo { get; set; }
+
+
+
+    /// <summary>
+    /// Abrir el modal.
+    /// </summary>
+    public void Show(ContactModel model)
     {
-        get => _data;
-        set
+
+        Modelo = model;
+        StateHasChanged();
+        _ = this.InvokeAsync(() =>
         {
-            _data = value;
-            InvokeAsync(StateHasChanged);
-        }
+            Js.InvokeVoidAsync("ShowModal", $"modal-{Key}", $"btn-{Key}", "close-btn-edit");
+        });
+
     }
 
 
 
     /// <summary>
-    /// Abrir el popup.
+    /// Imagen en base64.
     /// </summary>
-    public async void Show()
-    {
-
-        try
-        {
-            // Abrir el popup.
-            await Js.InvokeVoidAsync("ShowModal", "small-modal", "closeee", "close-btn-send");
-        }
-        catch
-        {
-            MainLayout.Update();
-        }
-
-    }
+    string Img64 => Convert.ToBase64String(Modelo?.Picture ?? []);
 
 
-
-    /// <summary>
-    /// Abrir el popup.
-    /// </summary>
-    public async void Show(ContactModel contact)
-    {
-
-        Model = contact;
-        Show();
-
-    }
-
-
-
+    
     /// <summary>
     /// Enviar el comando al selector.
     /// </summary>
@@ -74,7 +60,7 @@ public partial class ContactPopup
         {
             Services.Realtime.InventoryAccessHub.SendToDevice(e.Id, new()
             {
-                Command = $"viewContact({_data?.Id})"
+                Command = $"viewContact({Modelo?.Id})"
             });
         };
 

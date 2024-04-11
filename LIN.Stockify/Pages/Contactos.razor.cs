@@ -94,8 +94,7 @@ public partial class Contactos
     /// <param name="e">Modelo.</param>
     private static void Go(ContactModel e)
     {
-        MainLayout.ContactPop.Model = e;
-        MainLayout.ContactPop.Show();
+        MainLayout.ContactPop.Show(e);
     }
 
 
