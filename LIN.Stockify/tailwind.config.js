@@ -13,6 +13,7 @@ module.exports = {
         extend: {
             colors: {
 
+                'money':"#52b34c",
                 'current': {
                     '50': '#f3f7ee',
                     '100': '#e4edda',

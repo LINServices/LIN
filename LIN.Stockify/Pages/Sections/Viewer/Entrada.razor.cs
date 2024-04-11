@@ -39,7 +39,10 @@ public partial class Entrada
 
             // Validar respuesta.
             if (inflowDetails.Response == Responses.Success)
+            {
                 Modelo = inflowDetails.Model;
+            }
+
 
             return;
         }
@@ -57,7 +60,11 @@ public partial class Entrada
             var inflowDetails = await Access.Inventory.Controllers.Inflows.Read(inflow.ID, Session.Instance.Token, true);
 
             if (inflowDetails.Response == Responses.Success)
+            {
                 inflow.Details = inflowDetails.Model.Details;
+                inflow.Inversion = inflowDetails.Model.Inversion;
+            }
+
         }
 
         // Establecer el modelo.

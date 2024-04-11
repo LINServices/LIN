@@ -32,3 +32,39 @@
         background-color: #222; /* Cambia este valor al color oscuro del thumb deseado */
     }
 }
+
+
+
+@media not all and (hover: none) and (pointer: coarse) {
+    /* Estilos para la barra de desplazamiento bajo la clase HiddenScroll */
+    .HiddenScroll::-webkit-scrollbar {
+        width: 0px;
+    }
+
+    .HiddenScroll::-webkit-scrollbar-track {
+        border-radius: 9999px;
+    }
+
+    .HiddenScroll::-webkit-scrollbar-track,
+    .HiddenScroll.dark::-webkit-scrollbar-track {
+        background-color: #00FF0000; /* Cambia este valor al color de fondo deseado */
+    }
+
+    .HiddenScroll::-webkit-scrollbar-thumb {
+        border-radius: 9999px;
+    }
+
+    .HiddenScroll::-webkit-scrollbar-thumb,
+    .HiddenScroll.dark::-webkit-scrollbar-thumb {
+        background-color: #d1d5db; /* Cambia este valor al color del thumb deseado */
+    }
+
+    /* Estilos oscuros */
+    .HiddenScroll.dark::-webkit-scrollbar-track {
+        background-color: #333; /* Cambia este valor al color oscuro de fondo deseado */
+    }
+
+    .HiddenScroll.dark::-webkit-scrollbar-thumb {
+        background-color: #222; /* Cambia este valor al color oscuro del thumb deseado */
+    }
+}

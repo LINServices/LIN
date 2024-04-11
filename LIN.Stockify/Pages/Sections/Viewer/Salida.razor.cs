@@ -1,13 +1,11 @@
-﻿using SILF.Script;
-
-namespace LIN.Pages.Sections.Viewer;
+﻿namespace LIN.Pages.Sections.Viewer;
 
 
 public partial class Salida
 {
 
 
-    
+
     /// <summary>
     /// Id de la entrada.
     /// </summary>
@@ -37,7 +35,7 @@ public partial class Salida
         if (inventoryContext == null)
         {
             // Obtener los detalles.
-            var outflowDetails = await LIN.Access.Inventory.Controllers.Outflows.Read(int.Parse(Id), LIN.Access.Inventory.Session.Instance.Token, true);
+            var outflowDetails = await Access.Inventory.Controllers.Outflows.Read(int.Parse(Id), LIN.Access.Inventory.Session.Instance.Token, true);
 
             // Validar respuesta.
             if (outflowDetails.Response == Responses.Success)
@@ -59,7 +57,13 @@ public partial class Salida
             var outflowDetails = await Access.Inventory.Controllers.Outflows.Read(outflow.ID, Session.Instance.Token, true);
 
             if (outflowDetails.Response == Responses.Success)
+            {
                 outflow.Details = outflowDetails.Model.Details;
+                outflow.Inversion = outflowDetails.Model.Inversion;
+                outflow.Ganancia = outflowDetails.Model.Ganancia;
+                outflow.Utilidad = outflowDetails.Model.Utilidad;
+            }
+
         }
 
         // Establecer el modelo.
@@ -105,7 +109,7 @@ public partial class Salida
 
 
 
-   
+
 
 
     public static void Show(int id)
@@ -130,6 +134,69 @@ public partial class Salida
         await LIN.Access.Inventory.Controllers.Outflows.Update(Modelo.ID, newdate.Value, Session.Instance.Token);
         edit = false;
         await this.InvokeAsync(StateHasChanged);
+    }
+
+
+
+    (string, string, string) GetGanancy()
+    {
+
+        string @base = "bg-money/20 dark:bg-green-100/20";
+        string Tittle = "text-money";
+        string svg = "fill-money";
+
+        if (Modelo == null)
+            return (@base, Tittle, svg);
+
+        if (Modelo.Ganancia < Modelo.Inversion)
+        {
+            @base = "bg-red-500/20 dark:bg-red-100/20";
+            Tittle = "text-red-500";
+            svg = "fill-red-500";
+        }
+
+        if (Modelo.Ganancia == Modelo.Inversion)
+        {
+            @base = "bg-orange-500/20 dark:bg-orange-100/20";
+            Tittle = "text-orange-500";
+            svg = "fill-orange-500";
+        }
+
+
+        return (@base, Tittle, svg);
+
+    }
+
+
+    (string, string, string) GetUtilities()
+    {
+
+        
+
+        string @base = "bg-money/20 dark:bg-green-100/20";
+        string Tittle = "text-money";
+        string svg = "fill-money";
+
+        if (Modelo == null)
+            return (@base, Tittle, svg);
+
+        if (Modelo.Utilidad == 0)
+        {
+            @base = "bg-red-500/20 dark:bg-red-100/20";
+            Tittle = "text-red-500";
+            svg = "fill-red-500";
+        }
+
+        if (Modelo.Utilidad < 0)
+        {
+            @base = "bg-orange-500/20 dark:bg-orange-100/20";
+            Tittle = "text-orange-500";
+            svg = "fill-orange-500";
+        }
+
+
+        return (@base, Tittle, svg);
+
     }
 
 }
