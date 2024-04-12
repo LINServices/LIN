@@ -63,6 +63,7 @@ public partial class Entrada
             {
                 inflow.Details = inflowDetails.Model.Details;
                 inflow.Inversion = inflowDetails.Model.Inversion;
+                inflow.Prevision = inflowDetails.Model.Prevision;
             }
 
         }
@@ -136,4 +137,37 @@ public partial class Entrada
         edit = false;
         await this.InvokeAsync(StateHasChanged);
     }
+
+
+    (string, string, string) GetPrevision()
+    {
+
+        string @base = "bg-money/20 dark:bg-green-100/20";
+        string Tittle = "text-money";
+        string svg = "fill-money";
+
+        if (Modelo == null)
+            return (@base, Tittle, svg);
+
+
+        if (Modelo.Prevision < 0)
+        {
+            @base = "bg-red-500/20 dark:bg-red-100/20";
+            Tittle = "text-red-500";
+            svg = "fill-red-500";
+        }
+
+        if (Modelo.Prevision == 0)
+        {
+            @base = "bg-orange-500/20 dark:bg-orange-100/20";
+            Tittle = "text-orange-500";
+            svg = "fill-orange-500";
+        }
+
+
+        return (@base, Tittle, svg);
+
+    }
+
+
 }

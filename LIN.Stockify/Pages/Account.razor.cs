@@ -20,7 +20,7 @@ public partial class Account
         await new LIN.LocalDataBase.Data.UserDB().DeleteUsers();
 
         // Limpiar error.
-        LIN.Services.InventoryContext.Dictionary.Clear();
+        InventoryContext.Dictionary.Clear();
 
         // Limpiar.
         Inventory.Clean();
