@@ -33,10 +33,12 @@ public partial class ContactPopup
     {
 
         Modelo = model;
-        StateHasChanged();
+
         _ = this.InvokeAsync(() =>
         {
-            Js.InvokeVoidAsync("ShowModal", $"modal-{Key}", $"btn-{Key}", "close-btn-edit");
+            StateHasChanged();
+            Js.InvokeVoidAsync("ShowModal", $"modal-{Key}", $"btn-{Key}", "close-btn-send");
+
         });
 
     }
@@ -49,7 +51,7 @@ public partial class ContactPopup
     string Img64 => Convert.ToBase64String(Modelo?.Picture ?? []);
 
 
-    
+
     /// <summary>
     /// Enviar el comando al selector.
     /// </summary>

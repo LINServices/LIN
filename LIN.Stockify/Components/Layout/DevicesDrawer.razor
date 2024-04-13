@@ -2,38 +2,44 @@
 
 
 <!-- drawer component -->
-<div id="@_id" class="flex items-center justify-center fixed bottom-0 left-0 right-0 z-50 w-full overflow-y-auto transition-transform translate-y-full " tabindex="-1" aria-labelledby="drawer-bottom-label">
+<div id="@_id" class="fixed bottom-0 left-0 right-0 z-50 flex w-full translate-y-full items-center justify-center overflow-y-auto transition-transform" tabindex="-1" aria-labelledby="drawer-bottom-label">
 
-    <div class="w-full lg:max-w-lg p-4 bg-white dark:bg-black rounded-t-xl">
+    <div class="w-full rounded-t-xl bg-white p-4 dark:bg-black lg:max-w-lg">
 
-        <div class="flex flex-col mt-5 min-h-[70dvh] max-h-[70dvh] px-3">
+        <div class="min-h-[70dvh] max-h-[70dvh] mt-5 flex flex-col px-3">
 
             @* Header. *@
-            <div class="flex flex-col w-full items-center justify-center mt-5">
+            <div class="mt-5 flex w-full flex-col items-center justify-center">
 
                 <img class="h-10 w-10" src="./img/device.png" />
-                <label class="text-xl mt-2 font-bold dark:text-white">Dispositivos</label>
+                <label class="mt-2 text-xl font-bold dark:text-white">Dispositivos</label>
 
             </div>
 
             @* Componentes. *@
-            <div id="close-all-all" class="flex-1 overflow-y-auto gap-3 mt-2 p-0.5 h-full UIScroll">
+            <div id="close-all-all" class="flex-1 UIScroll mt-2 h-full gap-3 overflow-y-auto p-0.5">
 
-                @if (DevicesList == null)
+                @if (DevicesList == null || DevicesList.Response == Responses.IsLoading)
                 {
-                    <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-zinc-300 w-full py-7 mt-3 dark:border-gray-400">
+                    <div class="border-2 mt-3 flex w-full items-center justify-center rounded-lg border-dashed border-zinc-300 py-7 dark:border-gray-400">
                         <Loader></Loader>
                     </div>
                 }
-                else if (DevicesList.Count <= 0)
+                else if (DevicesList.Response != Responses.Success)
                 {
-                    <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-zinc-300 w-full py-10 mt-3 dark:border-gray-400">
-                        <label class="text-zinc-400 dark:text-gray-200">Sin resultados</label>
+                    <div class="border-2 mt-3 flex w-full items-center justify-center rounded-lg border-dashed border-zinc-300 py-10 dark:border-gray-400">
+                        <label class="text-zinc-400 dark:text-gray-200">Hubo un error</label>
+                    </div>
+                }
+                else if (DevicesList.Models.Count <= 0)
+                {
+                    <div class="border-2 mt-3 flex w-full items-center justify-center rounded-lg border-dashed border-zinc-300 py-10 dark:border-gray-400">
+                        <label class="text-zinc-400 dark:text-gray-200">Sin dispositivos</label>
                     </div>
                 }
                 else
                 {
-                    @foreach (var e in DevicesList)
+                    @foreach (var e in DevicesList.Models)
                     {
                         <DeviceControl Model="e" OnClick="OnInvoke" />
                     }
@@ -42,9 +48,9 @@
             </div>
 
             @* Obtener dispositivos. *@
-            <div class="flex w-full self-end mt-2 items-end justify-center mb-2 gap-2">
-                <button @onclick="GetDevices" type="button" class="px-3 py-2 w-full text-sm font-medium text-center text-white bg-current-500 rounded-lg hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Actualizar</button>
-                <button id="btn-close-@_id" type="button" class="px-3 py-2 w-full text-sm font-medium text-center text-white bg-current-500 rounded-lg hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Aceptar</button>
+            <div class="mb-2 mt-2 flex w-full items-end justify-center gap-2 self-end">
+                <button @onclick="GetDevices" type="button" class="w-full rounded-lg bg-current-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Actualizar</button>
+                <button id="btn-close-@_id" type="button" class="w-full rounded-lg bg-current-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Aceptar</button>
             </div>
 
         </div>

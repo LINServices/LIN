@@ -17,7 +17,7 @@ public partial class DevicesDrawer
     /// Lista de dispositivos.
     /// </summary>
     [Parameter]
-    public static List<Types.Inventory.Models.DeviceModel> DevicesList { get; set; } = null!;
+    public static ReadAllResponse<DeviceModel> DevicesList { get; set; } = null!;
 
 
     /// <summary>
@@ -63,12 +63,12 @@ public partial class DevicesDrawer
         // Items
         var items = await Access.Inventory.Controllers.Profile.ReadDevices(Access.Inventory.Session.Instance.Token);
 
-        // Análisis de respuesta
-        if (items.Response != Responses.Success)
-            return false;
-
         // Rellena los items
-        DevicesList = [.. items.Models.Where(t => t.LocalId != Realtime.DeviceKey)];
+        DevicesList = items;
+
+        // Eliminar dispositivo local.
+        items.Models.RemoveAll(t => t.LocalId == Realtime.DeviceKey);
+
         StateHasChanged();
         return true;
 
