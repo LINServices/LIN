@@ -120,6 +120,19 @@ namespace LIN.LocalDataBase.Data
 
         }
 
+
+        /// <summary>
+        /// Elimina todos los usuarios
+        /// </summary>
+        public async Task Remove(int id)
+        {
+            await Init();
+
+            // Elimina todos los usuarios
+            await Database!.Table<Models.Note>().DeleteAsync(T => T.Id == id);
+
+        }
+
         // <summary>
         /// Elimina todos los usuarios
         /// </summary>
