@@ -1,4 +1,6 @@
-﻿namespace LIN.Pages.Sections.Viewer;
+﻿using LIN.Components.Popup;
+
+namespace LIN.Pages.Sections.Viewer;
 
 
 public partial class Product
@@ -6,6 +8,8 @@ public partial class Product
 
     static Product Instance;
 
+
+    private DeletePopup deletePopup;
 
 
     /// <summary>
@@ -112,6 +116,15 @@ public partial class Product
     public void Edit()
     {
         nav.NavigateTo($"/edit/product/{Modelo?.Id ?? 0}");
+    }
+
+
+
+    public async void Delete()
+    {
+
+        await LIN.Access.Inventory.Controllers.Product.Delete(Modelo.Id, Session.Instance.Token);
+
     }
 
 
