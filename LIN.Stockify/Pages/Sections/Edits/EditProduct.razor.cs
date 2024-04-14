@@ -15,6 +15,10 @@ public partial class EditProduct
 
 
 
+
+    string Img64 => Convert.ToBase64String(Photo ?? []);
+
+
     /// <summary>
     /// Modelo del producto.
     /// </summary>
@@ -30,6 +34,37 @@ public partial class EditProduct
     /// Imagen.
     /// </summary>
     public byte[] Photo { get; set; } = [];
+
+
+    string ErrorMessage = "";
+
+
+
+    bool isNewPhoto = false;
+
+    async void OpenImage()
+    {
+        Photo = await Services.File.OpenImage();
+        isNewPhoto = true;
+        StateHasChanged();
+    }
+
+
+    async void SetImage(byte[] photo)
+    {
+
+        Photo = photo;
+        isNewPhoto = false;
+        StateHasChanged();
+    }
+
+
+    async void DeleteImage()
+    {
+        Photo = [];
+        isNewPhoto = true;
+        StateHasChanged();
+    }
 
 
 
@@ -86,6 +121,7 @@ public partial class EditProduct
         };
 
 
+        SetImage(result.Image);
         Category = (int)Product.Category;
 
         ProductBase = result;
@@ -130,32 +166,50 @@ public partial class EditProduct
             Product.Category = (ProductCategories)Category;
 
 
+            if (!isNewPhoto)
+                Product.Image = null!;
+            else
+                Product.Image = Photo;
+
             // Respuesta del controlador
             var response = await Access.Inventory.Controllers.Product.Update(Product, LIN.Access.Inventory.Session.Instance.Token);
 
+            Product.Image = Photo;
             Product.Details = ProductBase.Details;
 
-            if (response.Response != Responses.Success)
+
+            switch(response.Response)
             {
-                Section = 2;
-                StateHasChanged();
-                return;
+
+                case Responses.Success:
+                    break;
+
+                case Responses.Unauthorized:
+                    Section = 2;
+                    ErrorMessage = "No tienes autorización para modificar este producto.";
+                    StateHasChanged();
+                    return;
+
+                default:
+                    Section = 2;
+                    ErrorMessage = "Hubo un error al modificar este producto.";
+                    StateHasChanged();
+                    return;
             }
+
 
             // Actualizar modelo existente.
             ProductBase.Category = Product.Category;
             ProductBase.Code = Product.Code;
             ProductBase.Description = Product.Description;
             ProductBase.Name = Product.Name;
+            ProductBase.Image = Product.Image;
 
             if (Product.DetailModel != null && ProductBase.DetailModel != null)
             {
                 ProductBase.DetailModel.PrecioCompra = Product.DetailModel.PrecioCompra;
                 ProductBase.DetailModel.PrecioVenta = Product.DetailModel.PrecioVenta;
             }
-
-
-
 
             Section = 1;
             StateHasChanged();
@@ -174,6 +228,11 @@ public partial class EditProduct
 
 
 
+    void GoNormal()
+    {
+       Section = 0;
+        StateHasChanged();
+    }
 
 
 
@@ -204,5 +263,5 @@ public partial class EditProduct
 
 
 
-   
+
 }

@@ -1,4 +1,6 @@
-﻿namespace LIN.Pages.Sections.New;
+﻿using static System.Collections.Specialized.BitVector32;
+
+namespace LIN.Pages.Sections.New;
 
 
 public partial class NewProduct
@@ -65,6 +67,7 @@ public partial class NewProduct
     }
 
 
+    string ErrorMessage = "";
 
     /// <summary>
     /// Crear.
@@ -87,12 +90,25 @@ public partial class NewProduct
             var response = await Access.Inventory.Controllers.Product.Create(Product, LIN.Access.Inventory.Session.Instance.Token);
 
 
-            if (response.Response != Responses.Success)
+            switch (response.Response)
             {
-                Section = 2;
-                StateHasChanged();
-                return;
+
+                case Responses.Success:
+                    break;
+
+                case Responses.Unauthorized:
+                    Section = 2;
+                    ErrorMessage = "No tienes autorización para crear productos en este inventario.";
+                    StateHasChanged();
+                    return;
+
+                default:
+                    Section = 2;
+                    ErrorMessage = "Hubo un error al crear este producto.";
+                    StateHasChanged();
+                    return;
             }
+
 
 
             Section = 1;
@@ -117,6 +133,15 @@ public partial class NewProduct
         }
 
     }
+
+
+
+    void GoNormal()
+    {
+        Section = 0;
+        StateHasChanged();
+    }
+
 
 
 

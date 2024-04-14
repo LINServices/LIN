@@ -58,7 +58,7 @@
                
 
                 <div class="bg-zinc-100/40 h-20 w-20 rounded-lg p-2 backdrop-blur-2xl dark:bg-zinc-900/70">
-                    <img class="h-full w-full" src="./img/inventory.png" />
+                    <img class="h-full w-full" src="@GetImage()" />
                 </div>
 
                 <label class="mt-5 text-2xl font-bold dark:text-zinc-200">@Modelo?.Name</label>
@@ -130,3 +130,4 @@
 </div>
 
 <DeletePopup @ref="deletePopup" Content="¿Eliminar este producto?" OnAccept="Delete"></DeletePopup>
+<AlertPopup @ref="alertPopup"></AlertPopup>

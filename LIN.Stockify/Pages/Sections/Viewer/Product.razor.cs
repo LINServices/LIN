@@ -8,8 +8,9 @@ public partial class Product
 
     static Product Instance;
 
-
     private DeletePopup deletePopup;
+
+    private AlertPopup alertPopup;
 
 
     /// <summary>
@@ -123,9 +124,43 @@ public partial class Product
     public async void Delete()
     {
 
-        await LIN.Access.Inventory.Controllers.Product.Delete(Modelo.Id, Session.Instance.Token);
+        var response = await LIN.Access.Inventory.Controllers.Product.Delete(Modelo.Id, Session.Instance.Token);
+
+        string message;
+
+        switch (response.Response)
+        {
+            case Responses.Success:
+                return;
+
+            case Responses.Unauthorized:
+                message = "No tienes autorización para eliminar este producto.";
+                break;
+                default:
+
+                message = "Hubo un error al eliminar este producto.";
+                break;
+        }
+
+
+        alertPopup.Show(message);
+
 
     }
 
+
+
+    private string GetImage()
+    {
+
+        if (Modelo?.Image.Length <= 0)
+        {
+            return "./img/Products/packages.png";
+        }
+
+        return $"data:image/png;base64,{Convert.ToBase64String(Modelo?.Image ?? [])}";
+
+
+    }
 
 }

@@ -3,37 +3,78 @@
 @inject NavigationManager nav
 
 
-<div class="flex flex-grow flex-col w-full h-full overflow-hidden px-4 lg:px-6 items-center">
+<div class="flex h-full w-full flex-grow flex-col items-center overflow-hidden px-4 lg:px-6">
 
 
     <LIN.Components.Layout.Header Tittle="Editar producto" GoBack="true" />
 
-    <div class="flex flex-grow flex-col h-full w-full max-w-lg overflow-hidden px-1">
+    <div class="flex h-full w-full max-w-lg flex-grow flex-col overflow-hidden px-1">
 
 
         @if (Section == 0)
         {
 
             @* Componentes. *@
-            <div class="flex-1 overflow-y-auto gap-3 mt-4 dl:mt-2 p-0.5 UIScroll">
+            <div class="flex-1 UIScroll mt-4 gap-3 overflow-y-auto p-0.5 dl:mt-2">
 
 
-                <div class="w-full">
-                    <label for="small-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M15.528 2.973a.75.75 0 0 1 .472.696v8.662a.75.75 0 0 1-.472.696l-7.25 2.9a.75.75 0 0 1-.557 0l-7.25-2.9A.75.75 0 0 1 0 12.331V3.669a.75.75 0 0 1 .471-.696L7.443.184l.01-.003.268-.108a.75.75 0 0 1 .558 0l.269.108.01.003zM10.404 2 4.25 4.461 1.846 3.5 1 3.839v.4l6.5 2.6v7.922l.5.2.5-.2V6.84l6.5-2.6v-.4l-.846-.339L8 5.961 5.596 5l6.154-2.461z" />
 
-                            </svg>
+                <div class="mb-2 w-full">
+                    <label for="small-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Imagen</label>
+                    <div @onclick="OpenImage" class="flex w-full appearance-none items-center justify-between rounded-md border border-gray-200 bg-gray-50 p-2 text-gray-900 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-[#2C2C2C] dark:border-zinc-700 dark:text-gray-100 sm:text-xs focus:dark:bg-[#323232]">
+
+
+                        <div class="flex items-center">
+                            @if (Photo == null || Photo.Length <= 0)
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-file-earmark-image h-4 w-4" viewBox="0 0 16 16">
+                                    <path d="M6.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
+                                    <path d="M14 14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM4 1a1 1 0 0 0-1 1v10l2.224-2.224a.5.5 0 0 1 .61-.075L8 11l2.157-3.02a.5.5 0 0 1 .76-.063L13 10V4.5h-2A1.5 1.5 0 0 1 9.5 3V1z" />
+                                </svg>
+                            }
+                            else
+                            {
+                                <img class="h-4 w-4 rounded-full" src="data:image/png;base64,@Img64" alt="Rounded avatar">
+                            }
+
+                            <label class="ml-2 hover:text-current-500">Imagen del producto</label>
+
                         </div>
-                        <input @bind="Product.Name" type="text" id="zip-input" aria-describedby="helper-text-explanation" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 ps-10 p-2 text-gray-900 placeholder-gray-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 sm:text-xs dark:bg-zinc-900 focus:dark:bg-[#323232] dark:border-zinc-700 dark:text-gray-100" required>
+                    
+
+                        <div class="flex items-center">
+                            @if (Photo != null && Photo.Length > 0)
+                            {
+                                <button @onclick:stopPropagation=true @onclick=" DeleteImage">
+                                    <svg class="h-4 w-4 fill-zinc-600 hover:fill-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" /></svg>
+                                </button>
+                            }
+                        </div>
+
+                     
+                        
+
                     </div>
                 </div>
 
-                <div class="w-full mt-3.5">
-                    <label for="small" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoría</label>
-                    <select @bind="Category" id="small" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 p-2 text-gray-900 placeholder-zinc-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 sm:text-xs dark:bg-zinc-900 focus:dark:bg-[#323232] dark:border-zinc-700 dark:text-gray-100">
+
+
+
+                <div class="w-full">
+                    <label for="small-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                    <div class="relative">
+                        <div class="pointer-events-none absolute inset-y-0 start-0 top-0 flex items-center ps-3.5">
+                            <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15.528 2.973a.75.75 0 0 1 .472.696v8.662a.75.75 0 0 1-.472.696l-7.25 2.9a.75.75 0 0 1-.557 0l-7.25-2.9A.75.75 0 0 1 0 12.331V3.669a.75.75 0 0 1 .471-.696L7.443.184l.01-.003.268-.108a.75.75 0 0 1 .558 0l.269.108.01.003zM10.404 2 4.25 4.461 1.846 3.5 1 3.839v.4l6.5 2.6v7.922l.5.2.5-.2V6.84l6.5-2.6v-.4l-.846-.339L8 5.961 5.596 5l6.154-2.461z" />
+                            </svg>
+                        </div>
+                        <input @bind="Product.Name" type="text" id="zip-input" aria-describedby="helper-text-explanation" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 p-2 ps-10 text-gray-900 placeholder-gray-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:border-zinc-700 dark:text-gray-100 sm:text-xs focus:dark:bg-[#323232]" required>
+                    </div>
+                </div>
+
+                <div class="mt-3.5 w-full">
+                    <label for="small" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Categoría</label>
+                    <select @bind="Category" id="small" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 p-2 text-gray-900 placeholder-zinc-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:border-zinc-700 dark:text-gray-100 sm:text-xs focus:dark:bg-[#323232]">
                         <option selected value="0">Selecciona una categoría</option>
                         <option value="1">Tecnología</option>
                         <option value="2">Deporte</option>
@@ -54,53 +95,53 @@
 
 
 
-                <div class="w-full mt-3.5">
-                    <label for="small-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Código</label>
+                <div class="mt-3.5 w-full">
+                    <label for="small-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Código</label>
                     <div class="relative">
-                        <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                        <div class="pointer-events-none absolute inset-y-0 start-0 top-0 flex items-center ps-3.5">
+                            <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0z" />
                             </svg>
                         </div>
-                        <input @bind="Product.Code" type="text" id="zip-input" aria-describedby="helper-text-explanation" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 ps-10 p-2 text-gray-900 placeholder-gray-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 sm:text-xs dark:bg-zinc-900 focus:dark:bg-[#323232] dark:border-zinc-700 dark:text-gray-100"  required>
+                        <input @bind="Product.Code" type="text" id="zip-input" aria-describedby="helper-text-explanation" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 p-2 ps-10 text-gray-900 placeholder-gray-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:border-zinc-700 dark:text-gray-100 sm:text-xs focus:dark:bg-[#323232]"  required>
                     </div>
                 </div>
 
-                <div class="flex w-full mt-3.5 gap-3">
+                <div class="mt-3.5 flex w-full gap-3">
                     <div class="w-full">
-                        <label for="small-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Compra</label>
+                        <label for="small-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Compra</label>
                         <div class="relative">
-                            <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                            <div class="pointer-events-none absolute inset-y-0 start-0 top-0 flex items-center ps-3.5">
+                                <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
                                     <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2z" />
                                 </svg>
                             </div>
-                            <input @bind="Product.DetailModel.PrecioCompra" type="number" id="zip-input" aria-describedby="helper-text-explanation" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 ps-10 p-2 text-gray-900 placeholder-gray-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 sm:text-xs dark:bg-zinc-900 focus:dark:bg-[#323232] dark:border-zinc-700 dark:text-gray-100" placeholder="Precio de compra" required>
+                            <input @bind="Product.DetailModel.PrecioCompra" type="number" id="zip-input" aria-describedby="helper-text-explanation" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 p-2 ps-10 text-gray-900 placeholder-gray-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:border-zinc-700 dark:text-gray-100 sm:text-xs focus:dark:bg-[#323232]" placeholder="Precio de compra" required>
                         </div>
                     </div>
                     <div class="w-full">
-                        <label for="small-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Venta</label>
+                        <label for="small-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Venta</label>
                         <div class="relative">
-                            <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                            <div class="pointer-events-none absolute inset-y-0 start-0 top-0 flex items-center ps-3.5">
+                                <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M2 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 6.586 1zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
                                 </svg>
                             </div>
-                            <input @bind="Product.DetailModel.PrecioVenta" type="number" id="zip-input" aria-describedby="helper-text-explanation" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 ps-10 p-2 text-gray-900 placeholder-gray-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 sm:text-xs dark:bg-zinc-900 focus:dark:bg-[#323232] dark:border-zinc-700 dark:text-gray-100" placeholder="Precio de venta" required>
+                            <input @bind="Product.DetailModel.PrecioVenta" type="number" id="zip-input" aria-describedby="helper-text-explanation" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 p-2 ps-10 text-gray-900 placeholder-gray-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:border-zinc-700 dark:text-gray-100 sm:text-xs focus:dark:bg-[#323232]" placeholder="Precio de venta" required>
                         </div>
                     </div>
                 </div>
 
-                <div class="w-full mt-3.5">
-                    <label for="small-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
-                    <textarea @bind="Product.Description" id="campoInput" rows="4" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 p-2 text-gray-900 placeholder-gray-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 sm:text-xs dark:bg-zinc-900 focus:dark:bg-[#323232] dark:border-zinc-700 dark:text-gray-100" ></textarea>
+                <div class="mt-3.5 w-full">
+                    <label for="small-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
+                    <textarea @bind="Product.Description" id="campoInput" rows="4" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 p-2 text-gray-900 placeholder-gray-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:border-zinc-700 dark:text-gray-100 sm:text-xs focus:dark:bg-[#323232]" ></textarea>
                 </div>
 
             </div>
 
 
-            <div class="flex w-full self-end mt-2 items-end justify-center">
+            <div class="mt-2 flex w-full items-end justify-center self-end">
                
             </div>
 
@@ -108,25 +149,25 @@
         }
         else if (Section == 1)
         {
-            <div class="flex items-center h-full justify-center">
+            <div class="flex h-full items-center justify-center">
                 <Success></Success>
             </div>
         }
 
         else if (Section == 2)
         {
-            <div class="flex flex-col items-center h-full justify-center">
+            <div class="flex h-full flex-col items-center justify-center">
 
                 <Failure />
 
-                <label class="font-bold dark:text-zinc-200">Hubo un error al crear el producto</label>
-                <label class="font-bold text-red-500 dark:text-red-400 mt-1">Volver</label>
+                <label class="font-bold dark:text-zinc-200">@ErrorMessage</label>
+                <label @onclick="GoNormal" class="mt-1 font-bold text-red-500 dark:text-red-400">Volver</label>
             </div>
         }
 
         else if (Section == 3)
         {
-            <div class="flex items-center h-full justify-center">
+            <div class="flex h-full items-center justify-center">
                 <Loader></Loader>
             </div>
         }

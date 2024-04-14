@@ -1,4 +1,6 @@
-﻿namespace LIN.Pages.Sections.New;
+﻿using static System.Collections.Specialized.BitVector32;
+
+namespace LIN.Pages.Sections.New;
 
 
 public partial class NewOutflow
@@ -86,6 +88,8 @@ public partial class NewOutflow
     }
 
 
+    string ErrorMessage = "";
+
 
     /// <summary>
     /// Crear.
@@ -159,15 +163,26 @@ public partial class NewOutflow
         var response = await Access.Inventory.Controllers.Outflows.Create(entry, LIN.Access.Inventory.Session.Instance.Token);
 
 
-        // Si hubo un error
-        if (response.Response != Responses.Success)
+        switch (response.Response)
         {
-            section = 2;
-            StateHasChanged();
-            await Task.Delay(2000);
-            section = 0;
-            return;
+
+            case Responses.Success:
+                break;
+
+            case Responses.Unauthorized:
+                section = 2;
+                ErrorMessage = "No tienes autorización para crear movimientos en este inventario.";
+                StateHasChanged();
+                return;
+
+            default:
+                section = 2;
+                ErrorMessage = "Hubo un error al crear este movimiento.";
+                StateHasChanged();
+                return;
         }
+
+
 
 
         section = 1;
@@ -202,6 +217,15 @@ public partial class NewOutflow
         }
 
     }
+
+
+    void GoNormal()
+    {
+        section = 0;
+        StateHasChanged();
+    }
+
+
 
 
 }

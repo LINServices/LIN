@@ -102,6 +102,9 @@ public partial class NewInventory
         var x = await LIN.Access.Inventory.Controllers.Inventories.Read(response.LastID, Session.Instance.Token);
 
 
+
+
+
         if (x.Response == Responses.Success)
         {
             Pages.Inventory.AddData(x.Model);
