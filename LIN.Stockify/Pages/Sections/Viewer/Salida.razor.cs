@@ -69,7 +69,7 @@ public partial class Salida
                 outflow.Ganancia = outflowDetails.Model.Ganancia;
                 outflow.Utilidad = outflowDetails.Model.Utilidad;
             }
-            else if (inflowDetails.Response == Responses.Unauthorized)
+            else if (outflowDetails.Response == Responses.Unauthorized)
             {
                 Alerta.Show("No tienes autorización para visualizar los movimientos.");
             }
