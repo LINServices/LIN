@@ -1,20 +1,20 @@
 ﻿@inject IJSRuntime JS
 
 
-<div class="flex justify-between items-center w-full pt-4 mt-1">
+<div class="mt-1 flex w-full items-center justify-between pt-4">
 
     @* Sección izquierda *@
     <div class="flex items-center">
         @if (GoBack)
         {
-            <button @onclick="GoBackPage" class="h-9 w-9 mr-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-full h-full fill-zinc-800 hover:fill-zinc-600 dark:fill-zinc-200" viewBox="0 0 16 16">
+            <button @onclick="GoBackPage" class="mr-2 h-9 w-9">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-full w-full fill-zinc-800 hover:fill-zinc-600 dark:fill-zinc-200" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
                 </svg>
             </button>
         }
 
-        <label class="font-bold text-lg dark:text-zinc-200 mt-0.5">@Tittle</label>
+        <label class="mt-0.5 text-lg font-bold dark:text-zinc-200">@Tittle</label>
     </div>
 
 

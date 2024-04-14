@@ -199,4 +199,29 @@ public partial class Salida
 
     }
 
+    private string GetImage()
+    {
+
+
+
+        switch (Modelo?.Type)
+        {
+            case Types.Inventory.Enumerations.OutflowsTypes.Consumo:
+                return "./img/Products/outflows/seller.png";
+            case Types.Inventory.Enumerations.OutflowsTypes.Donacion:
+                return "./img/Products/outflows/donate.png";
+            case Types.Inventory.Enumerations.OutflowsTypes.Fraude:
+                return "./img/Products/outflows/criminal.png";
+            case Types.Inventory.Enumerations.OutflowsTypes.Venta:
+                return "./img/Products/outflows/shop.png";
+            case Types.Inventory.Enumerations.OutflowsTypes.Perdida:
+                return "./img/Products/outflows/lost.png";
+            case Types.Inventory.Enumerations.OutflowsTypes.Caducidad:
+                return "./img/Products/outflows/expired.png";
+            default:
+                return "./img/Products/packages.png";
+        }
+
+    }
+
 }
