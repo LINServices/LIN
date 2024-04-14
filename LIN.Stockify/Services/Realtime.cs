@@ -39,7 +39,7 @@ internal class Realtime
     public static InventoryAccessHub? InventoryAccessHub { get; set; } = null;
 
 
-  
+
 
     /// <summary>
     /// Iniciar el servicio.
@@ -228,7 +228,7 @@ internal class Realtime
 
 
         // Visualizar un outflow.
-        SILFFunction viewOutflow = new( (values) =>
+        SILFFunction viewOutflow = new((values) =>
         {
 
             // Obtener el parámetro.
@@ -474,8 +474,62 @@ internal class Realtime
         };
 
 
+
+        SILFFunction updateProduct = new(async (values) =>
+        {
+
+            // Obtener el parámetro.
+            var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
+
+            // Validar el tipo.
+            if (value is not decimal)
+                return;
+
+            // Id.
+            var id = (int)((value as decimal?) ?? 0);
+
+            // Obtener el contacto.
+            var x = await LIN.Access.Inventory.Controllers.Product.Read(id, Session.Instance.Token);
+
+
+            var context = InventoryContext.Get(x.Model.InventoryId);
+
+
+            var exist = context?.FindProduct(x.Model.Id);
+
+            if (exist == null)
+            {
+                context?.Products?.Models.Add(x.Model);
+                exist = x.Model;
+            }
+            else
+            {
+                exist.Category = x.Model.Category;
+                exist.Code = x.Model.Code;
+                exist.Description = x.Model.Description;
+                exist.Name = x.Model.Name;
+                exist.DetailModel.PrecioCompra = x.Model.DetailModel.PrecioCompra;
+                exist.DetailModel.PrecioVenta = x.Model.DetailModel.PrecioVenta;
+            }
+
+
+            ProductObserver.Update(exist.InventoryId);
+
+
+        })
+        // Propiedades
+        {
+            Name = "updateProduct",
+            Parameters =
+            [
+                new("id", new("number"))
+            ]
+        };
+
+
+
         // Guardar métodos.
-        Actions = [updateContacts, viewContact, viewProduct, addProduct, addInflow, addOutflow, newInvitation, newStateInvitation, viewInflow, viewOutflow];
+        Actions = [updateContacts, viewContact, viewProduct, addProduct, addInflow, addOutflow, newInvitation, newStateInvitation, viewInflow, viewOutflow, updateProduct];
 
     }
 
