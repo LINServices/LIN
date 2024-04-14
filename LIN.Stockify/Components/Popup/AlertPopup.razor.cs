@@ -5,6 +5,9 @@ public partial class AlertPopup
 {
 
 
+    [Parameter]
+    public Action OnAccept { get; set; } = () => { };
+
 
     public string Content { get; set; }
 

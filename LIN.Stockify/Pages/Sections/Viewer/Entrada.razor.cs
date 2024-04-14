@@ -1,10 +1,14 @@
 ﻿
+using LIN.Components.Popup;
+
 namespace LIN.Pages.Sections.Viewer;
 
 
 public partial class Entrada
 {
 
+
+    AlertPopup Alerta;
 
     /// <summary>
     /// Id de la entrada.
@@ -65,6 +69,10 @@ public partial class Entrada
                 inflow.Details = inflowDetails.Model.Details;
                 inflow.Inversion = inflowDetails.Model.Inversion;
                 inflow.Prevision = inflowDetails.Model.Prevision;
+            }
+            else if (inflowDetails.Response == Responses.Unauthorized)
+            {
+                Alerta.Show("No tienes autorización para visualizar los movimientos.");
             }
 
         }
@@ -191,4 +199,5 @@ public partial class Entrada
         }
 
     }
+
 }

@@ -1,9 +1,15 @@
-﻿namespace LIN.Pages.Sections.Viewer;
+﻿using LIN.Components.Popup;
+
+namespace LIN.Pages.Sections.Viewer;
 
 
 public partial class Salida
 {
 
+
+
+
+    AlertPopup Alerta;
 
 
     /// <summary>
@@ -63,7 +69,10 @@ public partial class Salida
                 outflow.Ganancia = outflowDetails.Model.Ganancia;
                 outflow.Utilidad = outflowDetails.Model.Utilidad;
             }
-
+            else if (inflowDetails.Response == Responses.Unauthorized)
+            {
+                Alerta.Show("No tienes autorización para visualizar los movimientos.");
+            }
         }
 
         // Establecer el modelo.
