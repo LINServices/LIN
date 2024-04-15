@@ -341,7 +341,7 @@ internal class Realtime
 
             }
 
-
+            inflow.Model.CountDetails = inflow.Model.Details.Count;
 
             ProductObserver.Update(context.Inventory.ID);
             InflowObserver.Update(context.Inventory.ID);
@@ -398,6 +398,8 @@ internal class Realtime
                     product.DetailModel.Quantity -= item.Cantidad;
 
             }
+
+            outflow.Model.CountDetails = outflow.Model.Details.Count;
 
             ProductObserver.Update(context.Inventory.ID);
             OutflowObserver.Update(context.Inventory.ID);
@@ -504,6 +506,7 @@ internal class Realtime
             }
             else
             {
+                exist.Image = x.Model.Image;
                 exist.Category = x.Model.Category;
                 exist.Code = x.Model.Code;
                 exist.Description = x.Model.Description;
