@@ -157,7 +157,7 @@ public partial class Settings
     {
 
 
-        foreach(var e in Participantes)
+        foreach (var e in Participantes)
         {
             var model = new InventoryAcessDataModel
             {
@@ -175,6 +175,18 @@ public partial class Settings
     void OpenMember(IntegrantDataModel member)
     {
         MemberPopup.Show(member);
+    }
+
+
+
+    void OnDelete(int id)
+    {
+        this.InvokeAsync(() =>
+        {
+            Response?.Models.RemoveAll(t => t.AccessID == id);
+            StateHasChanged();
+        });
+
     }
 
 

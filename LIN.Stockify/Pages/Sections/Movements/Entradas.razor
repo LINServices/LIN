@@ -6,7 +6,7 @@
 
 
 
-<div class="flex flex-grow flex-col w-full h-full overflow-hidden px-4 lg:px-6">
+<div class="flex h-full w-full flex-grow flex-col overflow-hidden px-4 lg:px-6">
 
 
     <LIN.Components.Layout.Header Tittle="Entradas" GoBack="true">
@@ -14,7 +14,7 @@
 
         @* Actualizar. *@
         <button @onclick="()=>GetData(true)" type="button" class="h-9 w-9 rounded-full p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="w-full h-full fill-zinc-800 hover:fill-zinc-600 dark:fill-zinc-200" version="1.1" id="Capa_1" viewBox="0 0 492.883 492.883" xml:space="preserve">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="h-full w-full fill-zinc-800 hover:fill-zinc-600 dark:fill-zinc-200" version="1.1" id="Capa_1" viewBox="0 0 492.883 492.883" xml:space="preserve">
             <g>
             <g>
             <path d="M122.941,374.241c-20.1-18.1-34.6-39.8-44.1-63.1c-25.2-61.8-13.4-135.3,35.8-186l45.4,45.4c2.5,2.5,7,0.7,7.6-3    l24.8-162.3c0.4-2.7-1.9-5-4.6-4.6l-162.4,24.8c-3.7,0.6-5.5,5.1-3,7.6l45.5,45.5c-75.1,76.8-87.9,192-38.6,282    c14.8,27.1,35.3,51.9,61.4,72.7c44.4,35.3,99,52.2,153.2,51.1l10.2-66.7C207.441,421.641,159.441,407.241,122.941,374.241z" />
@@ -22,14 +22,6 @@
              </g>
         </g>
 </svg>
-        </button>
-
-
-        @* Ajustes. *@
-        <button type="button" class="h-9 w-9 rounded-full p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="w-full h-full fill-zinc-800 hover:fill-zinc-600 dark:fill-zinc-200" version="1.1" viewBox="0 0 16 16" xml:space="preserve">
-            <path d="M4.58 1a1 1 0 0 0-.868.504l-3.428 6a1 1 0 0 0 0 .992l3.428 6A1 1 0 0 0 4.58 15h6.84a1 1 0 0 0 .868-.504l3.429-6a1 1 0 0 0 0-.992l-3.429-6A1 1 0 0 0 11.42 1zm5.018 9.696a3 3 0 1 1-3-5.196 3 3 0 0 1 3 5.196" />
-        </svg>
         </button>
 
 
@@ -45,33 +37,33 @@
         <div class="mt-3">
             <div class="flex flex-col justify-center py-4">
 
-                <label class="text-sm mt-0.5 dark:text-gray-300">Entradas</label>
-                <label class="font-bold text-4xl dark:text-gray-100">@(Response?.Models?.Count ?? 0)</label>
+                <label class="mt-0.5 text-sm dark:text-gray-300">Entradas</label>
+                <label class="text-4xl font-bold dark:text-gray-100">@(Response?.Models?.Count ?? 0)</label>
 
-                <div class="flex items-center rounded-lg bg-slate-200 dark:bg-zinc-900 p-1.5 w-40">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-basket3-fill ml-2 w-4 h-4 fill-zinc-500" viewBox="0 0 16 16">
+                <div class="flex w-40 items-center rounded-lg bg-slate-200 p-1.5 dark:bg-zinc-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-basket3-fill ml-2 h-4 w-4 fill-zinc-500" viewBox="0 0 16 16">
                         <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.468 15.426.943 9h14.114l-1.525 6.426a.75.75 0 0 1-.729.574H3.197a.75.75 0 0 1-.73-.574z" />
                     </svg>
-                    <label class=" font-bold text-zinc-700 text-xs mx-2 mt-0.5 dark:text-gray-300">@Contexto?.Inventory.Nombre</label>
+                    <label class="mx-2 mt-0.5 text-xs font-bold text-zinc-700 dark:text-gray-300">@Contexto?.Inventory.Nombre</label>
                 </div>
 
             </div>
         </div>
 
         @* Total de resultados. *@
-        <label class="text-zinc-400 text-sm">Se encontraron @(Response?.Models?.Count ?? 0) resultados</label>
+        <label class="text-sm text-zinc-400">Se encontraron @(Response?.Models?.Count ?? 0) resultados</label>
 
     </div>
 
 
     @* Componentes. *@
-    <div class="flex-1 overflow-auto gap-2 UIScroll">
+    <div class="flex-1 UIScroll gap-2 overflow-auto">
 
 
         @* Cargando *@
         @if (Response == null || IsLoading)
         {
-            <div class="w-full flex items-center justify-center">
+            <div class="flex w-full items-center justify-center">
                 <Loader />
             </div>
         }
@@ -89,7 +81,7 @@
                         @* No hay elementos *@
                         @if (Response.Models.Count <= 0)
                         {
-                            <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-zinc-300 w-full py-7 mt-3 dark:border-gray-400">
+                            <div class="border-2 mt-3 flex w-full items-center justify-center rounded-lg border-dashed border-zinc-300 py-7 dark:border-gray-400">
                                 <label class="text-zinc-400 dark:text-gray-200">No tienes ningún movimiento</label>
                             </div>
                         }
@@ -105,10 +97,19 @@
                         break;
                     }
 
+                @* Sin autorización *@
+                case Responses.Unauthorized:
+                    {
+                        <div class="border-2 mt-3 flex w-full items-center justify-center rounded-lg border-dashed border-zinc-300 py-7 dark:border-gray-400">
+                            <label class="text-zinc-400 dark:text-gray-200">No tienes autorización</label>
+                        </div>
+                        break;
+                    }
+
                 @* Otros *@
                 default:
                     {
-                        <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-zinc-300 w-full py-7 mt-3 dark:border-gray-400">
+                        <div class="border-2 mt-3 flex w-full items-center justify-center rounded-lg border-dashed border-zinc-300 py-7 dark:border-gray-400">
                             <label class="text-zinc-400 dark:text-gray-200">Error al obtener los movimientos</label>
                         </div>
                         break;

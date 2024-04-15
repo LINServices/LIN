@@ -103,7 +103,7 @@ public partial class Product
             case ProductCategories.Alimentos:
                 return ("Alimentos", "./img/Products/food.png");
             case ProductCategories.Agricultura:
-                return ("Hogar y decoración", "./img/Products/garden.png");
+                return ("Agricultura", "./img/Products/garden.png");
             default:
                 return ("", "");
         }

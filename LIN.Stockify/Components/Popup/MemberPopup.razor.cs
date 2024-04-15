@@ -32,6 +32,10 @@ public partial class MemberPopup
     public Action OnSuccess { get; set; } = () => { };
 
 
+    [Parameter]
+    public Action<int> OnDelete { get; set; } = (id) => { };
+
+
 
     int val = 0;
     int Type
@@ -95,6 +99,15 @@ public partial class MemberPopup
     }
 
 
+    async void Delete()
+    {
+        int id = Model.AccessID;
+        var response = await Access.Inventory.Controllers.InventoryAccess.DeleteSomeOne(Model.InventoryID, Model.ProfileID, Session.Instance.Token);
 
+        if (response.Response == Responses.Success)
+        {
+            OnDelete(id);
+        }
+    }
 
 }
