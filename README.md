@@ -1,11 +1,11 @@
 <div align="center">
   <p align="center">
-    <img alt="logo" height="60" src="./Img/icono.png">
+    <img alt="logo" height="60" src="./assets/icono.png">
   </p>
   <p>LIN Inventory es un proyecto de gestión de inventarios, disponible para todos con el objetivo de ser confiable, seguro y multiplataforma.</p>
  <p align="center">
-    <img alt="windows logo" height="20" src="./Img/computer.png">
-    <img alt="android logo" height="20" src="./Img/android.png">
+    <img alt="windows logo" height="20" src="./assets/computer.png">
+    <img alt="android logo" height="20" src="./assets/android.png">
   </p>
 </div>
 
@@ -29,24 +29,24 @@
 ## Home
 
 #### Modo claro
-![.Modo claro](./Img/light.png)
+![.Modo claro](./assets/light.png)
 
 #### Modo oscuro
-![.Modo oscuro](./Img/dark.png)
+![.Modo oscuro](./assets/dark.png)
 
 
 ## Login
 
-![Login en Windows](./Img/LoginW.png)
+![Login en Windows](./assets/LoginW.png)
 
 
 ## Inventario
 
-![Inventario](./Img/InventoryW.jpg)
+![Inventario](./assets/InventoryW.jpg)
 
-![Productos](./Img/ProductsW.jpg)
+![Productos](./assets/ProductsW.jpg)
 
-![Vista de producto](./Img/ProductViewW.jpg)
+![Vista de producto](./assets/ProductViewW.jpg)
 
 
 # Soporte
