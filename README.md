@@ -1,11 +1,11 @@
 <div align="center">
   <p align="center">
-    <img alt="heyform logo" height="60" src="./Img/icono.png">
+    <img alt="logo" height="60" src="./Img/icono.png">
   </p>
   <p>LIN Inventory es un proyecto de gestión de inventarios, disponible para todos con el objetivo de ser confiable, seguro y multiplataforma.</p>
  <p align="center">
-    <img alt="heyform logo" height="20" src="./Img/computer.png">
-    <img alt="heyform logo" height="20" src="./Img/android.png">
+    <img alt="windows logo" height="20" src="./Img/computer.png">
+    <img alt="android logo" height="20" src="./Img/android.png">
   </p>
 </div>
 
