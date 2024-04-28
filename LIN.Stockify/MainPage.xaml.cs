@@ -1,20 +1,26 @@
-﻿namespace LIN
+﻿namespace LIN;
+
+public partial class MainPage : ContentPage
 {
-    public partial class MainPage : ContentPage
+    public MainPage()
     {
-        public MainPage()
+        InitializeComponent();
+
+        Application.Current.RequestedThemeChanged += (s, a) =>
         {
-            InitializeComponent();
-
-            Application.Current.RequestedThemeChanged += (s, a) =>
-            {
-                MauiProgram.Aa();
-            };
+            MauiProgram.SetUIColors();
+        };
+    }
 
 
 
-
-
-        }
+    /// <summary>
+    /// Evento al abrir la app.
+    /// </summary>
+    protected override void OnAppearing()
+    {
+        // Establecer colores.
+        MauiProgram.SetUIColors();
+        base.OnAppearing();
     }
 }

@@ -16,7 +16,7 @@ namespace LIN
         public static string GetPlatform()
         {
 #if ANDROID
-        return "Android";
+            return "Android";
 #elif WINDOWS
             return "Windows";
 #endif
@@ -54,9 +54,10 @@ namespace LIN
 
 
 
-
-
-        public static void Aa()
+        /// <summary>
+        /// En Android, establecer el color de la barra ne navegación al color de la app.
+        /// </summary>
+        public static void SetUIColors()
         {
 #if ANDROID
             var currentActivity = Platform.CurrentActivity;
@@ -78,11 +79,11 @@ namespace LIN
                 currentActivity.Window.SetNavigationBarColor(new(0, 0, 0));
                 currentActivity.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)SystemUiFlags.LightStatusBar;
             }
-
-
-            //currentActivity.Window.SetTitleColor(new(0, 0, 0));
 #endif
         }
+
+
+
 
 
     }
