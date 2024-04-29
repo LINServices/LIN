@@ -20,6 +20,9 @@ internal class Realtime
     public static string DeviceKey { get => LIN.Inventory.Shared.Realtime.DeviceKey;  }
 
 
+    public static InventoryAccessHub InventoryAccessHub { get => LIN.Inventory.Shared.Realtime.InventoryAccessHub;  }
+
+
 
     /// <summary>
     /// Iniciar el servicio.
