@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Contacts", "..\..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Exp.Search", "..\..\Tipos\LIN.Types.Exp.Search\LIN.Types.Exp.Search.csproj", "{758F9FF1-D185-40FE-8719-FB8AFA6E94A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LIN.Inventory.Shared", "..\..\Components\LIN.Inventory.Shared\LIN.Inventory.Shared.csproj", "{A5B561BE-D75F-4B67-9F66-FF566C531AFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,6 +147,14 @@ Global
 		{758F9FF1-D185-40FE-8719-FB8AFA6E94A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{758F9FF1-D185-40FE-8719-FB8AFA6E94A7}.Release|x86.ActiveCfg = Release|x86
 		{758F9FF1-D185-40FE-8719-FB8AFA6E94A7}.Release|x86.Build.0 = Release|x86
+		{A5B561BE-D75F-4B67-9F66-FF566C531AFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5B561BE-D75F-4B67-9F66-FF566C531AFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5B561BE-D75F-4B67-9F66-FF566C531AFA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A5B561BE-D75F-4B67-9F66-FF566C531AFA}.Debug|x86.Build.0 = Debug|Any CPU
+		{A5B561BE-D75F-4B67-9F66-FF566C531AFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5B561BE-D75F-4B67-9F66-FF566C531AFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5B561BE-D75F-4B67-9F66-FF566C531AFA}.Release|x86.ActiveCfg = Release|Any CPU
+		{A5B561BE-D75F-4B67-9F66-FF566C531AFA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

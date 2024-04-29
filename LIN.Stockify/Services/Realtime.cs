@@ -12,32 +12,12 @@ internal class Realtime
 {
 
 
-    /// <summary>
-    /// Id del dispositivo.
-    /// </summary>
-    public static string DeviceName { get; set; } = string.Empty;
-
-
 
     /// <summary>
     /// Id del dispositivo.
     /// </summary>
-    public static string DeviceKey { get; private set; } = string.Empty;
-
-
-
-    /// <summary>
-    /// Funciones
-    /// </summary>
-    public static List<IFunction> Actions { get; set; } = [];
-
-
-
-    /// <summary>
-    /// Hub de tiempo real.
-    /// </summary>
-    public static InventoryAccessHub? InventoryAccessHub { get; set; } = null;
-
+    public static string DeviceName { get => LIN.Inventory.Shared.Realtime.DeviceName; set=>LIN.Inventory.Shared.Realtime.DeviceName = value; }
+    public static string DeviceKey { get => LIN.Inventory.Shared.Realtime.DeviceKey;  }
 
 
 
@@ -47,24 +27,7 @@ internal class Realtime
     public static void Start()
     {
 
-        // Validar si ya existe el hub.
-        if (InventoryAccessHub != null)
-            return;
-
-        // Llave.
-        if (string.IsNullOrWhiteSpace(DeviceKey))
-            DeviceKey = Guid.NewGuid().ToString();
-
-        // Generar nuevo hub.
-        InventoryAccessHub = new(Session.Instance.Token, new()
-        {
-            Name = DeviceName,
-            Platform = MauiProgram.GetPlatform(),
-            LocalId = DeviceKey
-        });
-
-        // Evento.
-        InventoryAccessHub.On += OnReceiveCommand;
+       LIN.Inventory.Shared.Realtime.Start();
 
     }
 
@@ -532,28 +495,7 @@ internal class Realtime
 
 
         // Guardar métodos.
-        Actions = [updateContacts, viewContact, viewProduct, addProduct, addInflow, addOutflow, newInvitation, newStateInvitation, viewInflow, viewOutflow, updateProduct];
-
-    }
-
-
-
-    /// <summary>
-    /// Evento al recibir un comando.
-    /// </summary>
-    /// <param name="e">Comando</param>
-    private static void OnReceiveCommand(object? sender, CommandModel e)
-    {
-
-        // Generar la app.
-        var app = new SILF.Script.App(e.Command);
-
-        // Agregar funciones del framework de Inventory.
-        app.AddDefaultFunctions(Actions);
-
-        // Ejecutar app.
-        app.Run();
-
+        LIN.Inventory.Shared.Realtime.Build([updateContacts, viewContact, viewProduct, addProduct, addInflow, addOutflow, newInvitation, newStateInvitation, viewInflow, viewOutflow, updateProduct]);
     }
 
 
@@ -563,9 +505,7 @@ internal class Realtime
     /// </summary>
     public static void Close()
     {
-        DeviceKey = string.Empty;
-        InventoryAccessHub?.Dispose();
-        InventoryAccessHub = null;
+     LIN.Inventory.Shared.Realtime.Close();
     }
 
 

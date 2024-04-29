@@ -1,14 +1,27 @@
-﻿namespace LIN.Services;
+﻿using LIN.Inventory.Shared.Interfaces;
+
+namespace LIN.Services;
 
 
-internal class File
+internal class File : IOpenFiles
 {
 
 
     /// <summary>
     /// Carga la imagen de perfil
     /// </summary>
-    public static async Task<byte[]> OpenImage()
+    public async Task<byte[]> OpenFile()
+    {
+        return await Open();
+    }
+
+
+
+
+    /// <summary>
+    /// Carga la imagen de perfil
+    /// </summary>
+    public static async Task<byte[]> Open()
     {
 
         // Carga el archivo.

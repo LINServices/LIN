@@ -48,6 +48,8 @@ namespace LIN
 
             Realtime.DeviceName = DeviceInfo.Current.Name;
 
+            LIN.Inventory.Shared.Service.SetOpenFile(new Services.File());
+
             Realtime.Build();
             return builder.Build();
         }

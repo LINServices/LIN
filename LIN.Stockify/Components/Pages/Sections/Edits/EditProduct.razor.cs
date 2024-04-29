@@ -44,7 +44,7 @@ public partial class EditProduct
 
     async void OpenImage()
     {
-        Photo = await Services.File.OpenImage();
+        Photo = await Services.File.Open();
         isNewPhoto = true;
         StateHasChanged();
     }

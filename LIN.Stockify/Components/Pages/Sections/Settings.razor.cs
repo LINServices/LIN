@@ -1,5 +1,4 @@
 ﻿using LIN.Access.Inventory.Controllers;
-using LIN.Components.Popup;
 
 namespace LIN.Components.Pages.Sections;
 

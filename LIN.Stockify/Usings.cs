@@ -15,3 +15,7 @@ global using LIN.Types.Inventory.Models;
 global using LIN.Types.Inventory.Enumerations;
 
 global using LIN.Services.Observers;
+
+global using LIN.Inventory.Shared.Popup;
+
+global using LIN.Inventory.Shared.Utilities;

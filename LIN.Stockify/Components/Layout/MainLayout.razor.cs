@@ -24,7 +24,7 @@ public partial class MainLayout
     /// <summary>
     /// Popup de nuevo contacto.
     /// </summary>
-    public static LIN.Components.Popup.NewContactPopup NewContactPopup { get; set; } = null!;
+    public static NewContactPopup NewContactPopup { get; set; } = null!;
 
 
     /// <summary>
@@ -36,7 +36,7 @@ public partial class MainLayout
     /// <summary>
     /// Popup de contacto.
     /// </summary>
-    public static LIN.Components.Popup.ContactPopup ContactPop { get; set; } = null!;
+    public static ContactPopup ContactPop { get; set; } = null!;
 
 
     public static MainLayout e = null!;

@@ -59,6 +59,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\Components\LIN.Emma.UI\LIN.Emma.UI\LIN.Emma.UI.csproj" />
+		<ProjectReference Include="..\..\..\Components\LIN.Inventory.Shared\LIN.Inventory.Shared.csproj" />
 		<ProjectReference Include="D:\LIN Services\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj" />
 		<ProjectReference Include="D:\LIN Services\AccesoAPI\LIN.Access.Inventory\LIN.Access.Inventory.csproj" />
 		<ProjectReference Include="D:\LIN Services\Clientes\LIN\LIN.LocalDataBase\LIN.LocalDataBase.csproj" />
