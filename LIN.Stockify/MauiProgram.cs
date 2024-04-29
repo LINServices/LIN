@@ -1,6 +1,6 @@
 ﻿#if ANDROID
 using Android.Views;
-using LIN.Pages.Sections;
+using LIN.Components.Pages.Sections;
 
 #endif
 

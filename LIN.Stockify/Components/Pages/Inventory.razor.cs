@@ -1,7 +1,7 @@
 ﻿using LIN.Access.Inventory.Controllers;
 using LIN.Services;
 
-namespace LIN.Pages;
+namespace LIN.Components.Pages;
 
 public partial class Inventory
 {

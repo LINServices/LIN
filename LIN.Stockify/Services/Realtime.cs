@@ -1,7 +1,7 @@
 ﻿using LIN.Access.Inventory.Hubs;
-using LIN.Pages;
-using LIN.Pages.Sections;
-using LIN.Pages.Sections.Viewer;
+using LIN.Components.Pages;
+using LIN.Components.Pages.Sections;
+using LIN.Components.Pages.Sections.Viewer;
 using LIN.Services.Runtime;
 using SILF.Script.Interfaces;
 

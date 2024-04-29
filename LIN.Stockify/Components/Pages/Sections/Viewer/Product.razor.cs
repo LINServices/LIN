@@ -1,6 +1,6 @@
 ﻿using LIN.Components.Popup;
 
-namespace LIN.Pages.Sections.Viewer;
+namespace LIN.Components.Pages.Sections.Viewer;
 
 
 public partial class Product

@@ -1,6 +1,6 @@
 ﻿using LIN.Access.Inventory.Controllers;
 
-namespace LIN.Pages.Sections.Movements;
+namespace LIN.Components.Pages.Sections.Movements;
 
 public partial class Entradas : IInflow, IDisposable
 {

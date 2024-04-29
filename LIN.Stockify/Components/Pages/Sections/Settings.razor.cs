@@ -1,7 +1,7 @@
 ﻿using LIN.Access.Inventory.Controllers;
 using LIN.Components.Popup;
 
-namespace LIN.Pages.Sections;
+namespace LIN.Components.Pages.Sections;
 
 public partial class Settings
 {

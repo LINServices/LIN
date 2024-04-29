@@ -1,7 +1,7 @@
 ﻿using LIN.Access.Inventory.Controllers;
 using LIN.Services;
 
-namespace LIN.Pages.Sections.New;
+namespace LIN.Components.Pages.Sections.New;
 
 
 public partial class NewInventory

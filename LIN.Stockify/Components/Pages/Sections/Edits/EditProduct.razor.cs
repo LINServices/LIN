@@ -1,4 +1,4 @@
-﻿namespace LIN.Pages.Sections.Edits;
+﻿namespace LIN.Components.Pages.Sections.Edits;
 
 
 public partial class EditProduct

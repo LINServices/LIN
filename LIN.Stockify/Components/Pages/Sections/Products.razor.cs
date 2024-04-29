@@ -1,15 +1,11 @@
-﻿using LIN.Access.Inventory.Controllers;
+﻿namespace LIN.Components.Pages.Sections;
 
-
-namespace LIN.Pages.Sections.Movements;
-
-
-public partial class Salidas : IOutflow, IDisposable
+public partial class Products : IProduct, IDisposable
 {
 
 
     /// <summary>
-    /// Id del inventario.
+    /// Id.
     /// </summary>
     [Parameter]
     public string Id { get; set; } = string.Empty;
@@ -24,6 +20,13 @@ public partial class Salidas : IOutflow, IDisposable
 
 
     /// <summary>
+    /// Producto seleccionado.
+    /// </summary>
+    public static ProductModel? Selected { get; set; } = null;
+
+
+
+    /// <summary>
     /// Contexto del inventario.
     /// </summary>
     Services.Models.InventoryContextModel? Contexto { get; set; }
@@ -33,16 +36,7 @@ public partial class Salidas : IOutflow, IDisposable
     /// <summary>
     /// Respuesta.
     /// </summary>
-    private ReadAllResponse<OutflowDataModel>? Response { get; set; } = null;
-
-
-
-    /// <summary>
-    /// Salida seleccionada.
-    /// </summary>
-    public static OutflowDataModel? Selected { get; set; } = null;
-
-
+    private ReadAllResponse<ProductModel>? Response { get; set; } = null;
 
 
 
@@ -55,15 +49,25 @@ public partial class Salidas : IOutflow, IDisposable
         // Obtener el contexto.
         Contexto = Services.InventoryContext.Get(int.Parse(Id));
 
-        OutflowObserver.Add(Contexto?.Inventory.ID ?? 0, this);
-
         // Evaluar el contexto.
         if (Contexto != null)
-            Response = Contexto.Outflows;
+            Response = Contexto.Products;
+        else
+            Contexto = new()
+            {
+                Inventory = new()
+                {
+                    ID = int.Parse(Id),
+                }
+            };
 
         // Evaluar la respuesta.
         if (Response == null)
             GetData();
+
+        ProductObserver.Add(Contexto?.Inventory.ID ?? 0, this);
+
+        _ = Services.Realtime.InventoryAccessHub?.JoinInventory(int.Parse(Id));
 
         // Base.
         base.OnParametersSet();
@@ -71,12 +75,9 @@ public partial class Salidas : IOutflow, IDisposable
 
 
 
-
-
     /// <summary>
     /// Obtener la data.
     /// </summary>
-    /// <param name="force">Es forzado.</param>
     private async void GetData(bool force = false)
     {
 
@@ -89,18 +90,18 @@ public partial class Salidas : IOutflow, IDisposable
         StateHasChanged();
 
         // Obtiene los dispositivos
-        var result = await Outflows.ReadAll(Contexto?.Inventory.ID ?? 0, Session.Instance.Token);
+        var result = await Access.Inventory.Controllers.Product.ReadAll(Contexto?.Inventory.ID ?? 0, Session.Instance.Token);
 
         // Nuevos estados.
         IsLoading = false;
         Response = result;
 
         if (Contexto != null)
-            Contexto.Outflows = Response;
-
+            Contexto.Products = Response;
 
         StateHasChanged();
     }
+
 
 
     /// <summary>
@@ -108,7 +109,11 @@ public partial class Salidas : IOutflow, IDisposable
     /// </summary>
     public void Render()
     {
-        InvokeAsync(StateHasChanged);
+        InvokeAsync(() =>
+        {
+            Response = Contexto?.Products;
+            StateHasChanged();
+        });
     }
 
 
@@ -118,7 +123,7 @@ public partial class Salidas : IOutflow, IDisposable
     /// </summary>
     public void Dispose()
     {
-        OutflowObserver.Remove(this);
+        ProductObserver.Remove(this);
     }
 
 
@@ -130,7 +135,7 @@ public partial class Salidas : IOutflow, IDisposable
     {
         MainLayout.Configure(new()
         {
-            OnCenterClick = GoNew,
+            OnCenterClick = GoCreate,
             Section = 1,
             DockIcon = 0
         });
@@ -141,23 +146,53 @@ public partial class Salidas : IOutflow, IDisposable
 
 
     /// <summary>
-    /// Abrir salida.
+    /// Abrir el producto.
     /// </summary>
-    /// <param name="e"></param>
-    void Go(Types.Inventory.Models.OutflowDataModel e)
+    /// <param name="e">Modelo.</param>
+    void Go(ProductModel e)
     {
         Selected = e;
-        nav.NavigateTo($"/outflow/{e.ID}");
+        nav.NavigateTo("/product");
     }
 
 
 
     /// <summary>
-    /// Abrir new.
+    /// Abrir la entradas.
     /// </summary>
-    void GoNew()
+    void GoEntradas()
     {
-        nav.NavigateTo($"/new/outflow/{Contexto?.Inventory.ID}");
+        nav.NavigateTo($"/inflows/{Contexto?.Inventory.ID}");
+    }
+
+
+
+    /// <summary>
+    /// Abrir integrantes.
+    /// </summary>
+    void GoMembers()
+    {
+        nav.NavigateTo($"/members/{Contexto?.Inventory.ID}");
+    }
+
+
+
+    /// <summary>
+    /// Abrir las salidas.
+    /// </summary>
+    void GoSalidas()
+    {
+        nav.NavigateTo($"/outflows/{Contexto?.Inventory.ID}");
+    }
+
+
+
+    /// <summary>
+    /// Abrir crear.
+    /// </summary>
+    void GoCreate()
+    {
+        nav.NavigateTo($"/new/product/{Contexto?.Inventory.ID}");
     }
 
 

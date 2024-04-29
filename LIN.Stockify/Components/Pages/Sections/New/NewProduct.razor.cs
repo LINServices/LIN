@@ -1,6 +1,6 @@
 ﻿using static System.Collections.Specialized.BitVector32;
 
-namespace LIN.Pages.Sections.New;
+namespace LIN.Components.Pages.Sections.New;
 
 
 public partial class NewProduct

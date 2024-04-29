@@ -1,6 +1,6 @@
 ﻿using LIN.Services;
 
-namespace LIN.Pages;
+namespace LIN.Components.Pages;
 
 
 public partial class Account
