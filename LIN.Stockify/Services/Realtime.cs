@@ -2,7 +2,9 @@
 using LIN.Components.Pages;
 using LIN.Components.Pages.Sections;
 using LIN.Components.Pages.Sections.Viewer;
-using LIN.Services.Runtime;
+using LIN.Inventory.Shared.Services;
+using LIN.Inventory.Shared.Services.Observers;
+using LIN.Inventory.Shared.Services.Runtime;
 using SILF.Script.Interfaces;
 
 namespace LIN.Services;
@@ -128,7 +130,7 @@ internal class Realtime
 
 
 
-            var context = InventoryContext.Get(inventory);
+            var context = LIN.Inventory.Shared.Services. InventoryContext.Get(inventory);
 
             var find = context?.FindProduct(id);
 

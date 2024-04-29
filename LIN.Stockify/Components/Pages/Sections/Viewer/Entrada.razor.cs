@@ -31,7 +31,7 @@ public partial class Entrada
 
 
         // Obtener el Contexto.
-        var inventoryContext = (from context in Services.InventoryContext.Dictionary
+        var inventoryContext = (from context in LIN.Inventory.Shared.Services.InventoryContext.Dictionary
                                 where (context.Value.Inflows ?? new()).Models.Any(t => t.ID == int.Parse(Id))
                                 select context.Value).FirstOrDefault();
 

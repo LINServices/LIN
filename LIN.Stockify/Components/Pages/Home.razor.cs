@@ -1,4 +1,6 @@
-﻿namespace LIN.Components.Pages;
+﻿using LIN.Inventory.Shared.Services.Observers;
+
+namespace LIN.Components.Pages;
 
 
 public partial class Home : IDisposable, INotificationObserver

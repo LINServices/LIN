@@ -1,4 +1,6 @@
 ﻿using LIN.Access.Inventory.Controllers;
+using LIN.Inventory.Shared.Services.Models;
+using LIN.Inventory.Shared.Services.Observers;
 
 namespace LIN.Components.Pages.Sections.Movements;
 
@@ -24,7 +26,7 @@ public partial class Entradas : IInflow, IDisposable
     /// <summary>
     /// Contexto del inventario.
     /// </summary>
-    private Services.Models.InventoryContextModel? Contexto { get; set; }
+    private InventoryContextModel? Contexto { get; set; }
 
 
 
@@ -49,7 +51,7 @@ public partial class Entradas : IInflow, IDisposable
     {
 
         // Obtener el contexto.
-        Contexto = Services.InventoryContext.Get(int.Parse(Id));
+        Contexto = LIN.Inventory.Shared.Services.InventoryContext.Get(int.Parse(Id));
 
         InflowObserver.Add(Contexto?.Inventory.ID ?? 0, this);
 

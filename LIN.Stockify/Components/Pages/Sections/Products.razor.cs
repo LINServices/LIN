@@ -1,4 +1,7 @@
-﻿namespace LIN.Components.Pages.Sections;
+﻿using LIN.Inventory.Shared.Services.Models;
+using LIN.Inventory.Shared.Services.Observers;
+
+namespace LIN.Components.Pages.Sections;
 
 public partial class Products : IProduct, IDisposable
 {
@@ -29,7 +32,7 @@ public partial class Products : IProduct, IDisposable
     /// <summary>
     /// Contexto del inventario.
     /// </summary>
-    Services.Models.InventoryContextModel? Contexto { get; set; }
+    InventoryContextModel? Contexto { get; set; }
 
 
 
@@ -47,7 +50,7 @@ public partial class Products : IProduct, IDisposable
     {
 
         // Obtener el contexto.
-        Contexto = Services.InventoryContext.Get(int.Parse(Id));
+        Contexto = InventoryContext.Get(int.Parse(Id));
 
         // Evaluar el contexto.
         if (Contexto != null)

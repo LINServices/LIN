@@ -1,4 +1,7 @@
-﻿namespace LIN.Components.Layout;
+﻿using LIN.Inventory.Shared.Services.Models;
+using LIN.Inventory.Shared.Services.Observers;
+
+namespace LIN.Components.Layout;
 
 
 public partial class DrawerProducts : IProduct, IDisposable
@@ -48,7 +51,7 @@ public partial class DrawerProducts : IProduct, IDisposable
     /// Evento al mostrar.
     /// </summary>
     [Parameter]
-    public Services.Models.InventoryContextModel Contexto { get; set; } = null!;
+    public InventoryContextModel Contexto { get; set; } = null!;
 
 
 
