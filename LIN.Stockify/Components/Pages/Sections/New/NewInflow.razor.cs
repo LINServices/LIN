@@ -1,4 +1,5 @@
-﻿using LIN.Inventory.Shared.Services.Models;
+﻿using LIN.Inventory.Shared.Drawers;
+using LIN.Inventory.Shared.Services.Models;
 using static System.Collections.Specialized.BitVector32;
 
 namespace LIN.Components.Pages.Sections.New;

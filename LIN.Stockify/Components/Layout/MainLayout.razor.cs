@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using LIN.Inventory.Shared.Drawers;
+using System.Runtime.CompilerServices;
 
 namespace LIN.Components.Layout;
 
@@ -30,7 +31,7 @@ public partial class MainLayout
     /// <summary>
     /// Selector de dispositivos.
     /// </summary>
-    public static LIN.Components.Layout.DevicesDrawer DevicesSelector { get; set; } = null!;
+    public static DevicesDrawer DevicesSelector { get; set; } = null!;
 
 
     /// <summary>

@@ -19,3 +19,4 @@ global using LIN.Inventory.Shared.Services.Observers;
 global using LIN.Inventory.Shared.Popup;
 
 global using LIN.Inventory.Shared.Utilities;
+global using LIN.Inventory.Shared.Drawers;

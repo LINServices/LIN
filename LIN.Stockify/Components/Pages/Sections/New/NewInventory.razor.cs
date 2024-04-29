@@ -1,4 +1,5 @@
 ﻿using LIN.Access.Inventory.Controllers;
+using LIN.Inventory.Shared.Drawers;
 using LIN.Services;
 
 namespace LIN.Components.Pages.Sections.New;

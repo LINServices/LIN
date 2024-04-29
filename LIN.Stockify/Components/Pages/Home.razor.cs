@@ -1,4 +1,5 @@
-﻿using LIN.Inventory.Shared.Services.Observers;
+﻿using LIN.Inventory.Shared.Drawers;
+using LIN.Inventory.Shared.Services.Observers;
 
 namespace LIN.Components.Pages;
 
