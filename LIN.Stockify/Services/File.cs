@@ -17,7 +17,6 @@ internal class File : IOpenFiles
 
 
 
-
     /// <summary>
     /// Carga la imagen de perfil
     /// </summary>

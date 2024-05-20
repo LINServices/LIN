@@ -2,40 +2,37 @@
 @inject NavigationManager nav
 
 
-
 @* Pantalla principal. *@
 <div class="flex justify-center">
-    <div class="w-full bg-white border border-gray-200 rounded-xl shadow dark:bg-zinc-950 dark:border-zinc-800 mt-10 max-w-lg mx-5">
+    <div class="mx-5 mt-10 w-full max-w-lg rounded-xl border border-gray-200 bg-white shadow dark:bg-zinc-950 dark:border-zinc-800">
 
-        <div class="flex flex-col items-center mb-8">
+        <div class="mb-8 flex flex-col items-center">
 
             @* Imagen. *@
             <div class="mt-5">
                 @if (@LIN.Access.Inventory.Session.Instance.Account.Profile.Length <= 0)
                 {
-                    <div class="relative inline-flex items-center justify-center w-20 h-20 overflow-hidden bg-gray-100 rounded-full dark:bg-zinc-800 shadow-lg mb-3">
+                    <div class="relative mb-3 inline-flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-gray-100 shadow-lg dark:bg-zinc-800">
                         <span class="text-2xl text-gray-600 dark:text-gray-300">@Global.Utilities.Strings.GetInitials(Session.Instance.Account.Name)</span>
                     </div>
                 }
                 else
                 {
-                    <img class="w-20 h-20 mb-3 rounded-full shadow-lg" src="/docs/images/people/profile-picture-3.jpg" alt="Bonnie image" />
+                    <img class="mb-3 h-20 w-20 rounded-full shadow-lg" src="/docs/images/people/profile-picture-3.jpg" alt="Bonnie image" />
                 }
             </div>
-
 
             <h5 class="mb-1 text-xl font-bold text-gray-900 dark:text-white">@LIN.Access.Inventory.Session.Instance.Account?.Name</h5>
             <span class="text-sm text-gray-500 dark:text-gray-400">@@@LIN.Access.Inventory.Session.Instance.Account?.Identity?.Unique</span>
 
-            <div class="flex justify-center gap-2 mt-4 w-full px-10">
+            <div class="mt-4 flex w-full justify-center gap-2 px-10">
 
-                <button type="button" class="px-3 py-2 text-sm font-medium text-center text-white bg-current-500 rounded-lg hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800 w-full">Ver mas</button>
-                <button @onclick="Close" type="button" class="px-3 py-2 text-sm font-medium text-center text-zinc-800 bg-white rounded-lg border-2 border-zinc-200 hover:bg-zinc-200 focus:ring-4 focus:outline-none focus:ring-zinc-300 dark:border-0 dark:text-white dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:focus:ring-zinc-800 w-full">Cerrar Sesión</button>
+                <button type="button" class="w-full rounded-lg bg-current-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Ver mas</button>
+                <button @onclick="Close" type="button" class="border-2 w-full rounded-lg border-zinc-200 bg-white px-3 py-2 text-center text-sm font-medium text-zinc-800 hover:bg-zinc-200 focus:ring-4 focus:outline-none focus:ring-zinc-300 dark:border-0 dark:text-white dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:focus:ring-zinc-800">Cerrar Sesión</button>
 
-
-        </div>
+            </div>
         </div>
 
     </div>
-    
+
 </div>
