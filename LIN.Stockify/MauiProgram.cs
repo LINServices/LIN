@@ -46,6 +46,7 @@ namespace LIN
 
 
             Realtime.DeviceName = DeviceInfo.Current.Name;
+            Realtime.DevicePlatform = DeviceInfo.Current.Platform.ToString();
             LIN.Inventory.Shared.Service.SetOpenFile(new Services.File());
 
             Realtime.Build();

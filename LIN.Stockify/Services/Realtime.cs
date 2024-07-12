@@ -2,10 +2,7 @@
 using LIN.Components.Pages;
 using LIN.Components.Pages.Sections;
 using LIN.Components.Pages.Sections.Viewer;
-using LIN.Inventory.Shared.Services;
-using LIN.Inventory.Shared.Services.Observers;
 using LIN.Inventory.Shared.Services.Runtime;
-using SILF.Script.Interfaces;
 
 namespace LIN.Services;
 
@@ -18,11 +15,12 @@ internal class Realtime
     /// <summary>
     /// Id del dispositivo.
     /// </summary>
-    public static string DeviceName { get => LIN.Inventory.Shared.Realtime.DeviceName; set=>LIN.Inventory.Shared.Realtime.DeviceName = value; }
-    public static string DeviceKey { get => LIN.Inventory.Shared.Realtime.DeviceKey;  }
+    public static string DeviceName { get => LIN.Inventory.Shared.Realtime.DeviceName; set => LIN.Inventory.Shared.Realtime.DeviceName = value; }
+    public static string DeviceKey { get => LIN.Inventory.Shared.Realtime.DeviceKey; }
+    public static string DevicePlatform { get => LIN.Inventory.Shared.Realtime.DevicePlatform; set => LIN.Inventory.Shared.Realtime.DevicePlatform = value; }
 
 
-    public static InventoryAccessHub InventoryAccessHub { get => LIN.Inventory.Shared.Realtime.InventoryAccessHub;  }
+    public static InventoryAccessHub InventoryAccessHub { get => LIN.Inventory.Shared.Realtime.InventoryAccessHub; }
 
 
 
@@ -32,7 +30,7 @@ internal class Realtime
     public static void Start()
     {
 
-       LIN.Inventory.Shared.Realtime.Start();
+        LIN.Inventory.Shared.Realtime.Start();
 
     }
 
@@ -130,7 +128,7 @@ internal class Realtime
 
 
 
-            var context = LIN.Inventory.Shared.Services. InventoryContext.Get(inventory);
+            var context = LIN.Inventory.Shared.Services.InventoryContext.Get(inventory);
 
             var find = context?.FindProduct(id);
 
@@ -510,7 +508,7 @@ internal class Realtime
     /// </summary>
     public static void Close()
     {
-     LIN.Inventory.Shared.Realtime.Close();
+        LIN.Inventory.Shared.Realtime.Close();
     }
 
 
