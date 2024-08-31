@@ -1,5 +1,4 @@
 ﻿using LIN.Inventory.Shared.Services.Models;
-using LIN.Inventory.Shared.Services.Observers;
 
 namespace LIN.Components.Pages.Sections;
 

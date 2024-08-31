@@ -1,6 +1,6 @@
 ﻿using LIN.Access.Inventory.Controllers;
-using LIN.Inventory.Shared.Drawers;
 using LIN.Services;
+using LIN.Types.Inventory.Enumerations;
 
 namespace LIN.Components.Pages.Sections.New;
 
@@ -91,7 +91,7 @@ public partial class NewInventory
 
         // Correcto.
         if (response.Response != Responses.Success)
-        { 
+        {
             // Sección.
             section = 0;
             StateHasChanged();
@@ -122,7 +122,7 @@ public partial class NewInventory
 
 
 
-        
+
 
         nav.NavigateTo("/inventory");
         return;

@@ -3,6 +3,7 @@ using LIN.Components.Pages;
 using LIN.Components.Pages.Sections;
 using LIN.Components.Pages.Sections.Viewer;
 using LIN.Inventory.Shared.Services.Runtime;
+using LIN.Types.Contacts.Models;
 
 namespace LIN.Services;
 

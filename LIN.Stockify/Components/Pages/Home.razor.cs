@@ -1,7 +1,4 @@
-﻿using LIN.Inventory.Shared.Drawers;
-using LIN.Inventory.Shared.Services.Observers;
-
-namespace LIN.Components.Pages;
+﻿namespace LIN.Components.Pages;
 
 
 public partial class Home : IDisposable, INotificationObserver
@@ -246,7 +243,7 @@ public partial class Home : IDisposable, INotificationObserver
             var result = ((HomeDTO.Model.TodaySalesTotal - HomeDTO.Model.YesterdaySalesTotal) / HomeDTO.Model.YesterdaySalesTotal * 100);
             return result.ToString("0.#");
         }
-        catch (Exception )
+        catch (Exception)
         {
         }
         return "0";

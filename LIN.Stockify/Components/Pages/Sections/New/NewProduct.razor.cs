@@ -1,5 +1,5 @@
 ﻿using LIN.Inventory.Shared.Services.Models;
-using static System.Collections.Specialized.BitVector32;
+using LIN.Types.Inventory.Enumerations;
 
 namespace LIN.Components.Pages.Sections.New;
 
@@ -61,7 +61,7 @@ public partial class NewProduct
     {
 
         // Obtener el contexto.
-        Contexto = LIN.Inventory.Shared. Services.InventoryContext.Get(int.Parse(Id));
+        Contexto = LIN.Inventory.Shared.Services.InventoryContext.Get(int.Parse(Id));
 
         // Base.
         base.OnParametersSet();

@@ -1,4 +1,6 @@
-﻿namespace LIN.Components.Pages;
+﻿using LIN.Types.Contacts.Models;
+
+namespace LIN.Components.Pages;
 
 
 public partial class Contactos

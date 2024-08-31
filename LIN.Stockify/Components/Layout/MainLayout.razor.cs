@@ -1,7 +1,4 @@
-﻿using LIN.Inventory.Shared.Drawers;
-using System.Runtime.CompilerServices;
-
-namespace LIN.Components.Layout;
+﻿namespace LIN.Components.Layout;
 
 
 public partial class MainLayout
@@ -75,7 +72,7 @@ public partial class MainLayout
 
     public static void Configure(DockSettings settings)
     {
-        
+
         Settings = settings;
         MainLayout.Update();
     }

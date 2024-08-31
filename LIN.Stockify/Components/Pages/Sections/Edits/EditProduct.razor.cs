@@ -1,4 +1,5 @@
 ﻿global using LIN.Inventory.Shared.Services;
+using LIN.Types.Inventory.Enumerations;
 
 namespace LIN.Components.Pages.Sections.Edits;
 
@@ -180,7 +181,7 @@ public partial class EditProduct
             Product.Details = ProductBase.Details;
 
 
-            switch(response.Response)
+            switch (response.Response)
             {
 
                 case Responses.Success:
@@ -232,7 +233,7 @@ public partial class EditProduct
 
     void GoNormal()
     {
-       Section = 0;
+        Section = 0;
         StateHasChanged();
     }
 

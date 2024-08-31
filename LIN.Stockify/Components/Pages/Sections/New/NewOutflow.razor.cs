@@ -1,6 +1,5 @@
-﻿using LIN.Inventory.Shared.Drawers;
-using LIN.Inventory.Shared.Services.Models;
-using static System.Collections.Specialized.BitVector32;
+﻿using LIN.Inventory.Shared.Services.Models;
+using LIN.Types.Inventory.Enumerations;
 
 namespace LIN.Components.Pages.Sections.New;
 
@@ -72,7 +71,7 @@ public partial class NewOutflow
     {
 
         // Obtener el contexto.
-        Contexto = LIN.Inventory.Shared. Services.InventoryContext.Get(int.Parse(Id));
+        Contexto = LIN.Inventory.Shared.Services.InventoryContext.Get(int.Parse(Id));
 
         // Base.
         base.OnParametersSet();

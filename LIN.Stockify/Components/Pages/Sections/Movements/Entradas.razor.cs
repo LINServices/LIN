@@ -1,6 +1,5 @@
 ﻿using LIN.Access.Inventory.Controllers;
 using LIN.Inventory.Shared.Services.Models;
-using LIN.Inventory.Shared.Services.Observers;
 
 namespace LIN.Components.Pages.Sections.Movements;
 
@@ -64,7 +63,7 @@ public partial class Entradas : IInflow, IDisposable
     }
 
 
-    
+
     /// <summary>
     /// Obtener la data.
     /// </summary>

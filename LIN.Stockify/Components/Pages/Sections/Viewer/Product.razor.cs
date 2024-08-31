@@ -1,5 +1,7 @@
 ﻿
 
+using LIN.Types.Inventory.Enumerations;
+
 namespace LIN.Components.Pages.Sections.Viewer;
 
 
@@ -136,7 +138,7 @@ public partial class Product
             case Responses.Unauthorized:
                 message = "No tienes autorización para eliminar este producto.";
                 break;
-                default:
+            default:
 
                 message = "Hubo un error al eliminar este producto.";
                 break;

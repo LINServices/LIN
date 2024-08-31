@@ -1,6 +1,4 @@
 ﻿using LIN.Access.Inventory.Controllers;
-using LIN.Inventory.Shared.Services;
-using LIN.Services;
 
 namespace LIN.Components.Pages;
 
@@ -51,7 +49,7 @@ public partial class Inventory
 
 
         foreach (var item in result.Models)
-           LIN.Inventory.Shared. Services.InventoryContext.PostAndReplace(item);
+            LIN.Inventory.Shared.Services.InventoryContext.PostAndReplace(item);
 
         // Nuevos estados.
         IsLoading = false;
