@@ -2,8 +2,11 @@
 using Android.Views;
 using LIN.Components.Pages.Sections;
 
+
+
 #endif
 
+using LIN.Inventory.Shared.Interfaces;
 using LIN.Services;
 using Microsoft.Extensions.Logging;
 
@@ -34,9 +37,14 @@ namespace LIN
                 });
 
             builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddTransient<IDeviceSelector, DeviceSelector>();
+
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
+
+
+
             builder.Logging.AddDebug();
 #endif
 

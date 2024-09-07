@@ -12,12 +12,10 @@ public partial class Contactos
     private bool IsLoading = false;
 
 
-
     /// <summary>
     /// Instancia.
     /// </summary>
     private static Contactos? _instance = null;
-
 
 
     /// <summary>
@@ -27,8 +25,6 @@ public partial class Contactos
     {
         _instance = this;
     }
-
-
 
 
     /// <summary>

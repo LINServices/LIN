@@ -1,18 +1,13 @@
 ﻿@inherits LayoutComponentBase
-
 @inject NavigationManager Nav
 
-
-<div class="flex flex-grow flex-col w-full h-full overflow-hidden">
+<div class="flex h-full w-full flex-grow flex-col overflow-hidden">
     @Body
 </div>
 
-<div class="w-full min-h-20 h-20 flex items-center justify-center @(ShowNavigation ? "":"hidden")">
-
+<div class="flex h-20 min-h-20 w-full items-center justify-center @(ShowNavigation ? "":"hidden")">
     <BottomNavigation @ref="Navigation" Settings="Settings" />
-
 </div>
-
 
 @* Selector de dispositivos. *@
 <DevicesDrawer @ref="DevicesSelector" />
