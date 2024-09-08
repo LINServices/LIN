@@ -1,9 +1,6 @@
 ﻿#if ANDROID
 using Android.Views;
 using LIN.Components.Pages.Sections;
-
-
-
 #endif
 
 using LIN.Inventory.Shared.Interfaces;
@@ -51,7 +48,6 @@ namespace LIN
             LIN.Access.Auth.Build.Init();
             Build.Init();
             LIN.Access.Search.Build.Init();
-
 
             Realtime.DeviceName = DeviceInfo.Current.Name;
             Realtime.DevicePlatform = DeviceInfo.Current.Platform.ToString();

@@ -146,12 +146,7 @@ internal class Realtime
             }
 
             Products.Selected = find;
-
             Product.Show();
-
-
-
-
 
         })
         // Propiedades

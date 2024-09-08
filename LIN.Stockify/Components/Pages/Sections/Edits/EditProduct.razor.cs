@@ -247,7 +247,6 @@ public partial class EditProduct
             if (ProductBase.DetailModel.PrecioCompra != Product.DetailModel.PrecioCompra)
                 return true;
 
-
             if (ProductBase.DetailModel.PrecioVenta != Product.DetailModel.PrecioVenta)
                 return true;
 

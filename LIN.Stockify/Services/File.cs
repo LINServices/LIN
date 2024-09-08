@@ -6,7 +6,6 @@ namespace LIN.Services;
 internal class File : IOpenFiles
 {
 
-
     /// <summary>
     /// Carga la imagen de perfil
     /// </summary>
@@ -14,7 +13,6 @@ internal class File : IOpenFiles
     {
         return await Open();
     }
-
 
 
     /// <summary>
@@ -47,6 +45,5 @@ internal class File : IOpenFiles
         return [];
 
     }
-
 
 }
