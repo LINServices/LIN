@@ -19,6 +19,9 @@ try {
 
 }
 catch (ex)
-{
-   
+{  
+}
+
+function CleanChar() {
+    document.getElementById("area-chart").innerHTML = "";
 }

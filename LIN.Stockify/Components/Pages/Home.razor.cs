@@ -92,12 +92,12 @@ public partial class Home : IDisposable, INotificationObserver
     /// <summary>
     /// Refrescar los datos de notificaciones.
     /// </summary>
-    private async Task<bool> RefreshDataHome()
+    private async Task<bool> RefreshDataHome(bool force = false)
     {
 
         try
         {
-            if (HomeDTO != null && HomeDTO.Response == Responses.Success)
+            if ((HomeDTO != null && !force) && HomeDTO.Response == Responses.Success)
                 return true;
 
             // Items
@@ -113,10 +113,7 @@ public partial class Home : IDisposable, INotificationObserver
         }
         catch (Exception ex) { }
 
-
-
         return false;
-
 
     }
 
@@ -139,7 +136,6 @@ public partial class Home : IDisposable, INotificationObserver
         NotificationObserver.Add(this);
         base.OnParametersSet();
     }
-
 
 
     /// <summary>

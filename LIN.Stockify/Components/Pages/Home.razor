@@ -49,7 +49,7 @@
 
         <div class="mb-2 mt-3 w-full">
 
-            <Chart @ref="Chart" HomeDto="HomeDTO?.Model" />
+            <Chart @ref="Chart" HomeDto="HomeDTO?.Model" OnRefresh="()=>_=RefreshDataHome(true)" />
 
         </div>
 
