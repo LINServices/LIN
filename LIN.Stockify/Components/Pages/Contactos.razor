@@ -5,7 +5,6 @@
 @* Pantalla *@
 <div class="flex h-full w-full flex-grow flex-col overflow-hidden px-4 lg:px-6">
 
-
     @* Cabeceras *@
     <Header Tittle="Contactos" GoBack="false">
 
@@ -19,9 +18,7 @@
             </g>
             </svg>
         </button>
-
     </Header>
-
 
     @* Header. *@
     <div class="mt-4">
@@ -47,10 +44,7 @@
         {
             <label class="text-sm text-zinc-400">Se encontraron @Response?.Models.Count resultados</label>
         }
-
-
     </div>
-
 
     @* Componentes. *@
     <div class="flex-1 UIScroll gap-3 overflow-auto">
@@ -68,7 +62,6 @@
         {
             switch (Response.Response)
             {
-
                 @* Correctamente *@
                 case Responses.Success:
                     {
@@ -101,8 +94,6 @@
                         break;
                     }
             }
-
         }
-
     </div>
 </div>

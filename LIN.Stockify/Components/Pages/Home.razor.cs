@@ -11,12 +11,10 @@ public partial class Home : IDisposable, INotificationObserver
     private EmmaDrawer EmmaIA { get; set; } = null!;
 
 
-
     /// <summary>
     /// Chart.
     /// </summary>
     private Chart Chart { get; set; } = null!;
-
 
 
     /// <summary>

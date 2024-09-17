@@ -1,10 +1,7 @@
 ﻿@page "/inflows/{Id}"
-
 @inject NavigationManager nav
 
-
 <div class="flex h-full w-full flex-grow flex-col overflow-hidden px-4 lg:px-6">
-
 
     <Header Tittle="Entradas" GoBack="true">
 
@@ -24,8 +21,6 @@
 
 
     </Header>
-
-
 
     @* Header. *@
     <div class="mt-1">
@@ -51,7 +46,6 @@
         <label class="text-sm text-zinc-400">Se encontraron @(Response?.Models?.Count ?? 0) resultados</label>
 
     </div>
-
 
     @* Componentes. *@
     <div class="flex-1 UIScroll gap-2 overflow-auto">
@@ -117,6 +111,5 @@
         }
 
     </div>
-
 
 </div>

@@ -6,7 +6,7 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
 
-        Application.Current.RequestedThemeChanged += (s, a) =>
+        Application.Current!.RequestedThemeChanged += (s, a) =>
         {
             MauiProgram.SetUIColors();
         };

@@ -104,7 +104,6 @@ public partial class Settings
     }
 
 
-
     /// <summary>
     /// Obtiene información desde el servidor
     /// </summary>
@@ -129,8 +128,6 @@ public partial class Settings
 
     }
 
-
-
     async void Save()
     {
 
@@ -151,8 +148,6 @@ public partial class Settings
         InventoryContext.Inventory.Direction = Description;
         StateHasChanged();
     }
-
-
 
     async Task SaveParticipants()
     {
@@ -179,7 +174,6 @@ public partial class Settings
     }
 
 
-
     void OnDelete(int id)
     {
         this.InvokeAsync(() =>
@@ -189,6 +183,5 @@ public partial class Settings
         });
 
     }
-
 
 }

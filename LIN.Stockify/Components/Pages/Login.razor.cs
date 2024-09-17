@@ -424,8 +424,4 @@ public partial class Login
              ShowError(message);
          });
     }
-
-
-
-
 }
