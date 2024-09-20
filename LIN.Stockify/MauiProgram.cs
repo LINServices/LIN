@@ -43,6 +43,7 @@ public static class MauiProgram
 #endif
 
         builder.Services.AddAuthenticationService();
+        LIN.Access.Inventory.Build.Init();
         LIN.Access.Search.Build.Init();
 
         Realtime.DeviceName = DeviceInfo.Current.Name;

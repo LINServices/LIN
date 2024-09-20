@@ -117,11 +117,11 @@ public partial class NewProduct
 
 
 
-            _ = Services.Realtime.InventoryAccessHub.SendCommand(new()
-            {
-                Command = $"addProduct({response.LastID})",
-                Inventory = Contexto?.Inventory.ID ?? 0
-            });
+            //_ = Services.Realtime.InventoryAccessHub.SendCommand(new()
+            //{
+            //    Command = $"addProduct({response.LastID})",
+            //    Inventory = Contexto?.Inventory.ID ?? 0
+            //});
 
 
             await Task.Delay(3000);
