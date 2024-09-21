@@ -191,8 +191,6 @@ public partial class NewInflow
         section = 1;
         StateHasChanged();
 
-        await deviceManager.SendCommand($"addInflow({response.LastID}, true)", Contexto?.Inventory.ID);
-
         await Task.Delay(2000);
         section = 0;
         StateHasChanged();

@@ -115,15 +115,6 @@ public partial class NewProduct
             Section = 1;
             StateHasChanged();
 
-
-
-            //_ = Services.Realtime.InventoryAccessHub.SendCommand(new()
-            //{
-            //    Command = $"addProduct({response.LastID})",
-            //    Inventory = Contexto?.Inventory.ID ?? 0
-            //});
-
-
             await Task.Delay(3000);
             Section = 0;
             StateHasChanged();
