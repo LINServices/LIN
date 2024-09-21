@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Exp.Search", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Inventory.Shared", "..\..\Components\LIN.Inventory.Shared\LIN.Inventory.Shared.csproj", "{A5B561BE-D75F-4B67-9F66-FF566C531AFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LIN.Inventory.Realtime", "..\..\Components\LIN.Inventory.Realtime\LIN.Inventory.Realtime.csproj", "{97DB9853-C1F7-424E-9ED7-7BD5A8CD0E02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Inventory.Realtime", "..\..\Components\LIN.Inventory.Realtime\LIN.Inventory.Realtime.csproj", "{97DB9853-C1F7-424E-9ED7-7BD5A8CD0E02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

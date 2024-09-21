@@ -2,8 +2,7 @@
 
 namespace LIN.Services;
 
-
-internal class File : IOpenFiles
+public class File : IOpenFiles
 {
 
     /// <summary>
@@ -18,7 +17,7 @@ internal class File : IOpenFiles
     /// <summary>
     /// Carga la imagen de perfil
     /// </summary>
-    public static async Task<byte[]> Open()
+    private static async Task<byte[]> Open()
     {
 
         // Carga el archivo.

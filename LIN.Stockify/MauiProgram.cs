@@ -1,69 +1,52 @@
 ﻿#if ANDROID
 using Android.Views;
-using LIN.Components.Pages.Sections;
 #endif
 
+using LIN.Access.Auth;
+using LIN.Inventory.Realtime.Extensions;
 using LIN.Inventory.Shared.Interfaces;
 using LIN.Services;
 using Microsoft.Extensions.Logging;
-using LIN.Access.Auth;
-using LIN.Inventory.Realtime.Extensions;
 namespace LIN;
 
 public static class MauiProgram
 {
 
-    public static string GetPlatform()
-    {
-#if ANDROID
-        return "Android";
-#elif WINDOWS
-        return "Windows";
-#endif
-    }
-
-
+    /// <summary>
+    /// Nueva estancia de la aplicación.
+    /// </summary>
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-            });
+        builder.UseMauiApp<App>();
 
+        // WebView.
         builder.Services.AddMauiBlazorWebView();
-        builder.Services.AddTransient<IDeviceSelector, DeviceSelector>();
 
+        // Local services.
+        builder.Services.AddTransient<IDeviceSelector, DeviceSelector>();
+        builder.Services.AddAuthenticationService();
+        builder.Services.AddRealTime();
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
         builder.Logging.AddDebug();
 #endif
 
-        builder.Services.AddAuthenticationService();
-
-
-        builder.Services.AddRealTime();
-
-
+        // Acceso a datos.
         LIN.Access.Inventory.Build.Init();
         LIN.Access.Search.Build.Init();
 
-        //Realtime.DeviceName = DeviceInfo.Current.Name;
-        //Realtime.DevicePlatform = DeviceInfo.Current.Platform.ToString();
-        LIN.Inventory.Shared.Service.SetOpenFile(new Services.File());
-
-      //  Realtime.Build();
+        // Archivos.
+        builder.Services.AddSingleton<IOpenFiles, Services.File>();
 
         var app = builder.Build();
 
-        app.Services.UseRealTime(DeviceInfo.Current.Name, Scripts.Get());
+        // Usar servicios de tiempo real.
+        app.Services.UseRealTime(DeviceInfo.Current.Name, DeviceInfo.Current.Platform.ToString(), Scripts.Get());
 
         return app;
     }
-
 
 
     /// <summary>
@@ -93,4 +76,5 @@ public static class MauiProgram
         }
 #endif
     }
+
 }

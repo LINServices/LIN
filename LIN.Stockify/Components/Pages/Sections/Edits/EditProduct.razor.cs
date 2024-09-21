@@ -3,10 +3,8 @@ using LIN.Types.Inventory.Enumerations;
 
 namespace LIN.Components.Pages.Sections.Edits;
 
-
 public partial class EditProduct
 {
-
 
     /// <summary>
     /// Id del producto.
@@ -47,7 +45,7 @@ public partial class EditProduct
 
     async void OpenImage()
     {
-        Photo = await Services.File.Open();
+        Photo = await openFiles.OpenFile();
         isNewPhoto = true;
         StateHasChanged();
     }
