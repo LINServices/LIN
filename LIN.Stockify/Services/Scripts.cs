@@ -1,48 +1,19 @@
-﻿using LIN.Access.Inventory.Hubs;
-using LIN.Components.Pages;
+﻿using LIN.Components.Pages;
 using LIN.Components.Pages.Sections;
 using LIN.Components.Pages.Sections.Viewer;
 using LIN.Inventory.Shared.Services.Runtime;
-using LIN.Types.Contacts.Models;
+using SILF.Script.Interfaces;
 
 namespace LIN.Services;
 
-
-internal class Realtime
+internal class Scripts
 {
-
-
-
-    /// <summary>
-    /// Id del dispositivo.
-    /// </summary>
-    public static string DeviceName { get => LIN.Inventory.Shared.Realtime.DeviceName; set => LIN.Inventory.Shared.Realtime.DeviceName = value; }
-    public static string DeviceKey { get => LIN.Inventory.Shared.Realtime.DeviceKey; }
-    public static string DevicePlatform { get => LIN.Inventory.Shared.Realtime.DevicePlatform; set => LIN.Inventory.Shared.Realtime.DevicePlatform = value; }
-
-
-    public static InventoryAccessHub InventoryAccessHub { get => LIN.Inventory.Shared.Realtime.InventoryAccessHub; }
-
-
-
-    /// <summary>
-    /// Iniciar el servicio.
-    /// </summary>
-    public static void Start()
-    {
-
-        LIN.Inventory.Shared.Realtime.Start();
-
-    }
-
-
 
     /// <summary>
     /// Construye las funciones.
     /// </summary>
-    public static void Build()
+    public static List<IFunction> Get()
     {
-
 
         // Función de actualizar contactos.
         SILFFunction updateContacts = new((values) =>
@@ -54,7 +25,6 @@ internal class Realtime
             Name = "updateCt",
             Parameters = []
         };
-
 
         // Visualizar un contacto.
         SILFFunction viewContact = new(async (values) =>
@@ -99,8 +69,6 @@ internal class Realtime
                 new("id", new("number"))
             ]
         };
-
-
 
         // Visualizar un producto.
         SILFFunction viewProduct = new(async (values) =>
@@ -493,18 +461,37 @@ internal class Realtime
 
 
 
+        SILFFunction deleteProduct = new((values) =>
+        {
+
+            // Obtener el parámetro.
+            var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
+
+            // Validar el tipo.
+            if (value is not decimal)
+                return;
+
+            // Id.
+            var id = (int)((value as decimal?) ?? 0);
+
+            var context = InventoryContext.GetProduct(id);
+            if (context == null)
+                return;
+
+            context.Statement = Types.Inventory.Enumerations.ProductBaseStatements.Deleted;
+            ProductObserver.Update(context.InventoryId);
+        })
+        // Propiedades
+        {
+            Name = "deleteProduct",
+            Parameters =
+        [
+            new("id", new("number"))
+        ]
+        };
+
         // Guardar métodos.
-        LIN.Inventory.Shared.Realtime.Build([updateContacts, viewContact, viewProduct, addProduct, addInflow, addOutflow, newInvitation, newStateInvitation, viewInflow, viewOutflow, updateProduct]);
-    }
-
-
-
-    /// <summary>
-    /// Cerrar conexión.
-    /// </summary>
-    public static void Close()
-    {
-        LIN.Inventory.Shared.Realtime.Close();
+        return [updateContacts, viewContact, viewProduct, addProduct, addInflow, addOutflow, newInvitation, newStateInvitation, viewInflow, viewOutflow, updateProduct, deleteProduct];
     }
 
 

@@ -1,8 +1,9 @@
-﻿using LIN.Inventory.Shared.Interfaces;
+﻿using LIN.Inventory.Realtime.Manager;
+using LIN.Inventory.Shared.Interfaces;
 
 namespace LIN.Services;
 
-public class DeviceSelector : IDeviceSelector
+public class DeviceSelector(IDeviceManager deviceManager) : IDeviceSelector
 {
 
     public void Send(string command)
@@ -10,10 +11,7 @@ public class DeviceSelector : IDeviceSelector
         // Nuevo onInvoque.
         MainLayout.DevicesSelector.OnInvoke = (e) =>
             {
-                Services.Realtime.InventoryAccessHub.SendToDevice(e.Id, new()
-                {
-                    Command = command
-                });
+                deviceManager.SendToDevice(command, e.Id);
             };
 
         Components.Layout.MainLayout.DevicesSelector.Show();

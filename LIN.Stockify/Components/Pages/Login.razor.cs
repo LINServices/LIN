@@ -1,6 +1,5 @@
 ﻿namespace LIN.Components.Pages;
 
-
 public partial class Login
 {
 
@@ -228,7 +227,7 @@ public partial class Login
             case Responses.Success:
 
                 // Iniciar servicios de tiempo real.
-                Services.Realtime.Start();
+                deviceManager.StartSession(Session!.Token);
 
                 // Obtener local db.
                 LocalDataBase.Data.UserDB database = new();
@@ -371,7 +370,10 @@ public partial class Login
         await Task.Delay(4000);
 
         // Esperar la respuesta de login.
-        var (_, response) = await logIn;
+        var (session, response) = await logIn;
+
+        // Iniciar servicios de tiempo real.
+        deviceManager.StartSession(session!.Token);
 
         // Segun la respuesta.
         switch (response)

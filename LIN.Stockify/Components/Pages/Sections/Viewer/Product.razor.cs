@@ -47,10 +47,7 @@ public partial class Product
         // Nuevo onInvoque.
         MainLayout.DevicesSelector.OnInvoke = (e) =>
         {
-            Services.Realtime.InventoryAccessHub.SendToDevice(e.Id, new()
-            {
-                Command = $"viewProduct({Modelo?.InventoryId},{Modelo?.Id})"
-            });
+            deviceManager.SendToDevice($"viewProduct({Modelo?.InventoryId},{Modelo?.Id})", e.Id);
         };
 
         Components.Layout.MainLayout.DevicesSelector.Show();

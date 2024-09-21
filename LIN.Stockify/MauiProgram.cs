@@ -7,7 +7,7 @@ using LIN.Inventory.Shared.Interfaces;
 using LIN.Services;
 using Microsoft.Extensions.Logging;
 using LIN.Access.Auth;
-
+using LIN.Inventory.Realtime.Extensions;
 namespace LIN;
 
 public static class MauiProgram
@@ -43,15 +43,25 @@ public static class MauiProgram
 #endif
 
         builder.Services.AddAuthenticationService();
+
+
+        builder.Services.AddRealTime();
+
+
         LIN.Access.Inventory.Build.Init();
         LIN.Access.Search.Build.Init();
 
-        Realtime.DeviceName = DeviceInfo.Current.Name;
-        Realtime.DevicePlatform = DeviceInfo.Current.Platform.ToString();
+        //Realtime.DeviceName = DeviceInfo.Current.Name;
+        //Realtime.DevicePlatform = DeviceInfo.Current.Platform.ToString();
         LIN.Inventory.Shared.Service.SetOpenFile(new Services.File());
 
-        Realtime.Build();
-        return builder.Build();
+      //  Realtime.Build();
+
+        var app = builder.Build();
+
+        app.Services.UseRealTime(DeviceInfo.Current.Name, Scripts.Get());
+
+        return app;
     }
 
 

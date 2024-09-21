@@ -1,6 +1,6 @@
 ﻿@page "/product"
 @inject NavigationManager nav
-
+@inject IDeviceManager deviceManager
 
 <style>
     .bg-image {
@@ -34,7 +34,7 @@
 
     <div class="UIScroll flex w-full flex-col items-center overflow-y-auto overflow-x-visible">
 
-        <div class="-z-10 blur-[40px] absolute mt-8 flex h-20 w-full max-w-lg justify-center lg:blur-[70px] lg:mt-6">
+        <div class="-z-10 absolute mt-8 flex h-20 w-full max-w-lg justify-center blur-[40px] lg:blur-[70px] lg:mt-6">
 
 
             <div class="h-full w-20 animate-pulse rounded-full bg-blue-600 dark:bg-blue-500">

@@ -111,10 +111,7 @@ public partial class Entrada
         // Nuevo onInvoque.
         MainLayout.DevicesSelector.OnInvoke = (e) =>
         {
-            Services.Realtime.InventoryAccessHub.SendToDevice(e.Id, new()
-            {
-                Command = $"viewInflow({Modelo?.ID})"
-            });
+            deviceManager.SendToDevice($"viewInflow({Modelo?.ID})", e.Id);
         };
 
         Components.Layout.MainLayout.DevicesSelector.Show();

@@ -28,7 +28,7 @@ public partial class Account
         Home.Clean();
 
         // Limpiar Hub.
-        Realtime.Close();
+        deviceManager.CloseSession();
 
         // Navegar al inicio.
         nav.NavigateTo("/", true, true);
