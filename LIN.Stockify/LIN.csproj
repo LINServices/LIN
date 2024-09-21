@@ -66,6 +66,5 @@
 		<ProjectReference Include="D:\LIN Services\Tipos\LIN.Types.Cloud.Identity\LIN.Types.Cloud.Identity.csproj" />
 		<ProjectReference Include="D:\LIN Services\Tipos\LIN.Types.Inventory\LIN.Types.Inventory.csproj" />
 		<ProjectReference Include="D:\LIN Services\Tipos\LIN.Types\LIN.Types.csproj" />
-		<ProjectReference Include="D:\SILF\SILF\SILF.Script\SILF.Script.csproj" />
 	</ItemGroup>
 </Project>
