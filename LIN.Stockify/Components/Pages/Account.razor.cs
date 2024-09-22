@@ -19,8 +19,8 @@ public partial class Account
         // Eliminar cuentas.
         await new LIN.LocalDataBase.Data.UserDB().DeleteUsers();
 
-        // Limpiar error.
-        InventoryContext.Dictionary.Clear();
+        // Limpiar error
+        inventoryManager.Clear();
 
         // Limpiar.
         Inventory.Clean();

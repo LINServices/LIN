@@ -1,5 +1,8 @@
 ﻿
 
+using LIN.Inventory.Realtime.Manager.Models;
+using LIN.Inventory.Realtime.Manager;
+
 namespace LIN.Components.Pages.Sections.Viewer;
 
 
@@ -30,10 +33,7 @@ public partial class Entrada
     {
 
 
-        // Obtener el Contexto.
-        var inventoryContext = (from context in LIN.Inventory.Shared.Services.InventoryContext.Dictionary
-                                where (context.Value.Inflows ?? new()).Models.Any(t => t.ID == int.Parse(Id))
-                                select context.Value).FirstOrDefault();
+        InventoryContext? inventoryContext = InventoryManager.FindContextByInflow(int.Parse(Id));
 
         // Validar.
         if (inventoryContext == null)

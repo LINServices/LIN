@@ -1,5 +1,4 @@
-﻿global using LIN.Inventory.Shared.Services;
-using LIN.Types.Inventory.Enumerations;
+﻿using LIN.Types.Inventory.Enumerations;
 
 namespace LIN.Components.Pages.Sections.Edits;
 
@@ -90,7 +89,7 @@ public partial class EditProduct
     {
 
         // Obtener el contexto.
-        var result = InventoryContext.GetProduct(int.Parse(Id));
+        var result = InventoryManager.GetProduct(int.Parse(Id));
 
 
         if (result == null)

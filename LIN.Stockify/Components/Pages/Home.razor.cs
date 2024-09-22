@@ -1,7 +1,10 @@
-﻿namespace LIN.Components.Pages;
+﻿using LIN.Inventory.Realtime.Manager.Observers;
+using LIN.Inventory.Realtime.Manager.Observers.Abstractions;
+
+namespace LIN.Components.Pages;
 
 
-public partial class Home : IDisposable, INotificationObserver
+public partial class Home : IDisposable, INotificationModelObserver
 {
 
 

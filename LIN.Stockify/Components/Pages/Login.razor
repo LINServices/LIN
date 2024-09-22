@@ -4,10 +4,8 @@
 @* Propiedades *@
 <PageTitle>Iniciar Sesión</PageTitle>
 
-
 @* Pantalla *@
 <div class="grid-cols-1 px-[-20px] grid max-h-dvh min-h-dvh w-full dl:grid-cols-2">
-
 
     @* Contenido *@
     <div class="flex w-full items-center justify-center p-3">
@@ -172,7 +170,6 @@
             @* Cargando *@
             else
             {
-
                 <div class="flex flex-col items-center justify-center">
                     <Loader />
                     <h5 class="mt-2 text-sm font-bold text-gray-600 dark:text-gray-300">@LogMessage</h5>
@@ -181,21 +178,16 @@
                         <label @onclick="CancelPasskey" class="text-sm hover:text-current-500 dark:text-gray-400">Cancelar</label>
                     }
                 </div>
-
             }
 
         </div>
 
     </div>
 
-
     @* Imagen *@
     <div class="hidden rounded-lg p-3 dl:block dl:w-full">
-
         <div class="bg-image h-full w-full rounded-lg">
         </div>
-
     </div>
-
 
 </div>

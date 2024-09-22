@@ -1,6 +1,5 @@
 ﻿namespace LIN.Components.Layout;
 
-
 public partial class MainLayout
 {
 

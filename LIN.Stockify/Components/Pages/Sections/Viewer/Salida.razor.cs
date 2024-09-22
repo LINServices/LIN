@@ -1,5 +1,7 @@
 ﻿
 
+using LIN.Inventory.Realtime.Manager.Models;
+
 namespace LIN.Components.Pages.Sections.Viewer;
 
 
@@ -33,9 +35,7 @@ public partial class Salida
     protected override async Task OnParametersSetAsync()
     {
         // Obtener el Contexto.
-        var inventoryContext = (from context in LIN.Inventory.Shared.Services.InventoryContext.Dictionary
-                                where (context.Value.Outflows ?? new()).Models.Any(t => t.ID == int.Parse(Id))
-                                select context.Value).FirstOrDefault();
+        InventoryContext? inventoryContext = InventoryManager.FindContextByOutflow(int.Parse(Id));
 
         // Validar.
         if (inventoryContext == null)

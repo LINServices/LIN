@@ -1,4 +1,4 @@
-﻿using LIN.Inventory.Shared.Services.Models;
+﻿using LIN.Inventory.Realtime.Manager.Models;
 using LIN.Types.Inventory.Enumerations;
 
 namespace LIN.Components.Pages.Sections.New;
@@ -57,12 +57,10 @@ public partial class NewInflow
     DrawerProducts DrawerProducts = null!;
 
 
-
     /// <summary>
     /// Contexto del inventario.
     /// </summary>
-    private InventoryContextModel? Contexto { get; set; }
-
+    private InventoryContext? Contexto { get; set; }
 
 
     /// <summary>
@@ -72,7 +70,7 @@ public partial class NewInflow
     {
 
         // Obtener el contexto.
-        Contexto = LIN.Inventory.Shared.Services.InventoryContext.Get(int.Parse(Id));
+        Contexto = InventoryManager.Get(int.Parse(Id));
 
         // Base.
         base.OnParametersSet();

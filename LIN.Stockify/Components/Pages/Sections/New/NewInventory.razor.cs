@@ -105,7 +105,7 @@ public partial class NewInventory
 
         if (x.Response == Responses.Success)
         {
-            Pages.Inventory.AddData(x.Model);
+            Pages.Inventory.Instance.AddData(x.Model);
 
 
         }

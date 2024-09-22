@@ -11,6 +11,7 @@ public partial class Inventory
     private bool IsLoading = false;
 
 
+    public static Inventory Instance { get; set; } 
 
     /// <summary>
     /// Respuesta.
@@ -24,6 +25,7 @@ public partial class Inventory
     /// </summary>
     protected override void OnInitialized()
     {
+        Instance = this;
         GetData();
         base.OnInitialized();
     }
@@ -49,7 +51,7 @@ public partial class Inventory
 
 
         foreach (var item in result.Models)
-            LIN.Inventory.Shared.Services.InventoryContext.PostAndReplace(item);
+            InventoryManager.PostAndReplace(item);
 
         // Nuevos estados.
         IsLoading = false;
@@ -114,12 +116,13 @@ public partial class Inventory
     /// Agregar modelo.
     /// </summary>
     /// <param name="model">Modelo de inventario.</param>
-    public static void AddData(InventoryDataModel model)
+    /// 
+    public void AddData(InventoryDataModel model)
     {
         if (Response?.Response != Responses.Success)
             return;
 
-        InventoryContext.Post(model);
+        InventoryManager.Post(model);
         Response.Models.Add(model);
 
     }

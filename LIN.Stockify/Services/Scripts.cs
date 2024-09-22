@@ -1,7 +1,8 @@
 ﻿using LIN.Components.Pages;
 using LIN.Components.Pages.Sections;
 using LIN.Components.Pages.Sections.Viewer;
-using LIN.Inventory.Shared.Services.Runtime;
+using LIN.Inventory.Realtime.Manager;
+using LIN.Inventory.Realtime.Script;
 using SILF.Script.Interfaces;
 
 namespace LIN.Services;
@@ -12,7 +13,7 @@ internal class Scripts
     /// <summary>
     /// Construye las funciones.
     /// </summary>
-    public static List<IFunction> Get()
+    public static List<IFunction> Get(IServiceProvider provider)
     {
 
         // Función de actualizar contactos.
@@ -95,9 +96,10 @@ internal class Scripts
             // Id.
             var inventory = (int)((value as decimal?) ?? 0);
 
+            var manager = provider.GetService<IInventoryManager>();
 
 
-            var context = LIN.Inventory.Shared.Services.InventoryContext.Get(inventory);
+            var context = manager.Get(inventory);
 
             var find = context?.FindProduct(id);
 
@@ -205,8 +207,10 @@ internal class Scripts
             if (product.Response != Responses.Success)
                 return;
 
+            var manager = provider.GetService<IInventoryManager>();
+
             // Contexto.
-            var context = InventoryContext.Get(product.Model.InventoryId);
+            var context = manager.Get(product.Model.InventoryId);
 
             // Si no se encontró.
             if (context == null)
@@ -215,7 +219,9 @@ internal class Scripts
             if (context.Products != null && context.Products.Response == Responses.Success)
                 context.Products.Models.Add(product.Model);
 
-            ProductObserver.Update(context.Inventory.ID);
+            var observer = provider.GetService<IProductObserver>();
+
+            observer.Update(context.Inventory.ID);
 
 
         })
@@ -248,8 +254,11 @@ internal class Scripts
             if (inflow.Response != Responses.Success)
                 return;
 
+            var manager = provider.GetService<IInventoryManager>();
+
+
             // Contexto.
-            var context = InventoryContext.Get(inflow.Model.InventoryId);
+            var context = manager.Get(inflow.Model.InventoryId);
 
             // Si no se encontró.
             if (context == null)
@@ -273,8 +282,12 @@ internal class Scripts
 
             inflow.Model.CountDetails = inflow.Model.Details.Count;
 
-            ProductObserver.Update(context.Inventory.ID);
-            InflowObserver.Update(context.Inventory.ID);
+            var pObserver = provider.GetService<IProductObserver>();
+            var iObserver = provider.GetService<IInflowObserver>();
+
+
+            pObserver.Update(context.Inventory.ID);
+            iObserver.Update(context.Inventory.ID);
 
 
         })
@@ -307,8 +320,10 @@ internal class Scripts
             if (outflow.Response != Responses.Success)
                 return;
 
+            var manager = provider.GetService<IInventoryManager>();
+
             // Contexto.
-            var context = InventoryContext.Get(outflow.Model.InventoryId);
+            var context = manager.Get(outflow.Model.InventoryId);
 
             // Si no se encontró.
             if (context == null)
@@ -331,8 +346,11 @@ internal class Scripts
 
             outflow.Model.CountDetails = outflow.Model.Details.Count;
 
-            ProductObserver.Update(context.Inventory.ID);
-            OutflowObserver.Update(context.Inventory.ID);
+            var pObserver = provider.GetService<IProductObserver>();
+            var oObserver = provider.GetService<IOutflowObserver>();
+
+            pObserver.Update(context.Inventory.ID);
+            oObserver.Update(context.Inventory.ID);
 
 
         })
@@ -367,8 +385,9 @@ internal class Scripts
             if (notification == null || notification.Response != Responses.Success)
                 return;
 
+            var manager = provider.GetService<INotificationObserver>();
 
-            NotificationObserver.Append(notification.Model);
+            manager.Append(notification.Model);
 
         })
         // Propiedades
@@ -393,7 +412,9 @@ internal class Scripts
 
             var id = (int)((value as decimal?) ?? 0);
 
-            NotificationObserver.Delete(id);
+            var manager = provider.GetService<INotificationObserver>();
+
+            manager.Delete(id);
 
         })
         // Propiedades
@@ -423,8 +444,9 @@ internal class Scripts
             // Obtener el contacto.
             var x = await LIN.Access.Inventory.Controllers.Product.Read(id, Session.Instance.Token);
 
+            var manager = provider.GetService<IInventoryManager>();
 
-            var context = InventoryContext.Get(x.Model.InventoryId);
+            var context = manager.Get(x.Model.InventoryId);
 
 
             var exist = context?.FindProduct(x.Model.Id);
@@ -445,8 +467,10 @@ internal class Scripts
                 exist.DetailModel.PrecioVenta = x.Model.DetailModel.PrecioVenta;
             }
 
+            var pObserver = provider.GetService<IProductObserver>();
 
-            ProductObserver.Update(exist.InventoryId);
+
+            pObserver.Update(exist.InventoryId);
 
 
         })
@@ -474,12 +498,16 @@ internal class Scripts
             // Id.
             var id = (int)((value as decimal?) ?? 0);
 
-            var context = InventoryContext.GetProduct(id);
+            var manager = provider.GetService<IInventoryManager>();
+
+            var context = manager.GetProduct(id);
             if (context == null)
                 return;
 
             context.Statement = Types.Inventory.Enumerations.ProductBaseStatements.Deleted;
-            ProductObserver.Update(context.InventoryId);
+
+            var pObserver = provider.GetService<IProductObserver>();
+            pObserver.Update(context.InventoryId);
         })
         // Propiedades
         {

@@ -1,8 +1,8 @@
-﻿using LIN.Inventory.Shared.Services.Models;
+﻿using LIN.Inventory.Realtime.Manager.Models;
 
 namespace LIN.Components.Pages.Sections;
 
-public partial class Products : IProduct, IDisposable
+public partial class Products : IProductModelObserver, IDisposable
 {
 
 
@@ -31,7 +31,7 @@ public partial class Products : IProduct, IDisposable
     /// <summary>
     /// Contexto del inventario.
     /// </summary>
-    InventoryContextModel? Contexto { get; set; }
+    InventoryContext? Contexto { get; set; }
 
 
 
@@ -49,7 +49,7 @@ public partial class Products : IProduct, IDisposable
     {
 
         // Obtener el contexto.
-        Contexto = InventoryContext.Get(int.Parse(Id));
+        Contexto = InventoryManager.Get(int.Parse(Id));
 
         // Evaluar el contexto.
         if (Contexto != null)
