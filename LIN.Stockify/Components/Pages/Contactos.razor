@@ -1,13 +1,10 @@
 ﻿@page "/contacts"
 
-@inject NavigationManager nav
-
 @* Pantalla *@
 <div class="flex h-full w-full flex-grow flex-col overflow-hidden px-4 lg:px-6">
 
     @* Cabeceras *@
     <Header Tittle="Contactos" GoBack="false">
-
         @* Actualizar. *@
         <button @onclick="()=>GetData(true)" type="button" class="h-9 w-9 rounded-full p-2">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="h-full w-full fill-zinc-800 hover:fill-zinc-600 dark:fill-zinc-200" version="1.1" id="Capa_1" viewBox="0 0 492.883 492.883" xml:space="preserve">

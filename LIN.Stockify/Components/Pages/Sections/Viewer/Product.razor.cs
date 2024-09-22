@@ -1,6 +1,4 @@
-﻿
-
-using LIN.Types.Inventory.Enumerations;
+﻿using LIN.Types.Inventory.Enumerations;
 
 namespace LIN.Components.Pages.Sections.Viewer;
 
@@ -8,11 +6,11 @@ namespace LIN.Components.Pages.Sections.Viewer;
 public partial class Product
 {
 
-    static Product Instance;
+    static Product? Instance;
 
-    private DeletePopup deletePopup;
+    private DeletePopup? deletePopup;
 
-    private AlertPopup alertPopup;
+    private AlertPopup? alertPopup;
 
 
     /// <summary>
@@ -123,7 +121,7 @@ public partial class Product
     public async void Delete()
     {
 
-        var response = await LIN.Access.Inventory.Controllers.Product.Delete(Modelo.Id, Session.Instance.Token);
+        var response = await LIN.Access.Inventory.Controllers.Product.Delete(Modelo?.Id ?? 0, Session.Instance.Token);
 
         string message;
 
@@ -142,7 +140,7 @@ public partial class Product
         }
 
 
-        alertPopup.Show(message);
+        alertPopup?.Show(message);
 
 
     }

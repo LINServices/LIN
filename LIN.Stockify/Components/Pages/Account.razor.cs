@@ -1,11 +1,7 @@
-﻿using LIN.Services;
-
-namespace LIN.Components.Pages;
-
+﻿namespace LIN.Components.Pages;
 
 public partial class Account
 {
-
 
     /// <summary>
     /// Cerrar sesión.
@@ -20,7 +16,7 @@ public partial class Account
         await new LIN.LocalDataBase.Data.UserDB().DeleteUsers();
 
         // Limpiar error
-        inventoryManager.Clear();
+        InventoryManager.Clear();
 
         // Limpiar.
         Inventory.Clean();
@@ -28,13 +24,12 @@ public partial class Account
         Home.Clean();
 
         // Limpiar Hub.
-        deviceManager.CloseSession();
+        DeviceManager.CloseSession();
 
         // Navegar al inicio.
-        nav.NavigateTo("/", true, true);
+        NavigationManager.NavigateTo("/", true, true);
 
     }
-
 
 
     /// <summary>
@@ -42,16 +37,13 @@ public partial class Account
     /// </summary>
     protected override void OnInitialized()
     {
-
         MainLayout.Configure(new()
         {
             OnCenterClick = () => { },
             Section = 3,
             DockIcon = 0
         });
-
         base.OnInitialized();
     }
-
 
 }

@@ -29,7 +29,6 @@
 
                 </div>
 
-
                 <button @onclick="()=>Drawer.Show()" type="button" class="flex w-max gap-2 px-3.5 py-2.5 mt-3 text-xs font-medium text-center text-white bg-current-600 rounded-lg hover:bg-current-700 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">
 
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
@@ -42,26 +41,21 @@
             </div>
         </div>
 
-
         @* Total de resultados. *@
         <label class="text-sm text-zinc-400">Se encontraron @(Response?.Models.Count ?? 0) resultados</label>
 
     </div>
 
-
     @* Componentes. *@
     <div class="flex-1 UIScroll gap-2 overflow-auto">
 
-
         @* Componentes. *@
-
         @if (Participantes.Count > 0)
         {
             <label>Nuevos integrantes:</label>
 
             @foreach (var e in Participantes ?? [])
             {
-
                 var member = new LIN.Types.Inventory.Models.IntegrantDataModel
                     {
                         Nombre = e.Account.Name,
@@ -120,18 +114,10 @@
                         </div>
                         break;
                     }
-
             }
-
         }
-
     </div>
-
-
 </div>
 
-
-
 <DrawerPeople @ref="Drawer" OnHide="StateHasChanged" Selected="Participantes" />
-
 <MemberPopup @ref="MemberPopup" OnSuccess="()=>InvokeAsync(StateHasChanged)" OnDelete="OnDelete" />

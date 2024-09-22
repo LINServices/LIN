@@ -7,12 +7,10 @@ namespace LIN.Components.Pages.Sections;
 public partial class Settings
 {
 
-
     /// <summary>
     /// Drawer de integrantes.
     /// </summary>
     private DrawerPeople Drawer = null!;
-
 
 
     /// <summary>
@@ -21,13 +19,10 @@ public partial class Settings
     private MemberPopup MemberPopup { get; set; } = null!;
 
 
-
     /// <summary>
     /// Lista de participantes
     /// </summary>
-    private readonly List<Types.Cloud.Identity.Abstracts.SessionModel<LIN.Types.Inventory.Models.ProfileModel>> Participantes = new();
-
-
+    private readonly List<Types.Cloud.Identity.Abstracts.SessionModel<LIN.Types.Inventory.Models.ProfileModel>> Participantes = [];
 
 
     /// <summary>
@@ -94,8 +89,8 @@ public partial class Settings
         if (InventoryContext == null)
             return;
 
-        Name = InventoryContext.Inventory.Nombre;
-        Description = InventoryContext.Inventory.Direction;
+        Name = InventoryContext.Inventory?.Nombre ?? string.Empty;
+        Description = InventoryContext.Inventory?.Direction ?? string.Empty;
 
         // Rellena los datos
         await RetrieveData();
@@ -141,7 +136,7 @@ public partial class Settings
         var response = await LIN.Access.Inventory.Controllers.Inventories.Update(int.Parse(Id), Name, Description, Session.Instance.Token);
 
 
-        if (InventoryContext == null || response.Response != Responses.Success)
+        if (InventoryContext == null || response.Response != Responses.Success || InventoryContext.Inventory == null)
             return;
 
         InventoryContext.Inventory.Nombre = Name;

@@ -1,16 +1,13 @@
 ﻿using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
 
-namespace LIN
+namespace LIN;
+
+public partial class App : Microsoft.Maui.Controls.Application
 {
-    public partial class App : Microsoft.Maui.Controls.Application
+    public App()
     {
-        public App()
-        {
-            InitializeComponent();
-            MainPage = new MainPage();
-
-            App.Current!.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
-
-        }
+        InitializeComponent();
+        MainPage = new MainPage();
+        App.Current!.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
     }
 }

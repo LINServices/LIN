@@ -1,5 +1,4 @@
 ﻿using LIN.Access.Inventory.Controllers;
-using LIN.Services;
 using LIN.Types.Inventory.Enumerations;
 
 namespace LIN.Components.Pages.Sections.New;
@@ -105,9 +104,7 @@ public partial class NewInventory
 
         if (x.Response == Responses.Success)
         {
-            Pages.Inventory.Instance.AddData(x.Model);
-
-
+            Pages.Inventory.Instance?.AddData(x.Model);
         }
 
 

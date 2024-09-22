@@ -1,7 +1,4 @@
-﻿using LIN.Types.Contacts.Models;
-
-namespace LIN.Components.Pages;
-
+﻿namespace LIN.Components.Pages;
 
 public partial class Contactos
 {
@@ -33,8 +30,6 @@ public partial class Contactos
     public static ReadAllResponse<ContactModel>? Response { get; set; } = null;
 
 
-
-
     /// <summary>
     /// Actualizar.
     /// </summary>
@@ -43,7 +38,6 @@ public partial class Contactos
         Response = null;
         _instance?.Refresh();
     }
-
 
 
     /// <summary>
@@ -56,7 +50,6 @@ public partial class Contactos
             GetData(true);
         });
     }
-
 
 
     /// <summary>
@@ -85,7 +78,6 @@ public partial class Contactos
     }
 
 
-
     /// <summary>
     /// Abrir el contacto.
     /// </summary>
@@ -96,7 +88,6 @@ public partial class Contactos
     }
 
 
-
     /// <summary>
     /// Abrir el popup de crear.
     /// </summary>
@@ -105,11 +96,7 @@ public partial class Contactos
         MainLayout.NewContactPopup.Show();
     }
 
-
-
-
     //******** Eventos ********//
-
 
     /// <summary>
     /// Evento: Al inicializar.
@@ -119,7 +106,6 @@ public partial class Contactos
         GetData();
         base.OnInitialized();
     }
-
 
 
     /// <summary>
@@ -137,7 +123,5 @@ public partial class Contactos
 
         base.OnAfterRender(firstRender);
     }
-
-
 
 }

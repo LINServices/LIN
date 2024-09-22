@@ -1,7 +1,6 @@
 ﻿#if ANDROID
 using Android.Views;
 #endif
-
 using LIN.Access.Auth;
 using LIN.Inventory.Realtime.Extensions;
 using LIN.Inventory.Shared.Interfaces;

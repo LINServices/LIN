@@ -1,7 +1,6 @@
 ﻿
 
 using LIN.Inventory.Realtime.Manager.Models;
-using LIN.Inventory.Realtime.Manager;
 
 namespace LIN.Components.Pages.Sections.Viewer;
 
@@ -138,7 +137,7 @@ public partial class Entrada
     {
         var newdate = Modelo?.Date;
 
-        await LIN.Access.Inventory.Controllers.Inflows.Update(Modelo.ID, newdate.Value, Session.Instance.Token);
+        await LIN.Access.Inventory.Controllers.Inflows.Update(Modelo?.ID ?? 0, newdate!.Value, Session.Instance.Token);
         edit = false;
         await this.InvokeAsync(StateHasChanged);
     }

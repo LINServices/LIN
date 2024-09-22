@@ -82,7 +82,7 @@ public partial class NewProduct
             StateHasChanged();
 
             //Product.Provider = 1;
-            Product.InventoryId = Contexto?.Inventory.ID ?? 0;
+            Product.InventoryId = Contexto?.Inventory?.ID ?? 0;
             Product.Category = (ProductCategories)Category;
             Product.Statement = ProductBaseStatements.Normal;
             Product.Image = Photo;

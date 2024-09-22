@@ -1,12 +1,7 @@
-﻿using LIN.Inventory.Realtime.Manager.Observers;
-using LIN.Inventory.Realtime.Manager.Observers.Abstractions;
-
-namespace LIN.Components.Pages;
-
+﻿namespace LIN.Components.Pages;
 
 public partial class Home : IDisposable, INotificationModelObserver
 {
-
 
     /// <summary>
     /// Emma IA.
@@ -112,7 +107,7 @@ public partial class Home : IDisposable, INotificationModelObserver
             return true;
 
         }
-        catch (Exception ex) { }
+        catch (Exception) { }
 
         return false;
 

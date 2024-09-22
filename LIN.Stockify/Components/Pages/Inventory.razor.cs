@@ -11,13 +11,16 @@ public partial class Inventory
     private bool IsLoading = false;
 
 
-    public static Inventory Instance { get; set; } 
+    /// <summary>
+    /// Instancia.
+    /// </summary>
+    public static Inventory? Instance { get; set; }
+
 
     /// <summary>
     /// Respuesta.
     /// </summary>
     private static ReadAllResponse<InventoryDataModel>? Response { get; set; } = null;
-
 
 
     /// <summary>
@@ -29,7 +32,6 @@ public partial class Inventory
         GetData();
         base.OnInitialized();
     }
-
 
 
     /// <summary>
@@ -49,7 +51,7 @@ public partial class Inventory
         // Obtiene los dispositivos
         var result = await Inventories.ReadAll(Session.Instance.Token);
 
-
+        // Render.
         foreach (var item in result.Models)
             InventoryManager.PostAndReplace(item);
 
@@ -58,7 +60,6 @@ public partial class Inventory
         Response = result;
         StateHasChanged();
     }
-
 
 
     /// <summary>
@@ -70,9 +71,8 @@ public partial class Inventory
         if (e == null)
             return;
 
-        nav.NavigateTo($"/products/{e.ID}");
+        NavigationManager.NavigateTo($"/products/{e.ID}");
     }
-
 
 
     /// <summary>
@@ -91,15 +91,13 @@ public partial class Inventory
     }
 
 
-
     /// <summary>
     /// Abrir pantalla de crear.
     /// </summary>
     private void GoCreate()
     {
-        nav.NavigateTo("/new/inventory");
+        NavigationManager.NavigateTo("/new/inventory");
     }
-
 
 
     /// <summary>
@@ -109,7 +107,6 @@ public partial class Inventory
     {
         Response = null;
     }
-
 
 
     /// <summary>
@@ -126,6 +123,5 @@ public partial class Inventory
         Response.Models.Add(model);
 
     }
-
 
 }

@@ -80,13 +80,11 @@ public partial class Login
     private PassKeyHub? hub = null;
 
 
-
     /// <summary>
     /// Evento.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
-
 
         if (Access.Auth.SessionAuth.IsOpen)
         {
@@ -125,7 +123,6 @@ public partial class Login
     }
 
 
-
     /// <summary>
     /// Actualizar la sección.
     /// </summary>
@@ -140,7 +137,6 @@ public partial class Login
     }
 
 
-
     /// <summary>
     /// Oculta los errores
     /// </summary>
@@ -151,7 +147,6 @@ public partial class Login
     }
 
 
-
     /// <summary>
     /// Oculta los errores
     /// </summary>
@@ -159,7 +154,6 @@ public partial class Login
     {
         NavigationManager?.NavigateTo("/login/forgetPassword");
     }
-
 
 
     /// <summary>
@@ -177,7 +171,6 @@ public partial class Login
     }
 
 
-
     /// <summary>
     /// Muestra un mensaje
     /// </summary>
@@ -186,7 +179,6 @@ public partial class Login
         IsWithKey = !IsWithKey;
         StateHasChanged();
     }
-
 
 
     /// <summary>
@@ -264,11 +256,10 @@ public partial class Login
     }
 
 
-
     /// <summary>
     /// Inicia sesión
     /// </summary>
-    async void StartKey()
+    private async void StartKey()
     {
         // Id único.
         string localUnique = Guid.NewGuid().ToString();
@@ -324,7 +315,6 @@ public partial class Login
         StateHasChanged();
 
     }
-
 
 
     /// <summary>
@@ -393,8 +383,6 @@ public partial class Login
     }
 
 
-
-
     /// <summary>
     /// Cancelar passkey.
     /// </summary>
@@ -405,7 +393,6 @@ public partial class Login
         UpdateSection(0);
         return;
     }
-
 
 
     /// <summary>
@@ -426,4 +413,5 @@ public partial class Login
              ShowError(message);
          });
     }
+
 }

@@ -1,17 +1,11 @@
-﻿
-
-using LIN.Inventory.Realtime.Manager.Models;
+﻿using LIN.Inventory.Realtime.Manager.Models;
 
 namespace LIN.Components.Pages.Sections.Viewer;
-
 
 public partial class Salida
 {
 
-
-
-
-    AlertPopup Alerta;
+    AlertPopup? Alerta;
 
 
     /// <summary>
@@ -21,12 +15,10 @@ public partial class Salida
     public string Id { get; set; } = string.Empty;
 
 
-
     /// <summary>
     /// Modelo.
     /// </summary>
     private OutflowDataModel? Modelo { get; set; } = new();
-
 
 
     /// <summary>
@@ -79,7 +71,6 @@ public partial class Salida
         Modelo = outflow;
         await base.OnParametersSetAsync();
     }
-
 
 
     /// <summary>
@@ -137,7 +128,7 @@ public partial class Salida
     {
         var newdate = Modelo?.Date;
 
-        await LIN.Access.Inventory.Controllers.Outflows.Update(Modelo.ID, newdate.Value, Session.Instance.Token);
+        await LIN.Access.Inventory.Controllers.Outflows.Update(Modelo?.ID ?? 0, newdate!.Value, Session.Instance.Token);
         edit = false;
         await this.InvokeAsync(StateHasChanged);
     }

@@ -3,6 +3,9 @@
 public partial class MainLayout
 {
 
+    /// <summary>
+    /// Settings.
+    /// </summary>
     public static DockSettings Settings = new();
 
 
@@ -36,45 +39,66 @@ public partial class MainLayout
     public static ContactPopup ContactPop { get; set; } = null!;
 
 
-    public static MainLayout e = null!;
+    /// <summary>
+    /// Instance.
+    /// </summary>
+    public static MainLayout Instance = null!;
 
 
+    /// <summary>
+    /// Nuevo.
+    /// </summary>
     public MainLayout()
     {
-        e = this;
+        Instance = this;
     }
 
 
+    /// <summary>
+    /// Actualizar estado
+    /// </summary>
     public static void Update()
     {
-        e.State();
+        Instance.State();
     }
 
 
+    /// <summary>
+    /// Navegar a una url.
+    /// </summary>
+    /// <param name="url">Url.</param>
     public static void Navigate(string url)
     {
-        e.Nav.NavigateTo(url);
+        Instance.Nav.NavigateTo(url);
     }
 
+
+    /// <summary>
+    /// Actualizar el estado.
+    /// </summary>
     void State()
     {
         this.InvokeAsync(StateHasChanged);
     }
 
+
+    /// <summary>
+    /// Acción al presionar el botón del centro.
+    /// </summary>
     public static void OnCenter(Action action)
     {
         Settings.OnCenterClick = action;
-
-
     }
 
 
+    /// <summary>
+    /// Configurar.
+    /// </summary>
+    /// <param name="settings"></param>
     public static void Configure(DockSettings settings)
     {
-
         Settings = settings;
         MainLayout.Update();
     }
-
 
 }

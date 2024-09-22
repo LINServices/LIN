@@ -11,7 +11,7 @@ public partial class EditProduct
     [Parameter]
     public string Id { get; set; } = string.Empty;
 
-    public ProductModel ProductBase { get; set; }
+    public ProductModel? ProductBase { get; set; }
 
 
 
@@ -50,7 +50,7 @@ public partial class EditProduct
     }
 
 
-    async void SetImage(byte[] photo)
+    void SetImage(byte[] photo)
     {
 
         Photo = photo;
@@ -59,7 +59,7 @@ public partial class EditProduct
     }
 
 
-    async void DeleteImage()
+    void DeleteImage()
     {
         Photo = [];
         isNewPhoto = true;
@@ -111,11 +111,11 @@ public partial class EditProduct
             Image = result.Image,
             Details = [
                 new ProductDetailModel(){
-                    Estado = result.DetailModel.Estado,
-                    Id = result.DetailModel.Id,
-                    PrecioCompra = result.DetailModel.PrecioCompra,
-                    PrecioVenta = result.DetailModel.PrecioVenta,
-                    Quantity = result.DetailModel.Quantity
+                    Estado = result.DetailModel?.Estado ?? ProductStatements.Undefined,
+                    Id = result.DetailModel?.Id ?? 0,
+                    PrecioCompra = result.DetailModel?.PrecioCompra ?? 0,
+                    PrecioVenta = result.DetailModel?.PrecioVenta ?? 0,
+                    Quantity = result.DetailModel?.Quantity ?? 0
                 }
                 ],
         };
@@ -159,7 +159,7 @@ public partial class EditProduct
 
             if (!NeedUpdateDetail())
             {
-                ProductBase.Details = Product.Details;
+                ProductBase!.Details = Product.Details;
                 Product.Details = [];
             }
 
@@ -175,7 +175,7 @@ public partial class EditProduct
             var response = await Access.Inventory.Controllers.Product.Update(Product, LIN.Access.Inventory.Session.Instance.Token);
 
             Product.Image = Photo;
-            Product.Details = ProductBase.Details;
+            Product.Details = ProductBase?.Details ?? [];
 
 
             switch (response.Response)
@@ -199,7 +199,7 @@ public partial class EditProduct
 
 
             // Actualizar modelo existente.
-            ProductBase.Category = Product.Category;
+            ProductBase!.Category = Product.Category;
             ProductBase.Code = Product.Code;
             ProductBase.Description = Product.Description;
             ProductBase.Name = Product.Name;
@@ -241,10 +241,10 @@ public partial class EditProduct
 
         try
         {
-            if (ProductBase.DetailModel.PrecioCompra != Product.DetailModel.PrecioCompra)
+            if (ProductBase?.DetailModel?.PrecioCompra != Product.DetailModel?.PrecioCompra)
                 return true;
 
-            if (ProductBase.DetailModel.PrecioVenta != Product.DetailModel.PrecioVenta)
+            if (ProductBase?.DetailModel?.PrecioVenta != Product.DetailModel?.PrecioVenta)
                 return true;
 
 

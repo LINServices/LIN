@@ -2,9 +2,8 @@
 
 namespace LIN.Components.Pages.Sections;
 
-public partial class Products : IProductModelObserver, IDisposable
+public partial class Products : IInventoryModelObserver, IDisposable
 {
-
 
     /// <summary>
     /// Id.
@@ -13,12 +12,10 @@ public partial class Products : IProductModelObserver, IDisposable
     public string Id { get; set; } = string.Empty;
 
 
-
     /// <summary>
     /// Esta cargando.
     /// </summary>
     private bool IsLoading = false;
-
 
 
     /// <summary>
@@ -27,19 +24,16 @@ public partial class Products : IProductModelObserver, IDisposable
     public static ProductModel? Selected { get; set; } = null;
 
 
-
     /// <summary>
     /// Contexto del inventario.
     /// </summary>
-    InventoryContext? Contexto { get; set; }
-
+    private InventoryContext? Contexto { get; set; }
 
 
     /// <summary>
     /// Respuesta.
     /// </summary>
     private ReadAllResponse<ProductModel>? Response { get; set; } = null;
-
 
 
     /// <summary>
@@ -67,13 +61,12 @@ public partial class Products : IProductModelObserver, IDisposable
         if (Response == null)
             GetData();
 
-        ProductObserver.Add(Contexto?.Inventory.ID ?? 0, this);
+        ProductObserver.Add(Contexto?.Inventory?.ID ?? 0, this);
         deviceManager.JoinInventory(int.Parse(Id));
 
         // Base.
         base.OnParametersSet();
     }
-
 
 
     /// <summary>
@@ -91,7 +84,7 @@ public partial class Products : IProductModelObserver, IDisposable
         StateHasChanged();
 
         // Obtiene los dispositivos
-        var result = await Access.Inventory.Controllers.Product.ReadAll(Contexto?.Inventory.ID ?? 0, Session.Instance.Token);
+        var result = await Access.Inventory.Controllers.Product.ReadAll(Contexto?.Inventory?.ID ?? 0, Session.Instance.Token);
 
         // Nuevos estados.
         IsLoading = false;
@@ -104,7 +97,6 @@ public partial class Products : IProductModelObserver, IDisposable
     }
 
 
-
     /// <summary>
     /// Renderizar.
     /// </summary>
@@ -113,10 +105,10 @@ public partial class Products : IProductModelObserver, IDisposable
         InvokeAsync(() =>
         {
             Response = Contexto?.Products;
+            Response?.Models.RemoveAll(t => t.Statement == Types.Inventory.Enumerations.ProductBaseStatements.Deleted);
             StateHasChanged();
         });
     }
-
 
 
     /// <summary>
@@ -126,7 +118,6 @@ public partial class Products : IProductModelObserver, IDisposable
     {
         ProductObserver.Remove(this);
     }
-
 
 
     /// <summary>
@@ -145,56 +136,50 @@ public partial class Products : IProductModelObserver, IDisposable
     }
 
 
-
     /// <summary>
     /// Abrir el producto.
     /// </summary>
     /// <param name="e">Modelo.</param>
-    void Go(ProductModel e)
+    private void Go(ProductModel e)
     {
         Selected = e;
         nav.NavigateTo("/product");
     }
 
 
-
     /// <summary>
     /// Abrir la entradas.
     /// </summary>
-    void GoEntradas()
+    private void GoEntradas()
     {
-        nav.NavigateTo($"/inflows/{Contexto?.Inventory.ID}");
+        nav.NavigateTo($"/inflows/{Contexto?.Inventory?.ID}");
     }
-
 
 
     /// <summary>
     /// Abrir integrantes.
     /// </summary>
-    void GoMembers()
+    private void GoMembers()
     {
-        nav.NavigateTo($"/members/{Contexto?.Inventory.ID}");
+        nav.NavigateTo($"/members/{Contexto?.Inventory?.ID}");
     }
-
 
 
     /// <summary>
     /// Abrir las salidas.
     /// </summary>
-    void GoSalidas()
+    private void GoSalidas()
     {
-        nav.NavigateTo($"/outflows/{Contexto?.Inventory.ID}");
+        nav.NavigateTo($"/outflows/{Contexto?.Inventory?.ID}");
     }
-
 
 
     /// <summary>
     /// Abrir crear.
     /// </summary>
-    void GoCreate()
+    private void GoCreate()
     {
-        nav.NavigateTo($"/new/product/{Contexto?.Inventory.ID}");
+        nav.NavigateTo($"/new/product/{Contexto?.Inventory?.ID}");
     }
-
 
 }

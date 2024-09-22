@@ -1,7 +1,7 @@
 ﻿@page "/account"
-@inject NavigationManager nav
-@inject IDeviceManager deviceManager
-@inject IInventoryManager inventoryManager
+@inject NavigationManager NavigationManager
+@inject IDeviceManager DeviceManager
+@inject IInventoryManager InventoryManager
 
 @* Pantalla principal. *@
 <div class="flex justify-center">
@@ -23,17 +23,15 @@
                 }
             </div>
 
+            @* Metadata. *@
             <h5 class="mb-1 text-xl font-bold text-gray-900 dark:text-white">@LIN.Access.Inventory.Session.Instance.Account?.Name</h5>
             <span class="text-sm text-gray-500 dark:text-gray-400">@@@LIN.Access.Inventory.Session.Instance.Account?.Identity?.Unique</span>
 
+            @* Botones. *@
             <div class="mt-4 flex w-full justify-center gap-2 px-10">
-
                 <button type="button" class="w-full rounded-lg bg-current-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Ver mas</button>
                 <button @onclick="Close" type="button" class="border-2 w-full rounded-lg border-zinc-200 bg-white px-3 py-2 text-center text-sm font-medium text-zinc-800 hover:bg-zinc-200 focus:ring-4 focus:outline-none focus:ring-zinc-300 dark:border-0 dark:text-white dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:focus:ring-zinc-800">Cerrar Sesión</button>
-
             </div>
         </div>
-
     </div>
-
 </div>

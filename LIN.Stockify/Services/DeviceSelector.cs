@@ -14,7 +14,8 @@ public class DeviceSelector(IDeviceManager deviceManager) : IDeviceSelector
                 deviceManager.SendToDevice(command, e.Id);
             };
 
-        Components.Layout.MainLayout.DevicesSelector.Show();
+        // Abrir el selector de dispositivos.
+        MainLayout.DevicesSelector.Show();
     }
 
 }

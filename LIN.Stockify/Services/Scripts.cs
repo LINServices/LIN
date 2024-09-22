@@ -219,7 +219,7 @@ internal class Scripts
             if (context.Products != null && context.Products.Response == Responses.Success)
                 context.Products.Models.Add(product.Model);
 
-            var observer = provider.GetService<IProductObserver>();
+            var observer = provider.GetService<IInventoryObserver>();
 
             observer.Update(context.Inventory.ID);
 
@@ -282,7 +282,7 @@ internal class Scripts
 
             inflow.Model.CountDetails = inflow.Model.Details.Count;
 
-            var pObserver = provider.GetService<IProductObserver>();
+            var pObserver = provider.GetService<IInventoryObserver>();
             var iObserver = provider.GetService<IInflowObserver>();
 
 
@@ -346,7 +346,7 @@ internal class Scripts
 
             outflow.Model.CountDetails = outflow.Model.Details.Count;
 
-            var pObserver = provider.GetService<IProductObserver>();
+            var pObserver = provider.GetService<IInventoryObserver>();
             var oObserver = provider.GetService<IOutflowObserver>();
 
             pObserver.Update(context.Inventory.ID);
@@ -467,7 +467,7 @@ internal class Scripts
                 exist.DetailModel.PrecioVenta = x.Model.DetailModel.PrecioVenta;
             }
 
-            var pObserver = provider.GetService<IProductObserver>();
+            var pObserver = provider.GetService<IInventoryObserver>();
 
 
             pObserver.Update(exist.InventoryId);
@@ -506,7 +506,7 @@ internal class Scripts
 
             context.Statement = Types.Inventory.Enumerations.ProductBaseStatements.Deleted;
 
-            var pObserver = provider.GetService<IProductObserver>();
+            var pObserver = provider.GetService<IInventoryObserver>();
             pObserver.Update(context.InventoryId);
         })
         // Propiedades
