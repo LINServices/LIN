@@ -11,11 +11,16 @@ public partial class EditProduct
     [Parameter]
     public string Id { get; set; } = string.Empty;
 
+
+    /// <summary>
+    /// Modelo del producto.
+    /// </summary>
     public ProductModel? ProductBase { get; set; }
 
 
-
-
+    /// <summary>
+    /// Obtener imagen en base 64.
+    /// </summary>
     string Img64 => Convert.ToBase64String(Photo ?? []);
 
 
@@ -23,11 +28,9 @@ public partial class EditProduct
     /// Modelo del producto.
     /// </summary>
     public ProductModel Product { get; set; } = new()
-
     {
         Details = [new()]
     };
-
 
 
     /// <summary>
@@ -36,11 +39,18 @@ public partial class EditProduct
     public byte[] Photo { get; set; } = [];
 
 
-    string ErrorMessage = "";
+    /// <summary>
+    /// Mensaje de error a mostrar.
+    /// </summary>
+    private string ErrorMessage = "";
 
 
+    /// <summary>
+    /// Si la imagen es nueva.
+    /// </summary>
+    private bool isNewPhoto = false;
 
-    bool isNewPhoto = false;
+
 
     async void OpenImage()
     {
@@ -91,7 +101,6 @@ public partial class EditProduct
         // Obtener el contexto.
         var result = InventoryManager.GetProduct(int.Parse(Id));
 
-
         if (result == null)
         {
             nav.NavigateTo("/home");
@@ -120,7 +129,6 @@ public partial class EditProduct
                 ],
         };
 
-
         SetImage(result.Image);
         Category = (int)Product.Category;
 
@@ -131,7 +139,9 @@ public partial class EditProduct
     }
 
 
-
+    /// <summary>
+    /// Al inicializar.
+    /// </summary>
     protected override void OnInitialized()
     {
         MainLayout.Configure(new()
@@ -156,7 +166,6 @@ public partial class EditProduct
             Section = 3;
             StateHasChanged();
 
-
             if (!NeedUpdateDetail())
             {
                 ProductBase!.Details = Product.Details;
@@ -164,7 +173,6 @@ public partial class EditProduct
             }
 
             Product.Category = (ProductCategories)Category;
-
 
             if (!isNewPhoto)
                 Product.Image = null!;
@@ -176,7 +184,6 @@ public partial class EditProduct
 
             Product.Image = Photo;
             Product.Details = ProductBase?.Details ?? [];
-
 
             switch (response.Response)
             {
@@ -197,7 +204,6 @@ public partial class EditProduct
                     return;
             }
 
-
             // Actualizar modelo existente.
             ProductBase!.Category = Product.Category;
             ProductBase.Code = Product.Code;
@@ -213,7 +219,6 @@ public partial class EditProduct
 
             Section = 1;
             StateHasChanged();
-
 
             await Task.Delay(3000);
             Section = 0;
@@ -235,7 +240,6 @@ public partial class EditProduct
     }
 
 
-
     bool NeedUpdateDetail()
     {
 
@@ -247,20 +251,15 @@ public partial class EditProduct
             if (ProductBase?.DetailModel?.PrecioVenta != Product.DetailModel?.PrecioVenta)
                 return true;
 
-
-            return false;
         }
         catch
         {
-
         }
 
         return false;
 
 
     }
-
-
 
 
 }

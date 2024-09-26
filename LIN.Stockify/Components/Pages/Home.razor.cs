@@ -36,7 +36,6 @@ public partial class Home : IDisposable, INotificationModelObserver
     }
 
 
-
     /// <summary>
     /// Evento al remover una notificación.
     /// </summary>
@@ -44,7 +43,6 @@ public partial class Home : IDisposable, INotificationModelObserver
     {
         StateHasChanged();
     }
-
 
 
     /// <summary>
@@ -60,8 +58,6 @@ public partial class Home : IDisposable, INotificationModelObserver
     /// Notificaciones.
     /// </summary>
     private static ReadOneResponse<HomeDto>? HomeDTO = null;
-
-
 
 
     /// <summary>
@@ -81,8 +77,6 @@ public partial class Home : IDisposable, INotificationModelObserver
         return true;
 
     }
-
-
 
 
     /// <summary>
@@ -123,7 +117,6 @@ public partial class Home : IDisposable, INotificationModelObserver
     }
 
 
-
     /// <summary>
     /// Evento al establecer los parámetros.
     /// </summary>
@@ -151,7 +144,6 @@ public partial class Home : IDisposable, INotificationModelObserver
     }
 
 
-
     /// <summary>
     /// Eliminar un modelo de notificación.
     /// </summary>
@@ -163,7 +155,6 @@ public partial class Home : IDisposable, INotificationModelObserver
     }
 
 
-
     /// <summary>
     /// Evento dispose.
     /// </summary>
@@ -171,7 +162,6 @@ public partial class Home : IDisposable, INotificationModelObserver
     {
         NotificationObserver.Remove(this);
     }
-
 
 
     /// <summary>
@@ -186,6 +176,9 @@ public partial class Home : IDisposable, INotificationModelObserver
     }
 
 
+    /// <summary>
+    /// Formatear numero.
+    /// </summary>
     static string FormatearNumero(decimal numero)
     {
         // Definir los límites para las representaciones abreviadas
@@ -212,6 +205,9 @@ public partial class Home : IDisposable, INotificationModelObserver
     }
 
 
+    /// <summary>
+    /// Evento después de actualizar.
+    /// </summary>
     protected override void OnAfterRender(bool firstRender)
     {
         if (firstRender)
@@ -221,9 +217,10 @@ public partial class Home : IDisposable, INotificationModelObserver
     }
 
 
-
-
-
+    /// <summary>
+    /// Calcula el porcentaje de cambio en las ventas de hoy respecto a las ventas de ayer.
+    /// </summary>
+    /// <returns>El porcentaje de cambio como una cadena formateada, o "0" si los datos no están disponibles o si YesterdaySalesTotal es cero.</returns>
     public string Calcular()
     {
         try

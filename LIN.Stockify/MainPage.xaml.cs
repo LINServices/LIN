@@ -3,6 +3,9 @@
 public partial class MainPage : ContentPage
 {
 
+    /// <summary>
+    /// Iniciar pagina principal.
+    /// </summary>
     public MainPage()
     {
         InitializeComponent();

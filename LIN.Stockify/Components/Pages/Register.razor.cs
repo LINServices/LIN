@@ -43,7 +43,7 @@ public partial class Register
     /// <summary>
     /// Oculta los errores
     /// </summary>
-    void HideError()
+    private void HideError()
     {
         ErrorVisible = false;
         StateHasChanged();
@@ -53,7 +53,7 @@ public partial class Register
     /// <summary>
     /// Muestra un mensaje
     /// </summary>
-    async Task ShowError(string message)
+    private async Task ShowError(string message)
     {
         ErrorVisible = true;
         ErrorMessage = message;
@@ -65,15 +65,13 @@ public partial class Register
     }
 
 
-
-
-
     /// <summary>
     /// Crear cuenta.
     /// </summary>
-    async void Start()
+    private async void Start()
     {
 
+        // Actualizar sección.
         Section = 3;
         StateHasChanged();
 
@@ -91,9 +89,6 @@ public partial class Register
             return;
         }
 
-
-
-
         // Model
         AccountModel modelo = new()
         {
@@ -105,22 +100,18 @@ public partial class Register
             Password = Password
         };
 
-        // Creacion
-        var res = await LIN.Access.Auth.Controllers.Account.Create(modelo);
-
+        // Creación
+        var result = await LIN.Access.Auth.Controllers.Account.Create(modelo);
 
         // Respuesta
-        switch (res.Response)
+        switch (result.Response)
         {
-
             case Responses.Success:
-                // Guardar.
-
                 // Obtener local db.
                 LocalDataBase.Data.UserDB database = new();
 
                 // Guardar información.
-                await database.SaveUser(new() { ID = res.LastID, UserU = User, Password = Password });
+                await database.SaveUser(new() { ID = result.LastID, UserU = User, Password = Password });
 
                 Section = 1;
                 StateHasChanged();
@@ -140,11 +131,11 @@ public partial class Register
         }
 
 
-        var x = Task.Delay(3000);
+        var waitTask = Task.Delay(3000);
 
-        var (_, Response) = await Access.Inventory.Session.LoginWith(res.Token);
+        var (_, Response) = await Access.Inventory.Session.LoginWith(result.Token);
 
-        await x;
+        await waitTask;
 
         if (Response == Responses.Success)
         {

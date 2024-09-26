@@ -6,13 +6,11 @@ namespace LIN.Components.Pages.Sections.Movements;
 public partial class Entradas : IInflowModelObserver, IDisposable
 {
 
-
     /// <summary>
     /// Id del inventario.
     /// </summary>
     [Parameter]
     public string Id { get; set; } = string.Empty;
-
 
 
     /// <summary>
@@ -21,12 +19,10 @@ public partial class Entradas : IInflowModelObserver, IDisposable
     private bool IsLoading = false;
 
 
-
     /// <summary>
     /// Contexto del inventario.
     /// </summary>
     private InventoryContext? Contexto { get; set; }
-
 
 
     /// <summary>
@@ -35,12 +31,10 @@ public partial class Entradas : IInflowModelObserver, IDisposable
     private ReadAllResponse<InflowDataModel>? Response => Contexto?.Inflows;
 
 
-
     /// <summary>
     /// Entrada seleccionada.
     /// </summary>
     public static InflowDataModel? Selected { get; set; } = null;
-
 
 
     /// <summary>
@@ -61,7 +55,6 @@ public partial class Entradas : IInflowModelObserver, IDisposable
         // Base.
         base.OnParametersSet();
     }
-
 
 
     /// <summary>
@@ -97,7 +90,6 @@ public partial class Entradas : IInflowModelObserver, IDisposable
     }
 
 
-
     /// <summary>
     /// Renderizar.
     /// </summary>
@@ -107,7 +99,6 @@ public partial class Entradas : IInflowModelObserver, IDisposable
     }
 
 
-
     /// <summary>
     /// Evento dispose.
     /// </summary>
@@ -115,7 +106,6 @@ public partial class Entradas : IInflowModelObserver, IDisposable
     {
         InflowObserver.Remove(this);
     }
-
 
 
     /// <summary>
@@ -134,28 +124,23 @@ public partial class Entradas : IInflowModelObserver, IDisposable
     }
 
 
-
     /// <summary>
     /// Ir a una entrada.
     /// </summary>
     /// <param name="e">Modelo de la entrada.</param>
-    void Go(Types.Inventory.Models.InflowDataModel e)
+    public void Go(Types.Inventory.Models.InflowDataModel e)
     {
         Selected = e;
-        nav.NavigateTo($"/inflow/{e.ID}");
+        NavigationManager.NavigateTo($"/inflow/{e.ID}");
     }
-
 
 
     /// <summary>
     /// Abrir new.
     /// </summary>
-    void GoNew()
+    private void GoNew()
     {
-        nav.NavigateTo($"/new/inflow/{Contexto?.Inventory?.ID}");
+        NavigationManager.NavigateTo($"/new/inflow/{Contexto?.Inventory?.ID}");
     }
-
-
-
 
 }

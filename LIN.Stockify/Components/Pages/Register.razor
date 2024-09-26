@@ -38,11 +38,9 @@
                             @*Mensaje de cuenta*@
                             <div class="mt-10">
 
-                               
-                                    <h2 class="text-lg font-bold text-gray-900 dark:text-white">
-                                        Crear cuenta
-                                    </h2>
-                                
+                                <h2 class="text-lg font-bold text-gray-900 dark:text-white">
+                                    Crear cuenta
+                                </h2>
 
                                 <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
                                     Ya tienes una cuenta?@* *@ <a style="text-decoration: none !important;"
@@ -55,8 +53,6 @@
 
                         @* Cuerpo *@
                         <div class="grid-cols-1 mt-6 grid gap-4">
-
-
 
                             @*Nombre*@
                             <div class="">
@@ -76,25 +72,19 @@
                                        class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700 sm:text-sm dark:focus:bg-zinc-900">
                             </div>
 
-
-
-
-                           
-                                @*Contraseña*@
-                                <div class="">
-                                    <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Contraseña</label>
-                                    <input @onkeypress="HideError"
-                                           @bind="Password" type="password"
-                                           autocomplete="off"
-                                           class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700 sm:text-sm dark:focus:bg-zinc-900">
-                                </div>
-                          
+                            @*Contraseña*@
+                            <div class="">
+                                <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Contraseña</label>
+                                <input @onkeypress="HideError"
+                                       @bind="Password" type="password"
+                                       autocomplete="off"
+                                       class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700 sm:text-sm dark:focus:bg-zinc-900">
+                            </div>
 
                             @* Mensaje de error *@
                             <center class="@(ErrorVisible ? "visible":"hidden")" style="margin-bottom: -10px;">
                                 <label class="text-sm font-bold text-red-500">@ErrorMessage</label>
                             </center>
-
 
                             @* Botón *@
                             <div class="mt-1 flex flex-row">
@@ -106,10 +96,7 @@
                                 </button>
 
                             </div>
-
-                            
                         </div>
-
                     </div>
                 </div>
 
@@ -135,13 +122,10 @@
             @* Cargando *@
             else
             {
-
                 <div class="flex flex-col items-center justify-center">
                     <Loader />
                     <h5 class="mt-2 text-sm font-bold text-gray-600 dark:text-gray-300">Cargando</h5>
-                   
                 </div>
-
             }
 
         </div>

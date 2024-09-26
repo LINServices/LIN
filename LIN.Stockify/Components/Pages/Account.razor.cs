@@ -6,7 +6,7 @@ public partial class Account
     /// <summary>
     /// Cerrar sesión.
     /// </summary>
-    async void Close()
+    private async void Close()
     {
 
         // Cerrar la sesión.

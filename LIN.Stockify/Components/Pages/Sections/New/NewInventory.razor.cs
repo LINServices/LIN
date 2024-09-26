@@ -3,7 +3,6 @@ using LIN.Types.Inventory.Enumerations;
 
 namespace LIN.Components.Pages.Sections.New;
 
-
 public partial class NewInventory
 {
 
@@ -13,12 +12,10 @@ public partial class NewInventory
     private string Name { get; set; } = string.Empty;
 
 
-
     /// <summary>
     /// Dirección.
     /// </summary>
     private string Direction { get; set; } = string.Empty;
-
 
 
     /// <summary>
@@ -27,19 +24,16 @@ public partial class NewInventory
     private int section = 0;
 
 
-
     /// <summary>
     /// Drawer de integrantes.
     /// </summary>
     private DrawerPeople Drawer = null!;
 
 
-
     /// <summary>
     /// Lista de participantes
     /// </summary>
     private readonly List<Types.Cloud.Identity.Abstracts.SessionModel<LIN.Types.Inventory.Models.ProfileModel>> Participantes = new();
-
 
 
     /// <summary>
@@ -114,14 +108,9 @@ public partial class NewInventory
         await Task.Delay(3000);
 
 
-
-
-
-
-        nav.NavigateTo("/inventory");
+        NavigationManager.NavigateTo("/inventory");
         return;
 
     }
-
 
 }

@@ -8,6 +8,13 @@ public partial class Settings
 {
 
     /// <summary>
+    /// Parámetro Id.
+    /// </summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+
+    /// <summary>
     /// Drawer de integrantes.
     /// </summary>
     private DrawerPeople Drawer = null!;
@@ -25,15 +32,6 @@ public partial class Settings
     private readonly List<Types.Cloud.Identity.Abstracts.SessionModel<LIN.Types.Inventory.Models.ProfileModel>> Participantes = [];
 
 
-    /// <summary>
-    /// Parámetro Id.
-    /// </summary>
-
-    [Parameter]
-    public string Id { get; set; } = string.Empty;
-
-
-
     string Name = "";
     string Description = "";
 
@@ -45,12 +43,10 @@ public partial class Settings
     private bool IsLoading = false;
 
 
-
     /// <summary>
     /// Lista de modelos.
     /// </summary>
     private ReadAllResponse<IntegrantDataModel>? Response { get; set; } = null;
-
 
 
     /// <summary>
@@ -76,19 +72,20 @@ public partial class Settings
     }
 
 
-
     /// <summary>
     /// Operación de cargar.
     /// </summary>
     public async void Reload()
     {
 
+        // Obtener contexto.
         InventoryContext = InventoryManager.Get(int.Parse(Id));
 
-
+        // Validar contexto.
         if (InventoryContext == null)
             return;
 
+        // Obtener información.
         Name = InventoryContext.Inventory?.Nombre ?? string.Empty;
         Description = InventoryContext.Inventory?.Direction ?? string.Empty;
 
@@ -123,30 +120,40 @@ public partial class Settings
 
     }
 
-    async void Save()
+
+    /// <summary>
+    /// Guardar los datos.
+    /// </summary>
+    private async void Save()
     {
 
+        // Si hay nuevos integrantes.
         if (Participantes.Count > 0)
             await SaveParticipants();
 
+        // Validar campos.
         if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Description))
             return;
 
-
+        // Enviar respuesta.
         var response = await LIN.Access.Inventory.Controllers.Inventories.Update(int.Parse(Id), Name, Description, Session.Instance.Token);
 
-
+        // Validar respuesta.
         if (InventoryContext == null || response.Response != Responses.Success || InventoryContext.Inventory == null)
             return;
 
+        // Actualización.
         InventoryContext.Inventory.Nombre = Name;
         InventoryContext.Inventory.Direction = Description;
         StateHasChanged();
     }
 
-    async Task SaveParticipants()
-    {
 
+    /// <summary>
+    /// Guardar los nuevos integrantes.
+    /// </summary>
+    private async Task SaveParticipants()
+    {
 
         foreach (var e in Participantes)
         {
@@ -158,25 +165,30 @@ public partial class Settings
             };
             await LIN.Access.Inventory.Controllers.InventoryAccess.Create(model, Session.Instance.Token);
         }
-
-
     }
 
 
-    void OpenMember(IntegrantDataModel member)
+    /// <summary>
+    /// Abrir modal de integrantes.
+    /// </summary>
+    /// <param name="member"></param>
+    private void OpenMember(IntegrantDataModel member)
     {
         MemberPopup.Show(member);
     }
 
 
-    void OnDelete(int id)
+    /// <summary>
+    /// Al eliminar un integrante.
+    /// </summary>
+    /// <param name="id">Id del integrante.</param>
+    private void OnDelete(int id)
     {
         this.InvokeAsync(() =>
         {
             Response?.Models.RemoveAll(t => t.AccessID == id);
             StateHasChanged();
         });
-
     }
 
 }

@@ -3,10 +3,8 @@ using LIN.Types.Inventory.Enumerations;
 
 namespace LIN.Components.Pages.Sections.New;
 
-
 public partial class NewInflow
 {
-
 
     /// <summary>
     /// Id.
@@ -15,12 +13,10 @@ public partial class NewInflow
     public string Id { get; set; } = string.Empty;
 
 
-
     /// <summary>
     /// Categoría.
     /// </summary>
     private int Category { get; set; }
-
 
 
     /// <summary>
@@ -29,12 +25,10 @@ public partial class NewInflow
     private int section = 0;
 
 
-
     /// <summary>
     /// Fecha.
     /// </summary>
     private DateTime Date { get; set; } = DateTime.Now;
-
 
 
     /// <summary>
@@ -43,12 +37,10 @@ public partial class NewInflow
     private List<ProductModel> Selected { get; set; } = [];
 
 
-
     /// <summary>
     /// Valores.
     /// </summary>
     private Dictionary<int, int> Values { get; set; } = [];
-
 
 
     /// <summary>
@@ -77,8 +69,6 @@ public partial class NewInflow
     }
 
 
-
-
     /// <summary>
     /// Obtener el valor.
     /// </summary>
@@ -89,7 +79,11 @@ public partial class NewInflow
     }
 
 
-    string ErrorMessage = "";
+    /// <summary>
+    /// Mensaje de error.
+    /// </summary>
+    private string ErrorMessage = "";
+
 
     /// <summary>
     /// Crear.
@@ -112,11 +106,9 @@ public partial class NewInflow
             return;
         }
 
-
         // Variables
         List<InflowDetailsDataModel> details = new();
         InflowDataModel entry;
-
 
         // Rellena los detalles
         foreach (var control in Selected ?? [])
@@ -135,15 +127,10 @@ public partial class NewInflow
             details.Add(model);
         }
 
-
         // Si no hay detalles
         if (details.Count <= 0)
-        {
-
             return;
-        }
-
-
+        
         // Model de entrada
         entry = new()
         {
@@ -158,11 +145,8 @@ public partial class NewInflow
             ProfileID = Session.Instance.Informacion.ID
         };
 
-
         // Envía al servidor
         var response = await Access.Inventory.Controllers.Inflows.Create(entry, LIN.Access.Inventory.Session.Instance.Token);
-
-
 
         switch (response.Response)
         {
@@ -183,9 +167,6 @@ public partial class NewInflow
                 return;
         }
 
-
-
-
         section = 1;
         StateHasChanged();
 
@@ -196,11 +177,10 @@ public partial class NewInflow
     }
 
 
-
     /// <summary>
     /// Obtener el valor.
     /// </summary>
-    void ValueChange(int product, int q)
+    private void ValueChange(int product, int q)
     {
         try
         {
@@ -214,7 +194,7 @@ public partial class NewInflow
     }
 
 
-    void GoNormal()
+    private void GoNormal()
     {
         section = 0;
         StateHasChanged();

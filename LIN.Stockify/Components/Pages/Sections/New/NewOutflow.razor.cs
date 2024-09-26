@@ -3,7 +3,6 @@ using LIN.Types.Inventory.Enumerations;
 
 namespace LIN.Components.Pages.Sections.New;
 
-
 public partial class NewOutflow
 {
 
@@ -14,12 +13,10 @@ public partial class NewOutflow
     public string Id { get; set; } = string.Empty;
 
 
-
     /// <summary>
     /// Categoría.
     /// </summary>
     private int Category { get; set; }
-
 
 
     /// <summary>
@@ -28,12 +25,10 @@ public partial class NewOutflow
     int section = 0;
 
 
-
     /// <summary>
     /// Fecha.
     /// </summary>
     private DateTime Date { get; set; } = DateTime.Now;
-
 
 
     /// <summary>
@@ -42,12 +37,10 @@ public partial class NewOutflow
     private List<ProductModel> Selected { get; set; } = [];
 
 
-
     /// <summary>
     /// Valores
     /// </summary>
     private Dictionary<int, int> Values = [];
-
 
 
     /// <summary>
@@ -56,12 +49,10 @@ public partial class NewOutflow
     private DrawerProducts DrawerProducts { get; set; } = null!;
 
 
-
     /// <summary>
     /// Contexto del inventario.
     /// </summary>
     private InventoryContext? Contexto { get; set; }
-
 
 
     /// <summary>
@@ -76,7 +67,6 @@ public partial class NewOutflow
         // Base.
         base.OnParametersSet();
     }
-
 
 
     /// <summary>

@@ -1,13 +1,11 @@
 ﻿@page "/new/inventory"
-@inject NavigationManager nav
+@inject NavigationManager NavigationManager
 
 <div class="flex h-full w-full flex-grow flex-col items-center overflow-hidden px-4 lg:px-6">
-
 
     <Header Tittle="Nuevo Inventario" GoBack="true" />
 
     <div class="flex h-full w-full max-w-lg flex-grow flex-col overflow-hidden px-1">
-
 
         @if (section == 0)
         {
@@ -35,7 +33,6 @@
 
                     </div>
                 </div>
-
 
                 <div class="mt-2">
 
@@ -72,7 +69,6 @@
 
             </div>
 
-
             @* Botón. *@
             <div class="mb-2 mt-2 flex w-full items-end justify-center self-end">
                 <button @onclick="Create" type="button" class="w-full rounded-lg bg-current-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-current-700 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">
@@ -107,12 +103,5 @@
 
 
 </div>
-
-
-
-
-
-
-
 
 <DrawerPeople @ref="Drawer" OnHide="StateHasChanged" Selected="Participantes" />

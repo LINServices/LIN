@@ -1,13 +1,10 @@
 ﻿using LIN.Access.Inventory.Controllers;
 using LIN.Inventory.Realtime.Manager.Models;
 
-
 namespace LIN.Components.Pages.Sections.Movements;
-
 
 public partial class Salidas : IOutflowModelObserver, IDisposable
 {
-
 
     /// <summary>
     /// Id del inventario.
@@ -16,12 +13,10 @@ public partial class Salidas : IOutflowModelObserver, IDisposable
     public string Id { get; set; } = string.Empty;
 
 
-
     /// <summary>
     /// Esta cargando.
     /// </summary>
     private bool IsLoading = false;
-
 
 
     /// <summary>
@@ -30,21 +25,16 @@ public partial class Salidas : IOutflowModelObserver, IDisposable
     InventoryContext? Contexto { get; set; }
 
 
-
     /// <summary>
     /// Respuesta.
     /// </summary>
     private ReadAllResponse<OutflowDataModel>? Response { get; set; } = null;
 
 
-
     /// <summary>
     /// Salida seleccionada.
     /// </summary>
     public static OutflowDataModel? Selected { get; set; } = null;
-
-
-
 
 
     /// <summary>
@@ -69,9 +59,6 @@ public partial class Salidas : IOutflowModelObserver, IDisposable
         // Base.
         base.OnParametersSet();
     }
-
-
-
 
 
     /// <summary>
@@ -113,7 +100,6 @@ public partial class Salidas : IOutflowModelObserver, IDisposable
     }
 
 
-
     /// <summary>
     /// Evento Dispose.
     /// </summary>
@@ -121,7 +107,6 @@ public partial class Salidas : IOutflowModelObserver, IDisposable
     {
         OutflowObserver.Remove(this);
     }
-
 
 
     /// <summary>
@@ -140,26 +125,23 @@ public partial class Salidas : IOutflowModelObserver, IDisposable
     }
 
 
-
     /// <summary>
     /// Abrir salida.
     /// </summary>
     /// <param name="e"></param>
-    void Go(Types.Inventory.Models.OutflowDataModel e)
+    private void Go(Types.Inventory.Models.OutflowDataModel e)
     {
         Selected = e;
-        nav.NavigateTo($"/outflow/{e.ID}");
+        NavigationManager.NavigateTo($"/outflow/{e.ID}");
     }
-
 
 
     /// <summary>
     /// Abrir new.
     /// </summary>
-    void GoNew()
+    private void GoNew()
     {
-        nav.NavigateTo($"/new/outflow/{Contexto?.Inventory?.ID}");
+        NavigationManager.NavigateTo($"/new/outflow/{Contexto?.Inventory?.ID}");
     }
-
 
 }

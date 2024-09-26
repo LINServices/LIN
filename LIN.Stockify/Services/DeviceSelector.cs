@@ -6,6 +6,10 @@ namespace LIN.Services;
 public class DeviceSelector(IDeviceManager deviceManager) : IDeviceSelector
 {
 
+    /// <summary>
+    /// Enviar comando.
+    /// </summary>
+    /// <param name="command">Comando.</param>
     public void Send(string command)
     {
         // Nuevo onInvoque.

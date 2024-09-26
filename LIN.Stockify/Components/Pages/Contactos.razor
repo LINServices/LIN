@@ -25,14 +25,11 @@
             <div class="flex flex-col justify-center py-4">
 
                 <label class="mt-0.5 text-sm dark:text-gray-300">Total de contactos</label>
-
                 <label class="text-4xl font-bold dark:text-gray-100 @((Response == null || IsLoading) ?"animate-pulse":"")">@(Response?.Models?.Count.ToString() ?? "●")</label>
-
                 <div class="flex w-40 items-center justify-center rounded-lg bg-slate-200 p-1.5 dark:bg-zinc-900">
                     <img class="h-4 w-4" src="./img/person.png" />
                     <label class="mx-2 mt-0.5 text-xs font-bold text-zinc-700 dark:text-gray-300">Vinculados a LIN</label>
                 </div>
-
             </div>
         </div>
 
@@ -70,7 +67,6 @@
                                 <label class="text-zinc-400 dark:text-gray-200">No tienes ningún contacto</label>
                             </div>
                         }
-
                         @* Renderizar componentes *@
                         else
                         {
