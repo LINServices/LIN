@@ -1,15 +1,13 @@
 ﻿
 @font-face {
     font-family: 'Gilroy';
-    src: url('../fonts/Gilroy-Medium.ttf') format('truetype'); /* La fuente por defecto ser la negrita */
-    font-weight: normal; /* Definimos el peso normal */
+    src: url('../fonts/Gilroy-Medium.ttf') format('truetype');
+    font-weight: normal;
 }
-
-/* Especificamos la fuente Gilroy en negrita */
 @font-face {
-    font-family: 'Gilroy-bold';
+    font-family: 'Gilroy';
     src: url('../fonts/Gilroy-Bold.ttf') format('truetype');
-    font-weight: bold; /* Definimos el peso en negrita */
+    font-weight: bold;
 }
 
 html, body {
