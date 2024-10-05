@@ -22,6 +22,6 @@ catch (ex)
 {  
 }
 
-function CleanChar() {
+function cleanChart() {
     document.getElementById("area-chart").innerHTML = "";
 }
