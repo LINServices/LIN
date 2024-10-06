@@ -52,6 +52,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="LIN.Access.Auth" Version="1.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.91" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.91" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.91" />
@@ -60,8 +61,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\Components\LIN.Emma.UI\LIN.Emma.UI\LIN.Emma.UI.csproj" />
 		<ProjectReference Include="..\..\..\Components\LIN.Inventory.Shared\LIN.Inventory.Shared.csproj" />
-		<ProjectReference Include="D:\LIN Services\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj" />
-		<ProjectReference Include="D:\LIN Services\AccesoAPI\LIN.Access.Inventory\LIN.Access.Inventory.csproj" />
 		<ProjectReference Include="D:\LIN Services\Clientes\LIN\LIN.LocalDataBase\LIN.LocalDataBase.csproj" />
 	</ItemGroup>
 </Project>
