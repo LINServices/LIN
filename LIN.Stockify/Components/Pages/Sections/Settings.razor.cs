@@ -30,10 +30,8 @@ public partial class Settings
     /// Lista de participantes
     /// </summary>
     private readonly List<Types.Cloud.Identity.Abstracts.SessionModel<LIN.Types.Inventory.Models.ProfileModel>> Participantes = [];
-
-
-    string Name = "";
-    string Description = "";
+    private string Name = "";
+    private string Description = "";
 
 
 
@@ -52,7 +50,7 @@ public partial class Settings
     /// <summary>
     /// Contexto de inventario.
     /// </summary>
-    InventoryContext? InventoryContext { get; set; }
+    private InventoryContext? InventoryContext { get; set; }
 
 
     /// <summary>
@@ -160,7 +158,7 @@ public partial class Settings
             var model = new InventoryAcessDataModel
             {
                 Inventario = int.Parse(Id),
-                ProfileID = e.Profile.ID,
+                ProfileID = e.Profile.Id,
                 Rol = InventoryRoles.Member
             };
             await LIN.Access.Inventory.Controllers.InventoryAccess.Create(model, Session.Instance.Token);

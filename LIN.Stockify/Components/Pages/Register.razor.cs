@@ -24,13 +24,13 @@ public partial class Register
     /// <summary>
     /// Error es visible.
     /// </summary>
-    bool ErrorVisible { get; set; }
+    private bool ErrorVisible { get; set; }
 
 
     /// <summary>
     /// Mensaje de error.
     /// </summary>
-    string ErrorMessage { get; set; } = string.Empty;
+    private string ErrorMessage { get; set; } = string.Empty;
 
 
     /// <summary>

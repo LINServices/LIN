@@ -67,8 +67,7 @@ public partial class NewProduct
         base.OnParametersSet();
     }
 
-
-    string ErrorMessage = "";
+    private string ErrorMessage = "";
 
     /// <summary>
     /// Crear.
@@ -126,9 +125,7 @@ public partial class NewProduct
 
     }
 
-
-
-    void GoNormal()
+    private void GoNormal()
     {
         Section = 0;
         StateHasChanged();

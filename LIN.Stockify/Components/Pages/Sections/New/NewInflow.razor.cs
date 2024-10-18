@@ -46,7 +46,7 @@ public partial class NewInflow
     /// <summary>
     /// Drawer de productos.
     /// </summary>
-    DrawerProducts DrawerProducts = null!;
+    private DrawerProducts DrawerProducts = null!;
 
 
     /// <summary>
@@ -130,7 +130,7 @@ public partial class NewInflow
         // Si no hay detalles
         if (details.Count <= 0)
             return;
-        
+
         // Model de entrada
         entry = new()
         {
@@ -142,7 +142,7 @@ public partial class NewInflow
                 ID = Contexto?.Inventory?.ID ?? 0
             },
             InventoryId = Contexto?.Inventory?.ID ?? 0,
-            ProfileID = Session.Instance.Informacion.ID
+            ProfileID = Session.Instance.Informacion.Id
         };
 
         // Envía al servidor

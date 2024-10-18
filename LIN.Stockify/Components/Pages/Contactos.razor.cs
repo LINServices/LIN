@@ -43,7 +43,7 @@ public partial class Contactos
     /// <summary>
     /// Actualizar los datos.
     /// </summary>
-    void Refresh()
+    private void Refresh()
     {
         InvokeAsync(() =>
         {

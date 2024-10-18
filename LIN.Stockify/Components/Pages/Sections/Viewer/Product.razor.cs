@@ -5,8 +5,7 @@ namespace LIN.Components.Pages.Sections.Viewer;
 
 public partial class Product
 {
-
-    static Product? Instance;
+    private static Product? Instance;
 
     private DeletePopup? deletePopup;
 
@@ -40,7 +39,7 @@ public partial class Product
     /// <summary>
     /// Enviar el comando al selector.
     /// </summary>
-    void Send()
+    private void Send()
     {
         // Nuevo onInvoque.
         MainLayout.DevicesSelector.OnInvoke = (e) =>
@@ -51,9 +50,7 @@ public partial class Product
         Components.Layout.MainLayout.DevicesSelector.Show();
     }
 
-
-
-    void Render()
+    private void Render()
     {
         this.InvokeAsync(StateHasChanged);
     }
@@ -71,42 +68,24 @@ public partial class Product
     {
 
 
-        switch (Modelo?.Category)
+        return (Modelo?.Category) switch
         {
-            case ProductCategories.Tecnología:
-                return ("Tecnología", "./img/Products/tec.png");
-            case ProductCategories.Arte:
-                return ("Cultura & Arte", "./img/Products/paint.png");
-            case ProductCategories.Juguetes:
-                return ("Juguete", "./img/Products/toy.png");
-            case ProductCategories.Automóviles:
-                return ("Automóviles", "./img/Products/car.png");
-            case ProductCategories.Frutas:
-                return ("Frutas y verduras", "./img/Products/fruit.png");
-            case ProductCategories.Deporte:
-                return ("Deportes", "./img/Products/fitness.png");
-            case ProductCategories.Servicios:
-                return ("Servicios", "./img/Products/tec.png");
-            case ProductCategories.Salud:
-                return ("Salud y farmacia", "./img/Products/health.png");
-            case ProductCategories.Moda:
-                return ("Moda", "./img/Products/fashion.png");
-            case ProductCategories.Limpieza:
-                return ("Limpieza", "./img/Products/clean.png");
-            case ProductCategories.Animales:
-                return ("Animales", "./img/Products/cat.png");
-            case ProductCategories.Hogar:
-                return ("Hogar y decoración", "./img/Products/home.png");
-            case ProductCategories.Alimentos:
-                return ("Alimentos", "./img/Products/food.png");
-            case ProductCategories.Agricultura:
-                return ("Agricultura", "./img/Products/garden.png");
-            default:
-                return ("", "");
-        }
-
-
-
+            ProductCategories.Tecnología => ("Tecnología", "./img/Products/tec.png"),
+            ProductCategories.Arte => ("Cultura & Arte", "./img/Products/paint.png"),
+            ProductCategories.Juguetes => ("Juguete", "./img/Products/toy.png"),
+            ProductCategories.Automóviles => ("Automóviles", "./img/Products/car.png"),
+            ProductCategories.Frutas => ("Frutas y verduras", "./img/Products/fruit.png"),
+            ProductCategories.Deporte => ("Deportes", "./img/Products/fitness.png"),
+            ProductCategories.Servicios => ("Servicios", "./img/Products/tec.png"),
+            ProductCategories.Salud => ("Salud y farmacia", "./img/Products/health.png"),
+            ProductCategories.Moda => ("Moda", "./img/Products/fashion.png"),
+            ProductCategories.Limpieza => ("Limpieza", "./img/Products/clean.png"),
+            ProductCategories.Animales => ("Animales", "./img/Products/cat.png"),
+            ProductCategories.Hogar => ("Hogar y decoración", "./img/Products/home.png"),
+            ProductCategories.Alimentos => ("Alimentos", "./img/Products/food.png"),
+            ProductCategories.Agricultura => ("Agricultura", "./img/Products/garden.png"),
+            _ => ("", ""),
+        };
     }
 
 
@@ -150,14 +129,9 @@ public partial class Product
     private string GetImage()
     {
 
-        if (Modelo?.Image.Length <= 0)
-        {
-            return "./img/Products/packages.png";
-        }
-
-        return $"data:image/png;base64,{Convert.ToBase64String(Modelo?.Image ?? [])}";
-
-
+        return Modelo?.Image.Length <= 0
+            ? "./img/Products/packages.png"
+            : $"data:image/png;base64,{Convert.ToBase64String(Modelo?.Image ?? [])}";
     }
 
 }

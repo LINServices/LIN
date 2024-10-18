@@ -8,7 +8,7 @@ namespace LIN.LocalDataBase.Data
         /// <summary>
         /// Base de datos
         /// </summary>
-        SQLiteAsyncConnection? Database;
+        private SQLiteAsyncConnection? Database;
 
 
 

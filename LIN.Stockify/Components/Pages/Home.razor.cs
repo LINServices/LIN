@@ -87,7 +87,7 @@ public partial class Home : IDisposable, INotificationModelObserver
 
         try
         {
-            if ((HomeDTO != null && !force) && HomeDTO.Response == Responses.Success)
+            if ((HomeDTO is not null && !force) && HomeDTO.Response == Responses.Success)
                 return true;
 
             // Items
@@ -179,7 +179,7 @@ public partial class Home : IDisposable, INotificationModelObserver
     /// <summary>
     /// Formatear numero.
     /// </summary>
-    static string FormatearNumero(decimal numero)
+    private static string FormatearNumero(decimal numero)
     {
         // Definir los límites para las representaciones abreviadas
         const int mill = 1000000;

@@ -76,7 +76,7 @@ public partial class MainLayout
     /// <summary>
     /// Actualizar el estado.
     /// </summary>
-    void State()
+    private void State()
     {
         this.InvokeAsync(StateHasChanged);
     }

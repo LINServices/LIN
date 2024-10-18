@@ -7,9 +7,7 @@ namespace LIN.Components.Pages.Sections.Viewer;
 
 public partial class Entrada
 {
-
-
-    AlertPopup Alerta;
+    private AlertPopup Alerta;
 
     /// <summary>
     /// Id de la entrada.
@@ -17,8 +15,7 @@ public partial class Entrada
     [Parameter]
     public string Id { get; set; } = string.Empty;
 
-
-    bool edit = false;
+    private bool edit = false;
 
 
     /// <summary>
@@ -105,7 +102,7 @@ public partial class Entrada
     /// <summary>
     /// Enviar el comando al selector.
     /// </summary>
-    void Send()
+    private void Send()
     {
         // Nuevo onInvoque.
         MainLayout.DevicesSelector.OnInvoke = (e) =>
@@ -126,14 +123,13 @@ public partial class Entrada
         MainLayout.Navigate($"/inflow/{id}");
     }
 
-    void ControllerDate()
+    private void ControllerDate()
     {
         edit = !edit;
         StateHasChanged();
     }
 
-
-    async void Update()
+    private async void Update()
     {
         var newdate = Modelo?.Date;
 
@@ -142,8 +138,7 @@ public partial class Entrada
         await this.InvokeAsync(StateHasChanged);
     }
 
-
-    (string, string, string) GetPrevision()
+    private (string, string, string) GetPrevision()
     {
 
         string @base = "bg-money/20 dark:bg-green-100/20";
@@ -179,20 +174,14 @@ public partial class Entrada
 
 
 
-        switch (Modelo?.Type)
+        return (Modelo?.Type) switch
         {
-            case Types.Inventory.Enumerations.InflowsTypes.Compra:
-                return "./img/Products/inflows/cart.png";
-            case Types.Inventory.Enumerations.InflowsTypes.Devolucion:
-                return "./img/Products/inflows/return.png";
-            case Types.Inventory.Enumerations.InflowsTypes.Regalo:
-                return "./img/Products/inflows/gift.png";
-            case Types.Inventory.Enumerations.InflowsTypes.Ajuste:
-                return "./img/Products/inflows/setting.png";
-            default:
-                return "./img/Products/packages.png";
-        }
-
+            Types.Inventory.Enumerations.InflowsTypes.Compra => "./img/Products/inflows/cart.png",
+            Types.Inventory.Enumerations.InflowsTypes.Devolucion => "./img/Products/inflows/return.png",
+            Types.Inventory.Enumerations.InflowsTypes.Regalo => "./img/Products/inflows/gift.png",
+            Types.Inventory.Enumerations.InflowsTypes.Ajuste => "./img/Products/inflows/setting.png",
+            _ => "./img/Products/packages.png",
+        };
     }
 
 }

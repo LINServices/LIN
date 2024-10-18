@@ -21,7 +21,7 @@ public partial class EditProduct
     /// <summary>
     /// Obtener imagen en base 64.
     /// </summary>
-    string Img64 => Convert.ToBase64String(Photo ?? []);
+    private string Img64 => Convert.ToBase64String(Photo ?? []);
 
 
     /// <summary>
@@ -50,17 +50,14 @@ public partial class EditProduct
     /// </summary>
     private bool isNewPhoto = false;
 
-
-
-    async void OpenImage()
+    private async void OpenImage()
     {
         Photo = await openFiles.OpenFile();
         isNewPhoto = true;
         StateHasChanged();
     }
 
-
-    void SetImage(byte[] photo)
+    private void SetImage(byte[] photo)
     {
 
         Photo = photo;
@@ -68,8 +65,7 @@ public partial class EditProduct
         StateHasChanged();
     }
 
-
-    void DeleteImage()
+    private void DeleteImage()
     {
         Photo = [];
         isNewPhoto = true;
@@ -174,10 +170,7 @@ public partial class EditProduct
 
             Product.Category = (ProductCategories)Category;
 
-            if (!isNewPhoto)
-                Product.Image = null!;
-            else
-                Product.Image = Photo;
+            Product.Image = !isNewPhoto ? null : Photo;
 
             // Respuesta del controlador
             var response = await Access.Inventory.Controllers.Product.Update(Product, LIN.Access.Inventory.Session.Instance.Token);
@@ -231,16 +224,13 @@ public partial class EditProduct
 
     }
 
-
-
-    void GoNormal()
+    private void GoNormal()
     {
         Section = 0;
         StateHasChanged();
     }
 
-
-    bool NeedUpdateDetail()
+    private bool NeedUpdateDetail()
     {
 
         try

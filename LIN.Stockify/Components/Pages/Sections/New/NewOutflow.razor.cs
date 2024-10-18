@@ -22,7 +22,7 @@ public partial class NewOutflow
     /// <summary>
     /// Sección actual.
     /// </summary>
-    int section = 0;
+    private int section = 0;
 
 
     /// <summary>
@@ -72,14 +72,13 @@ public partial class NewOutflow
     /// <summary>
     /// Obtener valor.
     /// </summary>
-    int GetValue(int product)
+    private int GetValue(int product)
     {
         Values.TryGetValue(product, out var value);
         return value;
     }
 
-
-    string ErrorMessage = "";
+    private string ErrorMessage = "";
 
 
     /// <summary>
@@ -146,7 +145,7 @@ public partial class NewOutflow
                 ID = Contexto?.Inventory?.ID ?? 0
             },
             InventoryId = Contexto?.Inventory?.ID ?? 0,
-            ProfileID = Session.Instance.Informacion.ID
+            ProfileID = Session.Instance.Informacion.Id
         };
 
 
@@ -190,7 +189,7 @@ public partial class NewOutflow
     /// <summary>
     /// Cambio del valor.
     /// </summary>
-    void ValueChange(int product, int q)
+    private void ValueChange(int product, int q)
     {
         try
         {
@@ -203,8 +202,7 @@ public partial class NewOutflow
 
     }
 
-
-    void GoNormal()
+    private void GoNormal()
     {
         section = 0;
         StateHasChanged();

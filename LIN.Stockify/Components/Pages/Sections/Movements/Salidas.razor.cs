@@ -22,7 +22,7 @@ public partial class Salidas : IOutflowModelObserver, IDisposable
     /// <summary>
     /// Contexto del inventario.
     /// </summary>
-    InventoryContext? Contexto { get; set; }
+    private InventoryContext? Contexto { get; set; }
 
 
     /// <summary>

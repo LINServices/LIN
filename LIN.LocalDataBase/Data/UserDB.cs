@@ -8,7 +8,7 @@ namespace LIN.LocalDataBase.Data
         /// <summary>
         /// Base de datos
         /// </summary>
-        SQLiteAsyncConnection? Database;
+        private SQLiteAsyncConnection? Database;
 
 
 
@@ -102,9 +102,7 @@ namespace LIN.LocalDataBase.Data
             var lista = await Database!.Table<Models.User>().ToListAsync();
 
             // Si no hay elementos
-            if (lista.Count == 0) return null;
-
-            return lista[0];
+            return lista.Count == 0 ? null : lista[0];
         }
 
 
