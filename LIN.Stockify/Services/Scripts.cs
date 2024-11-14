@@ -1,8 +1,8 @@
 ﻿using LIN.Components.Pages;
-using LIN.Components.Pages.Sections;
 using LIN.Components.Pages.Sections.Viewer;
 using LIN.Inventory.Realtime.Manager;
 using LIN.Inventory.Realtime.Script;
+using SILF.Script.DotnetRun.Interop;
 using SILF.Script.Interfaces;
 
 namespace LIN.Services;
@@ -10,124 +10,74 @@ namespace LIN.Services;
 internal class Scripts
 {
 
+    [SILFFunctionName("updateCt")]
+    private static void UpdateContacts() => Contactos.ToUpdate();
+
+    [SILFFunctionName("viewContact")]
+    private static async void ViewContact(decimal id)
+    {
+
+        // Obtener el contacto.
+        ContactModel? contact = Contactos.Response?.Models.FirstOrDefault(t => t.Id == id);
+
+        // Validar.
+        if (contact == null)
+        {
+            // Obtener desde la web.
+            var response = await Access.Inventory.Controllers.Contact.Read((int)id, Session.Instance.ContactsToken);
+
+            // Error.
+            if (response.Response != Responses.Success)
+                return;
+
+            // Establecer.
+            contact = response.Model;
+        }
+
+        // Abrir el pop.
+        MainLayout.ContactPop.Show(contact);
+    }
+
+    [SILFFunctionName("viewProduct")]
+    private static async void ViewProduct(decimal inventory, decimal id)
+    {
+
+        //var manager = provider.GetService<IInventoryManager>();
+
+
+        //var context = manager.Get(inventory);
+
+        //var find = context?.FindProduct(id);
+
+        //if (context == null || find == null)
+        //{
+        //    var xx = await LIN.Access.Inventory.Controllers.Product.Read(id, Session.Instance.Token);
+
+        //    if (xx.Response != Responses.Success)
+        //        return;
+
+
+        //    find = xx.Model;
+
+        //}
+
+        //Products.Selected = find;
+        //Product.Show();
+    }
+
+
+
+    public static List<Delegate> Get()
+    {
+        return [UpdateContacts, ViewContact, ViewProduct];
+    }
+
+
     /// <summary>
     /// Construye las funciones.
     /// </summary>
     public static List<IFunction> Get(IServiceProvider provider)
     {
-
-        // Función de actualizar contactos.
-        SILFFunction updateContacts = new((values) =>
-        {
-            Contactos.ToUpdate();
-        })
-        // Propiedades
-        {
-            Name = "updateCt",
-            Parameters = []
-        };
-
-        // Visualizar un contacto.
-        SILFFunction viewContact = new(async (values) =>
-        {
-
-            // Obtener el parámetro.
-            var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
-
-            // Validar el tipo.
-            if (value is not decimal)
-                return;
-
-            // Id.
-            var id = (int)((value as decimal?) ?? 0);
-
-            // Obtener el contacto.
-            ContactModel? contact = Contactos.Response?.Models.FirstOrDefault(t => t.Id == id);
-
-            // Validar.
-            if (contact == null)
-            {
-                // Obtener desde la web.
-                var response = await Access.Inventory.Controllers.Contact.Read(id, Session.Instance.ContactsToken);
-
-                // Error.
-                if (response.Response != Responses.Success)
-                    return;
-
-                // Establecer.
-                contact = response.Model;
-            }
-
-            // Abrir el pop.
-            MainLayout.ContactPop.Show(contact);
-
-        })
-        // Propiedades
-        {
-            Name = "viewContact",
-            Parameters =
-            [
-                new("id", new("number"))
-            ]
-        };
-
-        // Visualizar un producto.
-        SILFFunction viewProduct = new(async (values) =>
-        {
-
-            // Obtener el parámetro.
-            var value = values.FirstOrDefault(t => t.Name == "id")?.Objeto.GetValue();
-
-            // Validar el tipo.
-            if (value is not decimal)
-                return;
-
-            // Id.
-            var id = (int)((value as decimal?) ?? 0);
-
-
-            // Obtener el parámetro.
-            value = values.FirstOrDefault(t => t.Name == "inventory")?.Objeto.GetValue();
-
-            // Validar el tipo.
-            if (value is not decimal)
-                return;
-
-            // Id.
-            var inventory = (int)((value as decimal?) ?? 0);
-
-            var manager = provider.GetService<IInventoryManager>();
-
-
-            var context = manager.Get(inventory);
-
-            var find = context?.FindProduct(id);
-
-            if (context == null || find == null)
-            {
-                var xx = await LIN.Access.Inventory.Controllers.Product.Read(id, Session.Instance.Token);
-
-                if (xx.Response != Responses.Success)
-                    return;
-
-
-                find = xx.Model;
-
-            }
-
-            Products.Selected = find;
-            Product.Show();
-
-        })
-        // Propiedades
-        {
-            Name = "viewProduct",
-            Parameters =
-            [
-                new("inventory", new("number")),
-                new("id", new("number")),
-            ]
-        };
 
 
         // Visualizar un inflow.
@@ -519,7 +469,7 @@ internal class Scripts
         };
 
         // Guardar métodos.
-        return [updateContacts, viewContact, viewProduct, addProduct, addInflow, addOutflow, newInvitation, newStateInvitation, viewInflow, viewOutflow, updateProduct, deleteProduct];
+        return [ addProduct, addInflow, addOutflow, newInvitation, newStateInvitation, viewInflow, viewOutflow, updateProduct, deleteProduct];
     }
 
 

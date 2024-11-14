@@ -42,7 +42,7 @@ public static class MauiProgram
         var app = builder.Build();
 
         // Usar servicios de tiempo real.
-        app.Services.UseRealTime(DeviceInfo.Current.Name, DeviceInfo.Current.Platform.ToString(), Scripts.Get(app.Services));
+        app.Services.UseRealTime(DeviceInfo.Current.Name, DeviceInfo.Current.Platform.ToString(), Scripts.Get(app.Services), Scripts.Get());
 
         return app;
     }
