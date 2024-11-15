@@ -67,6 +67,12 @@ internal class Scripts
 
 
 
+
+
+
+
+
+
     public static List<Delegate> Get()
     {
         return [UpdateContacts, ViewContact, ViewProduct];

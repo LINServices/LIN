@@ -39,7 +39,6 @@ public partial class Register
     private int Section { get; set; } = 0;
 
 
-
     /// <summary>
     /// Oculta los errores
     /// </summary>
