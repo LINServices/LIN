@@ -63,4 +63,7 @@
 		<ProjectReference Include="..\..\..\Components\LIN.Inventory.Shared\LIN.Inventory.Shared.csproj" />
 		<ProjectReference Include="D:\LIN Services\Clientes\LIN\LIN.LocalDataBase\LIN.LocalDataBase.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Components\Pages\Sections\Reportes\" />
+	</ItemGroup>
 </Project>
