@@ -145,7 +145,7 @@ public partial class NewOutflow
                 ID = Contexto?.Inventory?.ID ?? 0
             },
             InventoryId = Contexto?.Inventory?.ID ?? 0,
-            ProfileID = Session.Instance.Informacion.Id
+            ProfileID = Session.Instance.Information.Id
         };
 
 

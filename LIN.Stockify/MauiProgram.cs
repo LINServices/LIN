@@ -25,6 +25,7 @@ public static class MauiProgram
         // Local services.
         builder.Services.AddTransient<IDeviceSelector, DeviceSelector>();
         builder.Services.AddAuthenticationService();
+        builder.Services.AddInventoryService();
         builder.Services.AddRealTime();
 
 #if DEBUG
@@ -33,7 +34,6 @@ public static class MauiProgram
 #endif
 
         // Acceso a datos.
-        LIN.Access.Inventory.Build.Init();
         LIN.Access.Search.Build.Init();
 
         // Archivos.

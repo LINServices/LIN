@@ -51,7 +51,7 @@ public partial class NewInventory
         {
             Nombre = Name,
             Direction = Direction,
-            Creador = Session.Instance.Informacion.Id
+            Creador = Session.Instance.Information.Id
         };
 
 
@@ -64,7 +64,7 @@ public partial class NewInventory
             modelo.UsersAccess.Add(new()
             {
 
-                ProfileID = Session.Instance.Informacion.Id
+                ProfileID = Session.Instance.Information.Id
             });
 
             // Otros participantes
