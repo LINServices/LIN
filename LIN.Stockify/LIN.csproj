@@ -33,7 +33,7 @@
 		<AndroidPackageFormat>apk</AndroidPackageFormat>
 	</PropertyGroup>
 	<ItemGroup>
-		
+
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#6e964c" BaseSize="128,128" />
 		<!-- Images -->
@@ -64,6 +64,6 @@
 		<ProjectReference Include="D:\LIN Services\Clientes\LIN\LIN.LocalDataBase\LIN.LocalDataBase.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Components\Pages\Sections\Reportes\" />
+		<Folder Include="Components\Pages\Sections\Reportes\" />
 	</ItemGroup>
 </Project>
