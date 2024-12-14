@@ -52,8 +52,6 @@
         @* Componentes. *@
         @if (Participantes.Count > 0)
         {
-            <label>Nuevos integrantes:</label>
-
             @foreach (var e in Participantes ?? [])
             {
                 var member = new LIN.Types.Inventory.Models.IntegrantDataModel

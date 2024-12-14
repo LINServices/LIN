@@ -174,6 +174,16 @@ public partial class Products : IInventoryModelObserver, IDisposable
     }
 
 
+
+    /// <summary>
+    /// Abrir los reportes.
+    /// </summary>
+    private void GoReports()
+    {
+        nav.NavigateTo($"/reports/{Contexto?.Inventory?.ID}");
+    }
+
+
     /// <summary>
     /// Abrir crear.
     /// </summary>

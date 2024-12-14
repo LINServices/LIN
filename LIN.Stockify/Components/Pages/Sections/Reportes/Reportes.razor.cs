@@ -2,9 +2,9 @@
 using LIN.Inventory.Realtime.Manager.Models;
 using LIN.Types.Inventory.Enumerations;
 
-namespace LIN.Components.Pages.Sections;
+namespace LIN.Components.Pages.Sections.Reportes;
 
-public partial class Settings
+public partial class Reportes
 {
 
     /// <summary>
@@ -15,21 +15,10 @@ public partial class Settings
 
 
     /// <summary>
-    /// Drawer de integrantes.
-    /// </summary>
-    private DrawerPeople Drawer = null!;
-
-
-    /// <summary>
-    /// Popup del integrante.
-    /// </summary>
-    private MemberPopup MemberPopup { get; set; } = null!;
-
-
-    /// <summary>
     /// Lista de participantes
     /// </summary>
     private readonly List<Types.Cloud.Identity.Abstracts.SessionModel<LIN.Types.Inventory.Models.ProfileModel>> Participantes = [];
+  
     private string Name = "";
     private string Description = "";
 
@@ -165,16 +154,6 @@ public partial class Settings
 
         Participantes.Clear();
         await RetrieveData(true);
-    }
-
-
-    /// <summary>
-    /// Abrir modal de integrantes.
-    /// </summary>
-    /// <param name="member"></param>
-    private void OpenMember(IntegrantDataModel member)
-    {
-        MemberPopup.Show(member);
     }
 
 
