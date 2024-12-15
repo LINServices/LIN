@@ -42,7 +42,7 @@ public static class MauiProgram
         var app = builder.Build();
 
         // Usar servicios de tiempo real.
-        app.Services.UseRealTime(DeviceInfo.Current.Name, DeviceInfo.Current.Platform.ToString(), Scripts.Get(app.Services), Scripts.Get());
+        app.Services.UseRealTime(DeviceInfo.Current.Name, GetPlatform(), [], Scripts.Get(app.Services));
 
         return app;
     }
@@ -73,6 +73,16 @@ public static class MauiProgram
             currentActivity.Window.SetNavigationBarColor(new(0, 0, 0));
             currentActivity.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)SystemUiFlags.Visible;
         }
+#endif
+    }
+
+
+    public static string GetPlatform()
+    {
+#if WINDOWS
+        return "windows";
+#elif ANDROID
+return "android";
 #endif
     }
 
