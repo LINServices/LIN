@@ -82,7 +82,7 @@ public static class MauiProgram
 #if WINDOWS
         return "windows";
 #elif ANDROID
-return "android";
+        return "android";
 #endif
     }
 

@@ -5,7 +5,7 @@
     @Body
 </div>
 
-<div class="flex h-20 min-h-20 w-full items-center justify-center @(ShowNavigation ? "":"hidden")">
+<div class="flex h-20 min-h-20 w-full items-center justify-center @(ShowNavigation ? string.Empty : "hidden")">
     <BottomNavigation @ref="Navigation" Settings="Settings" />
 </div>
 

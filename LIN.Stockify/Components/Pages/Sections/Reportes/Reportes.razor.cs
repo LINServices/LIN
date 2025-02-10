@@ -18,7 +18,7 @@ public partial class Reportes
     /// Lista de participantes
     /// </summary>
     private readonly List<Types.Cloud.Identity.Abstracts.SessionModel<LIN.Types.Inventory.Models.ProfileModel>> Participantes = [];
-  
+
     private string Name = "";
     private string Description = "";
 

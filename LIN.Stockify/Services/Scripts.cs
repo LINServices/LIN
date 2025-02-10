@@ -42,7 +42,6 @@ internal class Scripts
 
         var manager = provider.GetService<IInventoryManager>();
 
-
         var context = manager.Get((int)inventory);
 
         var find = context?.FindProduct((int)id);
