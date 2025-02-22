@@ -131,7 +131,7 @@ public partial class Product
 
         return Modelo?.Image.Length <= 0
             ? "./img/Products/packages.png"
-            : $"data:image/png;base64,{Convert.ToBase64String(Modelo?.Image ?? [])}";
+            : Modelo?.Image;
     }
 
 }

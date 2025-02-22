@@ -97,7 +97,7 @@ internal class Scripts
 
         var observer = provider.GetService<IInventoryObserver>();
 
-        observer.Update(context.Inventory.ID);
+        observer.Update(context.Inventory.Id);
     }
 
     [SILFFunctionName("addInflow")]
@@ -123,7 +123,6 @@ internal class Scripts
         if (context.Inflows != null && context.Inflows.Response == Responses.Success)
             context.Inflows.Models.Insert(0, inflow.Model);
 
-
         // Actualizar la cantidad.
         foreach (var item in inflow.Model.Details)
         {
@@ -141,9 +140,8 @@ internal class Scripts
         var pObserver = provider.GetService<IInventoryObserver>();
         var iObserver = provider.GetService<IInflowObserver>();
 
-
-        pObserver.Update(context.Inventory.ID);
-        iObserver.Update(context.Inventory.ID);
+        pObserver.Update(context.Inventory.Id);
+        iObserver.Update(context.Inventory.Id);
     }
 
     [SILFFunctionName("addOutflow")]
@@ -185,8 +183,8 @@ internal class Scripts
         var pObserver = provider.GetService<IInventoryObserver>();
         var oObserver = provider.GetService<IOutflowObserver>();
 
-        pObserver.Update(context.Inventory.ID);
-        oObserver.Update(context.Inventory.ID);
+        pObserver.Update(context.Inventory.Id);
+        oObserver.Update(context.Inventory.Id);
     }
 
     [SILFFunctionName("newInvitation")]

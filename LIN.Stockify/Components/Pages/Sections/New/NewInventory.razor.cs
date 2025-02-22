@@ -64,7 +64,7 @@ public partial class NewInventory
             modelo.UsersAccess.Add(new()
             {
 
-                ProfileID = Session.Instance.Information.Id
+                ProfileId = Session.Instance.Information.Id
             });
 
             // Otros participantes
@@ -73,7 +73,7 @@ public partial class NewInventory
                 notificationList.Add(user.Profile.Id);
                 modelo.UsersAccess.Add(new()
                 {
-                    ProfileID = user.Profile.Id,
+                    ProfileId = user.Profile.Id,
                     Rol = InventoryRoles.Member
                 });
             }

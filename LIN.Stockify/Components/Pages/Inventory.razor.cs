@@ -71,7 +71,7 @@ public partial class Inventory
         if (e == null)
             return;
 
-        NavigationManager.NavigateTo($"/products/{e.ID}");
+        NavigationManager.NavigateTo($"/products/{e.Id}");
     }
 
 

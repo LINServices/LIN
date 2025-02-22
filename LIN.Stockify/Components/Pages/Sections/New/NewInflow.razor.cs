@@ -139,9 +139,9 @@ public partial class NewInflow
             Type = type,
             Inventory = new()
             {
-                ID = Contexto?.Inventory?.ID ?? 0
+                Id = Contexto?.Inventory?.Id ?? 0
             },
-            InventoryId = Contexto?.Inventory?.ID ?? 0,
+            InventoryId = Contexto?.Inventory?.Id ?? 0,
             ProfileID = Session.Instance.Information.Id
         };
 

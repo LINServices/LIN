@@ -46,7 +46,7 @@ public partial class Entradas : IInflowModelObserver, IDisposable
         // Obtener el contexto.
         Contexto = InventoryManager.Get(int.Parse(Id));
 
-        InflowObserver.Add(Contexto?.Inventory?.ID ?? 0, this);
+        InflowObserver.Add(Contexto?.Inventory?.Id ?? 0, this);
 
         // Evaluar la respuesta.
         if (Response == null)
@@ -73,7 +73,7 @@ public partial class Entradas : IInflowModelObserver, IDisposable
         StateHasChanged();
 
         // Obtiene los dispositivos
-        var result = await Inflows.ReadAll(Contexto?.Inventory?.ID ?? 0, Session.Instance.Token);
+        var result = await Inflows.ReadAll(Contexto?.Inventory?.Id ?? 0, Session.Instance.Token);
 
         // Nuevos estados.
         IsLoading = false;
@@ -131,7 +131,7 @@ public partial class Entradas : IInflowModelObserver, IDisposable
     public void Go(Types.Inventory.Models.InflowDataModel e)
     {
         Selected = e;
-        NavigationManager.NavigateTo($"/inflow/{e.ID}");
+        NavigationManager.NavigateTo($"/inflow/{e.Id}");
     }
 
 
@@ -140,7 +140,7 @@ public partial class Entradas : IInflowModelObserver, IDisposable
     /// </summary>
     private void GoNew()
     {
-        NavigationManager.NavigateTo($"/new/inflow/{Contexto?.Inventory?.ID}");
+        NavigationManager.NavigateTo($"/new/inflow/{Contexto?.Inventory?.Id}");
     }
 
 }

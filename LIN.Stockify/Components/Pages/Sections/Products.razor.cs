@@ -53,7 +53,7 @@ public partial class Products : IInventoryModelObserver, IDisposable
             {
                 Inventory = new()
                 {
-                    ID = int.Parse(Id),
+                    Id = int.Parse(Id),
                 }
             };
 
@@ -61,7 +61,7 @@ public partial class Products : IInventoryModelObserver, IDisposable
         if (Response == null)
             GetData();
 
-        ProductObserver.Add(Contexto?.Inventory?.ID ?? 0, this);
+        ProductObserver.Add(Contexto?.Inventory?.Id ?? 0, this);
         deviceManager.JoinInventory(int.Parse(Id));
 
         // Base.
@@ -84,7 +84,7 @@ public partial class Products : IInventoryModelObserver, IDisposable
         StateHasChanged();
 
         // Obtiene los dispositivos
-        var result = await Access.Inventory.Controllers.Product.ReadAll(Contexto?.Inventory?.ID ?? 0, Session.Instance.Token);
+        var result = await Access.Inventory.Controllers.Product.ReadAll(Contexto?.Inventory?.Id ?? 0, Session.Instance.Token);
 
         // Nuevos estados.
         IsLoading = false;
@@ -152,7 +152,7 @@ public partial class Products : IInventoryModelObserver, IDisposable
     /// </summary>
     private void GoEntradas()
     {
-        nav.NavigateTo($"/inflows/{Contexto?.Inventory?.ID}");
+        nav.NavigateTo($"/inflows/{Contexto?.Inventory?.Id}");
     }
 
 
@@ -161,7 +161,7 @@ public partial class Products : IInventoryModelObserver, IDisposable
     /// </summary>
     private void GoMembers()
     {
-        nav.NavigateTo($"/members/{Contexto?.Inventory?.ID}");
+        nav.NavigateTo($"/members/{Contexto?.Inventory?.Id}");
     }
 
 
@@ -170,7 +170,7 @@ public partial class Products : IInventoryModelObserver, IDisposable
     /// </summary>
     private void GoSalidas()
     {
-        nav.NavigateTo($"/outflows/{Contexto?.Inventory?.ID}");
+        nav.NavigateTo($"/outflows/{Contexto?.Inventory?.Id}");
     }
 
 
@@ -180,7 +180,7 @@ public partial class Products : IInventoryModelObserver, IDisposable
     /// </summary>
     private void GoReports()
     {
-        nav.NavigateTo($"/reports/{Contexto?.Inventory?.ID}");
+        nav.NavigateTo($"/reports/{Contexto?.Inventory?.Id}");
     }
 
 
@@ -189,7 +189,7 @@ public partial class Products : IInventoryModelObserver, IDisposable
     /// </summary>
     private void GoCreate()
     {
-        nav.NavigateTo($"/new/product/{Contexto?.Inventory?.ID}");
+        nav.NavigateTo($"/new/product/{Contexto?.Inventory?.Id}");
     }
 
 }

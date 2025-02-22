@@ -50,14 +50,14 @@ public partial class Entrada
 
         // Obtener la salida.
         var inflow = (from inflowModel in (inventoryContext.Inflows ?? new()).Models
-                      where inflowModel.ID == int.Parse(Id)
+                      where inflowModel.Id == int.Parse(Id)
                       select inflowModel).FirstOrDefault();
 
         // Si no hay detalles.
         if (inflow?.Details.Count <= 0)
         {
             // Obtener los detalles.
-            var inflowDetails = await Access.Inventory.Controllers.Inflows.Read(inflow.ID, Session.Instance.Token, true);
+            var inflowDetails = await Access.Inventory.Controllers.Inflows.Read(inflow.Id, Session.Instance.Token, true);
 
             if (inflowDetails.Response == Responses.Success)
             {
@@ -107,7 +107,7 @@ public partial class Entrada
         // Nuevo onInvoque.
         MainLayout.DevicesSelector.OnInvoke = (e) =>
         {
-            deviceManager.SendToDevice($"viewInflow({Modelo?.ID})", e.Id);
+            deviceManager.SendToDevice($"viewInflow({Modelo?.Id})", e.Id);
         };
 
         Components.Layout.MainLayout.DevicesSelector.Show();
@@ -133,7 +133,7 @@ public partial class Entrada
     {
         var newdate = Modelo?.Date;
 
-        await LIN.Access.Inventory.Controllers.Inflows.Update(Modelo?.ID ?? 0, newdate!.Value, Session.Instance.Token);
+        await LIN.Access.Inventory.Controllers.Inflows.Update(Modelo?.Id ?? 0, newdate!.Value, Session.Instance.Token);
         edit = false;
         await this.InvokeAsync(StateHasChanged);
     }

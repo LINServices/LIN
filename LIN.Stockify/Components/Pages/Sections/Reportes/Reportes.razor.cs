@@ -143,10 +143,10 @@ public partial class Reportes
     {
         foreach (var e in Participantes)
         {
-            var model = new InventoryAcessDataModel
+            var model = new InventoryAccessDataModel
             {
                 Inventario = int.Parse(Id),
-                ProfileID = e.Profile.Id,
+                ProfileId = e.Profile.Id,
                 Rol = InventoryRoles.Member
             };
             await LIN.Access.Inventory.Controllers.InventoryAccess.Create(model, Session.Instance.Token);
@@ -165,7 +165,7 @@ public partial class Reportes
     {
         this.InvokeAsync(() =>
         {
-            Response?.Models.RemoveAll(t => t.AccessID == id);
+            Response?.Models.RemoveAll(t => t.AccessId == id);
             StateHasChanged();
         });
     }
