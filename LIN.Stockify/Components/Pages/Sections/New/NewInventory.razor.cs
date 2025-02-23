@@ -90,7 +90,7 @@ public partial class NewInventory
             StateHasChanged();
         }
 
-        var x = await LIN.Access.Inventory.Controllers.Inventories.Read(response.LastID, Session.Instance.Token);
+        var x = await LIN.Access.Inventory.Controllers.Inventories.Read(response.LastId, Session.Instance.Token);
 
 
 
