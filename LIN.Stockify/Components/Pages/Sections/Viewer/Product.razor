@@ -32,9 +32,9 @@
 
 
 
-    <div class="UIScroll flex w-full flex-col items-center overflow-y-auto overflow-x-visible">
+    <div class="UIScroll flex w-full flex-col items-center overflow-x-visible overflow-y-auto">
 
-        <div class="-z-10 absolute mt-8 flex h-20 w-full max-w-lg justify-center blur-[40px] lg:blur-[70px] lg:mt-6">
+        <div class="absolute -z-10 mt-8 flex h-20 w-full max-w-lg justify-center blur-[40px] lg:blur-[70px] lg:mt-6">
 
 
             <div class="h-full w-20 animate-pulse rounded-full bg-blue-600 dark:bg-blue-500">
@@ -57,7 +57,7 @@
 
                
 
-                <div class="bg-zinc-100/40 h-20 w-20 rounded-lg p-2 backdrop-blur-2xl dark:bg-zinc-900/70">
+                <div class="h-20 w-20 rounded-lg bg-zinc-100/40 p-2 backdrop-blur-2xl dark:bg-zinc-900/70">
                     <img class="h-full w-full" src="@GetImage()" />
                 </div>
 
@@ -72,7 +72,7 @@
                     <label class="mt-0.5 text-zinc-600">@x.Item1</label>
                 </div>
 
-                <div class="bg-zinc-200/40 mt-3 flex w-full max-w-40 items-center justify-center rounded-xl p-1.5 dark:bg-zinc-900">
+                <div class="mt-3 flex w-full max-w-40 items-center justify-center rounded-xl bg-zinc-200/40 p-1.5 dark:bg-zinc-900">
 
                     <svg class="mr-2 h-4 w-4 dark:fill-zinc-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M248 0H208c-26.5 0-48 21.5-48 48V160c0 35.3 28.7 64 64 64H352c35.3 0 64-28.7 64-64V48c0-26.5-21.5-48-48-48H328V80c0 8.8-7.2 16-16 16H264c-8.8 0-16-7.2-16-16V0zM64 256c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H224c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H184v80c0 8.8-7.2 16-16 16H120c-8.8 0-16-7.2-16-16V256H64zM352 512H512c35.3 0 64-28.7 64-64V320c0-35.3-28.7-64-64-64H472v80c0 8.8-7.2 16-16 16H408c-8.8 0-16-7.2-16-16V256H352c-15 0-28.8 5.1-39.7 13.8c4.9 10.4 7.7 22 7.7 34.2V464c0 12.2-2.8 23.8-7.7 34.2C323.2 506.9 337 512 352 512z" /></svg>
 
@@ -85,34 +85,34 @@
         </div>
 
         @* Componentes. *@
-        <div class="flex-1 mt-5 gap-2 overflow-auto">
+        <div class="mt-5 flex-1 gap-2 overflow-auto">
 
             <div class="flex h-20 w-full justify-between gap-2">
 
 
-                <div class="bg-zinc-200/40 flex w-full items-center gap-3 rounded-lg px-3 backdrop-blur-lg dark:bg-zinc-900">
+                <div class="flex w-full items-center gap-3 rounded-lg bg-zinc-200/40 px-3 backdrop-blur-lg dark:bg-zinc-900">
 
                     <svg class="h-7 w-7 fill-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" /></svg>
 
                     <div class="flex flex-col">
                         <label class="font-bold dark:text-zinc-300">Compra</label>
-                        <label class="-mt-0.5 text-sm text-green-600">$@Modelo?.DetailModel?.PrecioCompra.ToString("#,##0.##")</label>
+                        <label class="-mt-0.5 text-sm text-green-600">$@Modelo?.DetailModel?.PurchasePrice.ToString("#,##0.##")</label>
                     </div>
                     
                 </div>
                
-                <div class="bg-zinc-200/40 flex w-full items-center gap-3 rounded-lg px-3 backdrop-blur-lg dark:bg-zinc-900">
+                <div class="flex w-full items-center gap-3 rounded-lg bg-zinc-200/40 px-3 backdrop-blur-lg dark:bg-zinc-900">
 <svg class="h-7 w-7 fill-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" /></svg>
                     <div class="flex flex-col">
                         <label class="font-bold dark:text-zinc-300">Venta</label>
-                        <label class="-mt-0.5 text-sm text-green-600">$@Modelo?.DetailModel?.PrecioVenta.ToString("#,##0.##")</label>
+                        <label class="-mt-0.5 text-sm text-green-600">$@Modelo?.DetailModel?.SalePrice.ToString("#,##0.##")</label>
                     </div>
 
                 </div>
 
             </div>
 
-            <div class="bg-zinc-200/40 mt-2 flex h-fit w-full flex-col rounded-xl p-3 dark:bg-zinc-900">
+            <div class="mt-2 flex h-fit w-full flex-col rounded-xl bg-zinc-200/40 p-3 dark:bg-zinc-900">
 
                 <svg class="h-5 w-5 fill-zinc-800 dark:fill-zinc-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" /></svg>
                 <label class="mt-2 font-bold dark:text-zinc-200">Descripción</label>

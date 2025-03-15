@@ -73,7 +73,7 @@ public partial class Reportes
             return;
 
         // Obtener información.
-        Name = InventoryContext.Inventory?.Nombre ?? string.Empty;
+        Name = InventoryContext.Inventory?.Name ?? string.Empty;
         Description = InventoryContext.Inventory?.Direction ?? string.Empty;
 
         // Rellena los datos
@@ -130,7 +130,7 @@ public partial class Reportes
             return;
 
         // Actualización.
-        InventoryContext.Inventory.Nombre = Name;
+        InventoryContext.Inventory.Name = Name;
         InventoryContext.Inventory.Direction = Description;
         StateHasChanged();
     }
@@ -145,7 +145,7 @@ public partial class Reportes
         {
             var model = new InventoryAccessDataModel
             {
-                Inventario = int.Parse(Id),
+                InventoryId = int.Parse(Id),
                 ProfileId = e.Profile.Id,
                 Rol = InventoryRoles.Member
             };

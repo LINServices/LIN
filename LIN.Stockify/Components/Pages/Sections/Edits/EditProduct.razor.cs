@@ -116,10 +116,10 @@ public partial class EditProduct
             Image = result.Image,
             Details = [
                 new ProductDetailModel(){
-                    Estado = result.DetailModel?.Estado ?? ProductStatements.Undefined,
+                    Status = result.DetailModel?.Status ?? ProductStatements.Undefined,
                     Id = result.DetailModel?.Id ?? 0,
-                    PrecioCompra = result.DetailModel?.PrecioCompra ?? 0,
-                    PrecioVenta = result.DetailModel?.PrecioVenta ?? 0,
+                    PurchasePrice = result.DetailModel?.PurchasePrice ?? 0,
+                    SalePrice = result.DetailModel?.SalePrice ?? 0,
                     Quantity = result.DetailModel?.Quantity ?? 0
                 }
                 ],
@@ -206,8 +206,8 @@ public partial class EditProduct
 
             if (Product.DetailModel != null && ProductBase.DetailModel != null)
             {
-                ProductBase.DetailModel.PrecioCompra = Product.DetailModel.PrecioCompra;
-                ProductBase.DetailModel.PrecioVenta = Product.DetailModel.PrecioVenta;
+                ProductBase.DetailModel.PurchasePrice = Product.DetailModel.PurchasePrice;
+                ProductBase.DetailModel.SalePrice = Product.DetailModel.SalePrice;
             }
 
             Section = 1;
@@ -235,10 +235,10 @@ public partial class EditProduct
 
         try
         {
-            if (ProductBase?.DetailModel?.PrecioCompra != Product.DetailModel?.PrecioCompra)
+            if (ProductBase?.DetailModel?.PurchasePrice != Product.DetailModel?.PurchasePrice)
                 return true;
 
-            if (ProductBase?.DetailModel?.PrecioVenta != Product.DetailModel?.PrecioVenta)
+            if (ProductBase?.DetailModel?.SalePrice != Product.DetailModel?.SalePrice)
                 return true;
 
         }

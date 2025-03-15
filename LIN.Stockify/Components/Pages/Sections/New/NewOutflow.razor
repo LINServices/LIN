@@ -68,7 +68,7 @@
 
 
             @* Componentes. *@
-            <div class="flex-1 UIScroll mt-2 gap-3 overflow-auto">
+            <div class="UIScroll mt-2 flex-1 gap-3 overflow-auto">
 
                 @if (Selected?.Count <= 0)
                 {
@@ -88,11 +88,20 @@
 
 
             @* Botón. *@
-            <div @onclick="Create" class="mb-2 mt-2 flex w-full items-end justify-center self-end">
+            <div @onclick="Create" class="mt-2 mb-2 flex w-full items-end justify-center self-end">
                 <button  type="button" class="w-full rounded-lg bg-current-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">
                     Crear
                 </button>
             </div>
+
+              @if (Category == 1)
+            {
+                <div @onclick="Create" class="mt-2 mb-2 flex w-full items-end justify-center self-end">
+                    <button type="button" class="w-full rounded-lg bg-current-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">
+                        Vender online
+                    </button>
+                </div>
+            }
 
         }
         else if (section == 1)

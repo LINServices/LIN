@@ -131,7 +131,7 @@ internal class Scripts
 
             // Actualizar la cantidad.
             if (product != null && product.DetailModel != null)
-                product.DetailModel.Quantity += item.Cantidad;
+                product.DetailModel.Quantity += item.Quantity;
 
         }
 
@@ -174,7 +174,7 @@ internal class Scripts
 
             // Actualizar la cantidad.
             if (product != null && product.DetailModel != null)
-                product.DetailModel.Quantity -= item.Cantidad;
+                product.DetailModel.Quantity -= item.Quantity;
 
         }
 
@@ -238,8 +238,8 @@ internal class Scripts
             exist.Code = x.Model.Code;
             exist.Description = x.Model.Description;
             exist.Name = x.Model.Name;
-            exist.DetailModel.PrecioCompra = x.Model.DetailModel.PrecioCompra;
-            exist.DetailModel.PrecioVenta = x.Model.DetailModel.PrecioVenta;
+            exist.DetailModel.PurchasePrice = x.Model.DetailModel.PurchasePrice;
+            exist.DetailModel.SalePrice = x.Model.DetailModel.SalePrice;
         }
 
         var pObserver = provider.GetService<IInventoryObserver>();

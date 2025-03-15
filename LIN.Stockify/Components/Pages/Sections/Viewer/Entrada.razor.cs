@@ -176,10 +176,10 @@ public partial class Entrada
 
         return (Modelo?.Type) switch
         {
-            Types.Inventory.Enumerations.InflowsTypes.Compra => "./img/Products/inflows/cart.png",
-            Types.Inventory.Enumerations.InflowsTypes.Devolucion => "./img/Products/inflows/return.png",
-            Types.Inventory.Enumerations.InflowsTypes.Regalo => "./img/Products/inflows/gift.png",
-            Types.Inventory.Enumerations.InflowsTypes.Ajuste => "./img/Products/inflows/setting.png",
+            Types.Inventory.Enumerations.InflowsTypes.Purchase => "./img/Products/inflows/cart.png",
+            Types.Inventory.Enumerations.InflowsTypes.Refund => "./img/Products/inflows/return.png",
+            Types.Inventory.Enumerations.InflowsTypes.Gift => "./img/Products/inflows/gift.png",
+            Types.Inventory.Enumerations.InflowsTypes.Correction => "./img/Products/inflows/setting.png",
             _ => "./img/Products/packages.png",
         };
     }

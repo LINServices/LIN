@@ -1,0 +1,136 @@
+﻿@page "/openStore/{Id}"
+@inject IInventoryManager InventoryManager
+
+@code{
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+}
+
+<AuthorizedControl />
+
+@* Pantalla *@
+<div class="flex h-full w-full flex-grow flex-col overflow-hidden px-4 lg:px-6">
+
+    @* Header. *@
+    <Header Tittle="Conexión con Open Store" GoBack="true" />
+
+    @* Header. *@
+    <div class="mt-1">
+
+    </div>
+
+
+    @* Componentes. *@
+    <div class="UIScroll mt-2 flex-1 gap-2 overflow-auto">
+
+        <div class="grid grid-cols-1 px-4 xl:grid-cols-2 xl:gap-4">
+            <div class="mb-4 rounded-lg border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-800 sm:p-6 xl:mb-0">
+                <div class="flow-root">
+                    <h3 class="text-xl font-semibold dark:text-white">Configuración</h3>
+                    <p class="text-sm font-normal text-zinc-500 dark:text-zinc-400">Activar o desactivar, la compatibilidad con la tienda Open Store</p>
+                 
+                    <div class="mt-2 divide-y divide-zinc-200 dark:divide-zinc-700">
+                        <!-- Item 1 -->
+                        <div class="flex items-center justify-between py-4">
+                            <div class="flex flex-grow flex-col">
+                                <div class="text-lg font-semibold text-zinc-900 dark:text-white">Pagos en línea</div>
+                                <div class="text-base font-normal text-zinc-500 dark:text-zinc-400">Pagos usando la plataforma de Mercado Pago</div>
+                            </div>
+                            <label class="inline-flex cursor-pointer items-center">
+                                <input type="checkbox" value="" class="peer sr-only">
+                                <div class="relative w-11 h-6 bg-zinc-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-current-300 dark:peer-focus:ring-current-800 rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-zinc-600 peer-checked:bg-current-600 dark:peer-checked:bg-current-600"></div>
+                            </label>
+                        </div>
+                        <!-- Item 2 -->
+                        <div class="flex items-center justify-between py-4">
+                            <div class="flex flex-grow flex-col">
+                                <div class="text-lg font-semibold text-zinc-900 dark:text-white">Vender productos sin stock</div>
+                                <div class="text-base font-normal text-zinc-500 dark:text-zinc-400">Permite vender productos sin stock</div>
+                            </div>
+                            <label class="inline-flex cursor-pointer items-center">
+                                <input type="checkbox" value="" class="peer sr-only">
+                                <div class="relative w-11 h-6 bg-zinc-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-current-300 dark:peer-focus:ring-current-800 rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-zinc-600 peer-checked:bg-current-600 dark:peer-checked:bg-current-600"></div>
+                            </label>
+                        </div>
+                        <!-- Item 3 -->
+                        <div class="flex items-center justify-between py-4">
+                            <div class="flex flex-grow flex-col">
+                                <div class="text-lg font-semibold text-zinc-900 dark:text-white">Reservar productos</div>
+                                <div class="text-base font-normal text-zinc-500 dark:text-zinc-400">Reservar los productos del stock mientras se genera el pago</div>
+                            </div>
+                            <label class="inline-flex cursor-pointer items-center">
+                                <input type="checkbox" value="" class="peer sr-only">
+                                <div class="relative w-11 h-6 bg-zinc-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-current-300 dark:peer-focus:ring-current-800 rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-zinc-600 peer-checked:bg-current-600 dark:peer-checked:bg-current-600"></div>
+                            </label>
+                        </div>
+                        <!-- Item 4 -->
+                        <div class="flex items-center justify-between pt-4">
+                            <div class="flex flex-grow flex-col">
+                                <div class="text-lg font-semibold text-zinc-900 dark:text-white">Devolver movimientos</div>
+                                <div class="text-base font-normal text-zinc-500 dark:text-zinc-400">Cambiar el estado de los movimientos según los estados de los pagos.</div>
+                            </div>
+                            <label class="inline-flex cursor-pointer items-center">
+                                <input type="checkbox" value="" class="peer sr-only">
+                                <div class="relative w-11 h-6 bg-zinc-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-current-300 dark:peer-focus:ring-current-800 rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-zinc-600 peer-checked:bg-current-600 dark:peer-checked:bg-current-600"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4 rounded-lg border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-800 sm:p-6 xl:mb-0">
+                <div class="flow-root">
+                    <h3 class="text-xl font-semibold dark:text-white">Notificaciones</h3>
+                    <p class="text-sm font-normal text-zinc-500 dark:text-zinc-400">Recibir al final del dia un resumen de las ventas</p>
+                    <div class="divide-y divide-zinc-200 dark:divide-zinc-700">
+                        <!-- Item 1 -->
+                        <div class="mt-2 flex items-center justify-between py-4">
+                            <div class="flex flex-grow flex-col">
+                                <div class="text-lg font-semibold text-zinc-900 dark:text-white">Resumen diario</div>
+                                <div class="text-base font-normal text-zinc-500 dark:text-zinc-400">Al final del dia, recibir un resumen de las ventas.</div>
+                            </div>
+                            <label class="inline-flex cursor-pointer items-center">
+                                <input type="checkbox" value="" class="peer sr-only">
+                                <div class="relative w-11 h-6 bg-zinc-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-current-300 dark:peer-focus:ring-current-800 rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-zinc-600 peer-checked:bg-current-600 dark:peer-checked:bg-current-600"></div>
+                            </label>
+                        </div>
+                        <!-- Item 2 -->
+                        <div class="flex items-center justify-between py-4">
+                            <div class="flex flex-grow flex-col">
+                                <div class="text-lg font-semibold text-zinc-900 dark:text-white">Notificaciones de pago</div>
+                                <div class="text-base font-normal text-zinc-500 dark:text-zinc-400">Recibir correos cuando se apruebe o devuelva un pago.</div>
+                            </div>
+                            <label class="inline-flex cursor-pointer items-center">
+                                <input type="checkbox" value="" class="peer sr-only">
+                                <div class="relative w-11 h-6 bg-zinc-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-current-300 dark:peer-focus:ring-current-800 rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-zinc-600 peer-checked:bg-current-600 dark:peer-checked:bg-current-600"></div>
+                            </label>
+                        </div>
+                        <!-- Item 3 -->
+                        <div class="flex items-center justify-between py-4">
+                            <div class="flex flex-grow flex-col">
+                                <div class="text-lg font-semibold text-zinc-900 dark:text-white">Item comment notifications</div>
+                                <div class="text-base font-normal text-zinc-500 dark:text-zinc-400">Send me an email when someone comments on one of my items</div>
+                            </div>
+                            <label class="inline-flex cursor-pointer items-center">
+                                <input type="checkbox" value="" class="peer sr-only">
+                                <div class="relative w-11 h-6 bg-zinc-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-current-300 dark:peer-focus:ring-current-800 rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-zinc-600 peer-checked:bg-current-600 dark:peer-checked:bg-current-600"></div>
+                            </label>
+                        </div>
+                        <!-- Item 4 -->
+                        <div class="flex items-center justify-between pt-4">
+                            <div class="flex flex-grow flex-col">
+                                <div class="text-lg font-semibold text-zinc-900 dark:text-white">Buyer review notifications</div>
+                                <div class="text-base font-normal text-zinc-500 dark:text-zinc-400">Send me an email when someone leaves a review with their rating</div>
+                            </div>
+                            <label class="inline-flex cursor-pointer items-center">
+                                <input type="checkbox" value="" class="peer sr-only">
+                                <div class="relative w-11 h-6 bg-zinc-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-current-300 dark:peer-focus:ring-current-800 rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-zinc-600 peer-checked:bg-current-600 dark:peer-checked:bg-current-600"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+    </div>
+
+</div>

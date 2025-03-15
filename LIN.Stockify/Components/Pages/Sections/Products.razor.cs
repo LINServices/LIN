@@ -192,4 +192,12 @@ public partial class Products : IInventoryModelObserver, IDisposable
         nav.NavigateTo($"/new/product/{Contexto?.Inventory?.Id}");
     }
 
+    /// <summary>
+    /// Abrir crear.
+    /// </summary>
+    void GoOpenStore()
+    {
+        nav.NavigateTo($"/openStore/{Contexto?.Inventory.Id}");
+    }
+
 }

@@ -115,7 +115,7 @@ public partial class NewOutflow
             Values.TryGetValue(control.Id, out int quantity);
             OutflowDetailsDataModel model = new()
             {
-                Cantidad = quantity,
+                Quantity = quantity,
                 ProductDetail = new()
                 {
                     Id = control.DetailModel?.Id ?? 0
@@ -145,7 +145,7 @@ public partial class NewOutflow
                 Id = Contexto?.Inventory?.Id ?? 0
             },
             InventoryId = Contexto?.Inventory?.Id ?? 0,
-            ProfileID = Session.Instance.Information.Id
+            ProfileId = Session.Instance.Information.Id
         };
 
 
