@@ -3,6 +3,8 @@
 @inject IOutflowObserver OutflowObserver
 @inject IInventoryManager InventoryManager
 
+<AuthorizedControl />
+
 <div class="flex h-full w-full flex-grow flex-col items-center overflow-hidden px-4 lg:px-6">
 
 
@@ -10,11 +12,12 @@
 
     <div class="flex h-full w-full max-w-lg flex-grow flex-col overflow-hidden px-1">
 
+
         @if (section == 0)
         {
 
             @* Header. *@
-            <div >
+            <div>
 
                 @* Cartas. *@
                 <div class="mt-3">
@@ -34,7 +37,7 @@
                             </div>
 
                             <div class="mt-3.5 w-full">
-                                <select @bind="Category" id="small" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-sm text-gray-900 focus:outline-none focus:border-current-500 dark:bg-zinc-900 dark:border-zinc-700 dark:placeholder-gray-400 dark:text-white dark:focus:border-current-500">
+                                <select @onclick="CategorizeChange" @bind="Category" id="small" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-sm text-gray-900 focus:outline-none focus:border-current-500 dark:bg-zinc-900 dark:border-zinc-700 dark:placeholder-gray-400 dark:text-white dark:focus:border-current-500">
                                     <option selected value="0">Selecciona una categoría</option>
                                     <option value="1">Venta</option>
                                     <option value="2">Perdida</option>
@@ -59,7 +62,7 @@
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                         </svg>
 
-                     Agregar elemento
+                        Agregar elemento
                     </button>
 
                 </div>
@@ -70,9 +73,59 @@
             @* Componentes. *@
             <div class="UIScroll mt-2 flex-1 gap-3 overflow-auto">
 
+                <div class="flex w-full flex-col">
+
+                    <div class="mb-2 mt-3.5">
+                        <h3 class="mb-2 font-semibold text-zinc-900 dark:text-white">Identificación</h3>
+                        <ul class="w-full items-center rounded-lg border border-zinc-200 bg-white text-sm font-medium text-zinc-900 dark:bg-zinc-900 dark:border-zinc-800 dark:text-white sm:flex">
+                            <li class="w-full border-b border-zinc-200 dark:border-zinc-600 sm:border-b-0 sm:border-r">
+                                <div class="flex items-center ps-3">
+                                    <input @onclick="()=>SelectClient(true)" id="horizontal-list-radio-license" type="radio" value="" name="list-radio" class="h-4 w-4 border-zinc-300 bg-zinc-100 text-blue-600 focus:ring-blue-500 focus:ring-2 dark:ring-offset-zinc-700 dark:bg-zinc-600 dark:border-zinc-500 dark:focus:ring-blue-600 dark:focus:ring-offset-zinc-700">
+                                    <label for="horizontal-list-radio-license" class="ms-2 w-full py-3 text-sm font-medium text-zinc-900 dark:text-zinc-300">Incluir cliente </label>
+                                </div>
+                            </li>
+                            <li class="w-full dark:border-zinc-600">
+                                <div class="flex items-center ps-3">
+                                    <input @onclick="()=>SelectClient(false)" id="horizontal-list-radio-passport" type="radio" value="" name="list-radio" class="h-4 w-4 border-zinc-300 bg-zinc-100 text-blue-600 focus:ring-blue-500 focus:ring-2 dark:ring-offset-zinc-700 dark:bg-zinc-600 dark:border-zinc-500 dark:focus:ring-blue-600 dark:focus:ring-offset-zinc-700">
+                                    <label for="horizontal-list-radio-passport" class="ms-2 w-full py-3 text-sm font-medium text-zinc-900 dark:text-zinc-300">Sin cliente</label>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+
+
+                    @if (IsFormClient)
+                    {
+                        <div class="mb-2">
+                            <div>
+                                <label for="small-input" class="mb-2 block text-sm font-medium text-zinc-900 dark:text-white">Correo electrónico</label>
+                                <input @bind="OutsiderMail" type="text" id="small-input" class="block w-full rounded-lg border border-zinc-300 bg-zinc-50 p-2 text-xs text-zinc-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </div>
+                            <div class="mt-2 flex gap-2">
+
+                                <div class="w-full">
+                                    <label for="small-input" class="mb-2 block text-sm font-medium text-zinc-900 dark:text-white">Nombre completo</label>
+                                    <input @bind="OutsiderName" type="text" id="small-input" class="block w-full rounded-lg border border-zinc-300 bg-zinc-50 p-2 text-xs text-zinc-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+
+                                <div class="w-full">
+                                    <label for="small-input" class="mb-2 block text-sm font-medium text-zinc-900 dark:text-white">Documento de identidad</label>
+                                    <input @bind="OutsiderDoc" type="text" id="small-input" class="block w-full rounded-lg border border-zinc-300 bg-zinc-50 p-2 text-xs text-zinc-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+                            </div>
+                        </div>
+                        <label class="mb-5 text-current-500 underline hover:text-current-600" @onclick="ShowClient">Buscar cliente</label>
+
+                    }
+
+                </div>
+
+
+
                 @if (Selected?.Count <= 0)
                 {
-                    <div class="border-2 mt-3 flex w-full items-center justify-center rounded-lg border-dashed border-zinc-300 py-7 dark:border-gray-400">
+                    <div class="mt-3 flex w-full items-center justify-center rounded-lg border-2 border-dashed border-zinc-300 py-7 dark:border-gray-400">
                         <label class="text-zinc-400 dark:text-gray-200">No tienes ningún detalle de salida</label>
                     </div>
                 }
@@ -88,15 +141,15 @@
 
 
             @* Botón. *@
-            <div @onclick="Create" class="mt-2 mb-2 flex w-full items-end justify-center self-end">
-                <button  type="button" class="w-full rounded-lg bg-current-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">
+            <div @onclick="()=>Create(false)" class="mb-2 mt-2 flex w-full items-end justify-center self-end">
+                <button type="button" class="w-full rounded-lg bg-current-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">
                     Crear
                 </button>
             </div>
 
-              @if (Category == 1)
+            @if (Category == 1)
             {
-                <div @onclick="Create" class="mt-2 mb-2 flex w-full items-end justify-center self-end">
+                <div @onclick="()=>Create(true)" class="mb-2 mt-2 flex w-full items-end justify-center self-end">
                     <button type="button" class="w-full rounded-lg bg-current-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">
                         Vender online
                     </button>
@@ -129,9 +182,55 @@
             </div>
         }
 
+        else if (section == 4)
+        {
+            <div class="flex h-full flex-col justify-center">
+                <img src="@qr" alt="Código QR generado" class="h-20 w-20 rounded-lg" />
+
+
+                <div class="mt-2 w-full max-w-[16rem]">
+                    <div class="relative">
+                        <label for="npm-install-copy-button" class="sr-only">Label</label>
+                        <input id="npm-install-copy-button" type="text" class="col-span-6 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-500 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="@qrText" disabled readonly>
+                        <button data-copy-to-clipboard-target="npm-install-copy-button" data-tooltip-target="tooltip-copy-npm-install-copy-button" class="-translate-y-1/2 absolute end-2 top-1/2 inline-flex items-center justify-center rounded-lg p-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+                            <span id="default-icon">
+                                <svg class="h-3.5 w-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                    <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
+                                </svg>
+                            </span>
+                            <span id="success-icon" class="hidden">
+                                <svg class="h-3.5 w-3.5 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div id="tooltip-copy-npm-install-copy-button" role="tooltip" class="shadow-xs tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 transition-opacity duration-300 dark:bg-gray-700">
+                            <span id="default-tooltip-message">Copy to clipboard</span>
+                            <span id="success-tooltip-message" class="hidden">Copied!</span>
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <label class="mt-2 text-xl font-bold text-current-500">Enlace de pago</label>
+                <label class="text-zinc-300 dark:text-zinc-300">Hemos enviado el enlace al correo del cliente, en cuanto el pago se acredite, actualizaremos el movimiento en el inventario.</label>
+
+                <div class="mt-2 flex w-full flex-col">
+                    <label class="font-bold">@OutsiderName</label>
+                    <label>@OutsiderMail</label>
+                </div>
+
+                <label class="mb-5 text-current-500 underline hover:text-current-600" @onclick="GoNormal">Volver</label>
+            </div>
+        }
+
     </div>
 
 
 </div>
 
+
 <DrawerProducts @ref="DrawerProducts" Selected="Selected" OnHide="StateHasChanged" Contexto="Contexto"></DrawerProducts>
+
+<ClientsDrawer @ref="ClientDrawer" Inventory="@int.Parse(Id)" OnHide="SelectClient"></ClientsDrawer>
