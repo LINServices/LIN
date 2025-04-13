@@ -5,6 +5,7 @@ namespace LIN.Components.Pages.Sections;
 public partial class Payments
 {
 
+
     /// <summary>
     /// Id.
     /// </summary>
@@ -50,6 +51,18 @@ public partial class Payments
         // Obtener el contexto.
         Contexto = InventoryManager.Get(int.Parse(Id));
 
+        // Evaluar el contexto.
+        if (Contexto != null)
+            Response = Contexto.Payments;
+        else
+            Contexto = new()
+            {
+                Inventory = new()
+                {
+                    Id = int.Parse(Id),
+                }
+            };
+
         GetData();
 
         // Base.
@@ -78,6 +91,9 @@ public partial class Payments
         // Nuevos estados.
         IsLoading = false;
         Response = result;
+
+        if (Contexto != null)
+            Contexto.Payments = Response;
 
         StateHasChanged();
     }
@@ -171,6 +187,5 @@ public partial class Payments
     {
         nav.NavigateTo($"/openStore/{Contexto?.Inventory.Id}");
     }
-
 
 }
