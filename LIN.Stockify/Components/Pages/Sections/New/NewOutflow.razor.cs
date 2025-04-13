@@ -1,7 +1,6 @@
 ﻿using LIN.Inventory.Realtime.Manager.Models;
-using LIN.Inventory.Shared.Drawers;
-using QRCoder;
 using LIN.Types.Inventory.Enumerations;
+using QRCoder;
 
 namespace LIN.Components.Pages.Sections.New;
 

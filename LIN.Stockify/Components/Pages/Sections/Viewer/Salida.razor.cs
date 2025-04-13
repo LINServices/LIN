@@ -105,8 +105,8 @@ public partial class Salida
             if (cajero is not null && !AccountManager.Accounts.Exists(t => t.Id == cajero?.Id))
             {
                 AccountManager.Accounts.Add(cajero);
-               
-            } 
+
+            }
             Cashier = cajero;
 
             if (outflowDetails.Response == Responses.Success)

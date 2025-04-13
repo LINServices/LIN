@@ -1,9 +1,7 @@
-﻿
-namespace LIN.LocalDataBase;
+﻿namespace LIN.LocalDataBase;
 
 public static class Constants
 {
-
 
     public const string DatabaseFilename = "data.db3";
 
@@ -15,6 +13,5 @@ public static class Constants
         // enable multi-threaded database access
         SQLite.SQLiteOpenFlags.SharedCache;
 
-    public static string DatabasePath =>
-        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DatabaseFilename);
+    public static string DatabasePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DatabaseFilename);
 }

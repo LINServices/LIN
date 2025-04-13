@@ -170,12 +170,12 @@ public partial class EditProduct
 
             Product.Category = (ProductCategories)Category;
 
-           // Product.Image = !isNewPhoto ? null : Photo;
+            // Product.Image = !isNewPhoto ? null : Photo;
 
             // Respuesta del controlador
             var response = await Access.Inventory.Controllers.Product.Update(Product, LIN.Access.Inventory.Session.Instance.Token);
 
-           // Product.Image = Photo;
+            // Product.Image = Photo;
             Product.Details = ProductBase?.Details ?? [];
 
             switch (response.Response)
