@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN", "LIN.Stockify\LIN.csproj", "{936B55DD-F190-4DE7-AFD4-E9C1C4134D1C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.LocalDataBase", "D:\LIN Services\Clientes\LIN\LIN.LocalDataBase\LIN.LocalDataBase.csproj", "{45F0B1F4-87A3-4B18-82B2-0DB7456A3CC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.LocalDataBase", "D:\LIN/LIN Services\Clientes\LIN\LIN.LocalDataBase\LIN.LocalDataBase.csproj", "{45F0B1F4-87A3-4B18-82B2-0DB7456A3CC4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Emma.UI", "..\..\Components\LIN.Emma.UI\LIN.Emma.UI\LIN.Emma.UI.csproj", "{D5265888-1703-4710-B7FC-4A20A600642A}"
 EndProject

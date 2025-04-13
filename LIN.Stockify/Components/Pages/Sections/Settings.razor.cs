@@ -7,11 +7,19 @@ namespace LIN.Components.Pages.Sections;
 public partial class Settings
 {
 
+
+    string user = string.Empty;
+    string password = string.Empty;
+    string tokenMercado = string.Empty;
+
+    bool Mode = false;
+
     /// <summary>
-    /// Parámetro Id.
+    /// Contexto del inventario.
     /// </summary>
-    [Parameter]
-    public string Id { get; set; } = string.Empty;
+    OpenStoreSettings SettingsA { get; set; } = new();
+
+
 
 
     /// <summary>
@@ -20,18 +28,33 @@ public partial class Settings
     private DrawerPeople Drawer = null!;
 
 
+
     /// <summary>
     /// Popup del integrante.
     /// </summary>
     private MemberPopup MemberPopup { get; set; } = null!;
 
 
+
     /// <summary>
     /// Lista de participantes
     /// </summary>
-    private readonly List<Types.Cloud.Identity.Abstracts.SessionModel<LIN.Types.Inventory.Models.ProfileModel>> Participantes = [];
-    private string Name = "";
-    private string Description = "";
+    private readonly List<Types.Cloud.Identity.Abstracts.SessionModel<Types.Inventory.Models.ProfileModel>> Participantes = new();
+
+
+
+
+    /// <summary>
+    /// Parámetro Id.
+    /// </summary>
+
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+
+
+    string Name = "";
+    string Description = "";
 
 
 
@@ -41,16 +64,18 @@ public partial class Settings
     private bool IsLoading = false;
 
 
+
     /// <summary>
     /// Lista de modelos.
     /// </summary>
     private ReadAllResponse<IntegrantDataModel>? Response { get; set; } = null;
 
 
+
     /// <summary>
     /// Contexto de inventario.
     /// </summary>
-    private InventoryContext? InventoryContext { get; set; }
+    InventoryContext? InventoryContext { get; set; }
 
 
     /// <summary>
@@ -70,28 +95,28 @@ public partial class Settings
     }
 
 
+
     /// <summary>
     /// Operación de cargar.
     /// </summary>
     public async void Reload()
     {
 
-        // Obtener contexto.
         InventoryContext = InventoryManager.Get(int.Parse(Id));
 
-        // Validar contexto.
+
         if (InventoryContext == null)
             return;
 
-        // Obtener información.
-        Name = InventoryContext.Inventory?.Name ?? string.Empty;
-        Description = InventoryContext.Inventory?.Direction ?? string.Empty;
+        Name = InventoryContext.Inventory.Name;
+        Description = InventoryContext.Inventory.Direction;
 
         // Rellena los datos
         await RetrieveData();
 
         StateHasChanged();
     }
+
 
 
     /// <summary>
@@ -101,7 +126,7 @@ public partial class Settings
     {
 
         // Validación.
-        if ((!force && (Response != null)) || IsLoading)
+        if (!force && Response != null || IsLoading)
             return;
 
         IsLoading = true;
@@ -116,42 +141,59 @@ public partial class Settings
         Response = response;
         StateHasChanged();
 
+
+        // Obtener la información de OpenStore.
+        var ss = await Access.Inventory.Controllers.OpenStore.ReadSettings(Session.Instance.Token, int.Parse(Id));
+
+        InventoryContext.Inventory.OpenStoreSettings = ss.Model;
+
+        if (ss.Response == Responses.NotRows)
+        {
+            Mode = true;
+        }
+        else if (ss.Response != Responses.Success)
+        {
+            Mode = false;
+        }
+        else
+        {
+            SettingsA = ss.Model;
+            Mode = false;
+        }
+
+        StateHasChanged();
+
     }
 
 
-    /// <summary>
-    /// Guardar los datos.
-    /// </summary>
-    private async void Save()
+
+    async void Save()
     {
 
-        // Si hay nuevos integrantes.
         if (Participantes.Count > 0)
             await SaveParticipants();
 
-        // Validar campos.
         if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Description))
             return;
 
-        // Enviar respuesta.
-        var response = await LIN.Access.Inventory.Controllers.Inventories.Update(int.Parse(Id), Name, Description, Session.Instance.Token);
 
-        // Validar respuesta.
-        if (InventoryContext == null || response.Response != Responses.Success || InventoryContext.Inventory == null)
+        var response = await Inventories.Update(int.Parse(Id), Name, Description, Session.Instance.Token);
+
+
+        if (InventoryContext == null || response.Response != Responses.Success)
             return;
 
-        // Actualización.
         InventoryContext.Inventory.Name = Name;
         InventoryContext.Inventory.Direction = Description;
         StateHasChanged();
     }
 
 
-    /// <summary>
-    /// Guardar los nuevos integrantes.
-    /// </summary>
-    private async Task SaveParticipants()
+
+    async Task SaveParticipants()
     {
+
+
         foreach (var e in Participantes)
         {
             var model = new InventoryAccessDataModel
@@ -160,35 +202,37 @@ public partial class Settings
                 ProfileId = e.Profile.Id,
                 Rol = InventoryRoles.Member
             };
-            await LIN.Access.Inventory.Controllers.InventoryAccess.Create(model, Session.Instance.Token);
+            await InventoryAccess.Create(model, Session.Instance.Token);
         }
 
-        Participantes.Clear();
-        await RetrieveData(true);
+
     }
 
 
-    /// <summary>
-    /// Abrir modal de integrantes.
-    /// </summary>
-    /// <param name="member"></param>
-    private void OpenMember(IntegrantDataModel member)
+    void OpenMember(IntegrantDataModel member)
     {
         MemberPopup.Show(member);
     }
 
 
-    /// <summary>
-    /// Al eliminar un integrante.
-    /// </summary>
-    /// <param name="id">Id del integrante.</param>
-    private void OnDelete(int id)
+
+    void OnDelete(int id)
     {
-        this.InvokeAsync(() =>
+        InvokeAsync(() =>
         {
             Response?.Models.RemoveAll(t => t.AccessId == id);
             StateHasChanged();
         });
+
     }
+
+
+    async Task Create()
+    {
+
+        var create = await LIN.Access.Inventory.Controllers.OpenStore.CreateSettings(Session.Instance.Token, tokenMercado, int.Parse(Id), user, password);
+
+    }
+
 
 }

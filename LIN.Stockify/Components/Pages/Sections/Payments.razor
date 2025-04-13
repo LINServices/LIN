@@ -1,0 +1,129 @@
+﻿@page "/payments/{Id}"
+@inject NavigationManager nav
+@inject IDeviceManager deviceManager
+@inject IInventoryManager InventoryManager
+@inject IInventoryObserver InventoryObserver
+
+<AuthorizedControl />
+
+@* Pantalla *@
+<div class="flex h-full w-full flex-grow flex-col overflow-hidden px-4 lg:px-6">
+
+
+    <Header Tittle="Pagos" GoBack="true">
+
+        @* Actualizar. *@
+        <button @onclick="()=>GetData(true)" type="button" class="h-9 w-9 rounded-full p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="h-full w-full fill-zinc-800 hover:fill-zinc-600 dark:fill-zinc-200" version="1.1" id="Capa_1" viewBox="0 0 492.883 492.883" xml:space="preserve">
+            <g>
+            <g>
+            <path d="M122.941,374.241c-20.1-18.1-34.6-39.8-44.1-63.1c-25.2-61.8-13.4-135.3,35.8-186l45.4,45.4c2.5,2.5,7,0.7,7.6-3    l24.8-162.3c0.4-2.7-1.9-5-4.6-4.6l-162.4,24.8c-3.7,0.6-5.5,5.1-3,7.6l45.5,45.5c-75.1,76.8-87.9,192-38.6,282    c14.8,27.1,35.3,51.9,61.4,72.7c44.4,35.3,99,52.2,153.2,51.1l10.2-66.7C207.441,421.641,159.441,407.241,122.941,374.241z" />
+            <path d="M424.941,414.341c75.1-76.8,87.9-192,38.6-282c-14.8-27.1-35.3-51.9-61.4-72.7c-44.4-35.3-99-52.2-153.2-51.1l-10.2,66.7    c46.6-4,94.7,10.4,131.2,43.4c20.1,18.1,34.6,39.8,44.1,63.1c25.2,61.8,13.4,135.3-35.8,186l-45.4-45.4c-2.5-2.5-7-0.7-7.6,3    l-24.8,162.3c-0.4,2.7,1.9,5,4.6,4.6l162.4-24.8c3.7-0.6,5.4-5.1,3-7.6L424.941,414.341z" />
+                    </g>
+                </g>
+            </svg>
+        </button>
+
+        @* Ajustes. *@
+        <button @onclick="GoMembers" type="button" class="h-9 w-9 rounded-full p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="h-full w-full fill-zinc-800 hover:fill-zinc-600 dark:fill-zinc-200" version="1.1" viewBox="0 0 16 16" xml:space="preserve">
+            <path d="M4.58 1a1 1 0 0 0-.868.504l-3.428 6a1 1 0 0 0 0 .992l3.428 6A1 1 0 0 0 4.58 15h6.84a1 1 0 0 0 .868-.504l3.429-6a1 1 0 0 0 0-.992l-3.429-6A1 1 0 0 0 11.42 1zm5.018 9.696a3 3 0 1 1-3-5.196 3 3 0 0 1 3 5.196" />
+        </svg>
+        </button>
+
+
+    </Header>
+
+
+    @* Header. *@
+    <div class="mt-1">
+
+        @* Cartas. *@
+        <div class="mt-3">
+            <div class="flex flex-col justify-center py-4">
+
+                <label class="mt-0.5 text-sm dark:text-gray-300">Total de pagos</label>
+                <label class="text-4xl font-bold dark:text-gray-100">@(Response?.Models.Count ?? 0)</label>
+
+                <div class="flex w-40 items-center rounded-lg bg-slate-200 p-1.5 dark:bg-zinc-900">
+                    <svg class="bi bi-basket3-fill ml-2 h-4 w-4 fill-zinc-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="512" height="512">
+                        <path d="M18,0H6A3,3,0,0,0,3,3V23.9l3.67-2.51,2.671,1.826,2.666-1.826,2.666,1.826,2.664-1.825L21,23.9V3A3,3,0,0,0,18,0ZM15,14H7V12h8Zm2-5H7V7H17Z" />
+                    </svg>
+                    <label class="mx-2 mt-0.5 text-xs font-bold text-zinc-700 dark:text-gray-300">0 sin stock</label>
+                </div>
+
+            </div>
+        </div>
+
+        @* Total de resultados. *@
+        <label class="text-sm text-zinc-400">Se encontraron @(Response?.Models.Count ?? 0) resultados</label>
+
+    </div>
+
+
+    @* Componentes. *@
+    <div class="UIScroll flex-1 gap-2 overflow-auto">
+
+
+        @* Cargando *@
+        @if (Response == null || IsLoading)
+        {
+            <div class="flex w-full items-center justify-center">
+                <Loader />
+            </div>
+        }
+
+        @* Render *@
+        else
+        {
+            switch (Response.Response)
+            {
+
+                @* Correctamente *@
+                case Responses.Success:
+                    {
+
+                        @* No hay elementos *@
+                        @if (Response.Models.Count <= 0)
+                        {
+                            <div class="mt-3 flex w-full items-center justify-center rounded-lg border-2 border-dashed border-zinc-300 py-7 dark:border-gray-400">
+                                <label class="text-zinc-400 dark:text-gray-200">No tienes ningún producto</label>
+                            </div>
+                        }
+
+                        @* Renderizar componentes *@
+                        else
+                        {
+                            @foreach (var e in Response.Models ?? [])
+                            {
+                                <PaymentControl Model="e" />
+                            }
+                        }
+                        break;
+                    }
+
+                @* Sin autorización *@
+                case Responses.Unauthorized:
+                    {
+                        <div class="mt-3 flex w-full items-center justify-center rounded-lg border-2 border-dashed border-zinc-300 py-7 dark:border-gray-400">
+                            <label class="text-zinc-400 dark:text-gray-200">No tienes autorización</label>
+                        </div>
+                        break;
+                    }
+                @* Otros *@
+                default:
+                    {
+                        <div class="mt-3 flex w-full items-center justify-center rounded-lg border-2 border-dashed border-zinc-300 py-7 dark:border-gray-400">
+                            <label class="text-zinc-400 dark:text-gray-200">Error al obtener los productos</label>
+                        </div>
+                        break;
+                    }
+
+            }
+
+        }
+
+    </div>
+
+
+</div>

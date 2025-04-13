@@ -2,7 +2,7 @@
 
 namespace LIN.Components.Pages.Sections;
 
-public partial class Products : IInventoryModelObserver, IDisposable
+public partial class Payments
 {
 
     /// <summary>
@@ -12,10 +12,12 @@ public partial class Products : IInventoryModelObserver, IDisposable
     public string Id { get; set; } = string.Empty;
 
 
+
     /// <summary>
     /// Esta cargando.
     /// </summary>
     private bool IsLoading = false;
+
 
 
     /// <summary>
@@ -24,16 +26,19 @@ public partial class Products : IInventoryModelObserver, IDisposable
     public static ProductModel? Selected { get; set; } = null;
 
 
+
     /// <summary>
     /// Contexto del inventario.
     /// </summary>
-    private InventoryContext? Contexto { get; set; }
+    InventoryContext? Contexto { get; set; }
+
 
 
     /// <summary>
     /// Respuesta.
     /// </summary>
-    private ReadAllResponse<ProductModel>? Response { get; set; } = null;
+    private ReadAllResponse<Types.Payments.Models.PayModel>? Response { get; set; } = null;
+
 
 
     /// <summary>
@@ -45,28 +50,12 @@ public partial class Products : IInventoryModelObserver, IDisposable
         // Obtener el contexto.
         Contexto = InventoryManager.Get(int.Parse(Id));
 
-        // Evaluar el contexto.
-        if (Contexto != null)
-            Response = Contexto.Products;
-        else
-            Contexto = new()
-            {
-                Inventory = new()
-                {
-                    Id = int.Parse(Id),
-                }
-            };
-
-        // Evaluar la respuesta.
-        if (Response == null)
-            GetData();
-
-        ProductObserver.Add(Contexto?.Inventory?.Id ?? 0, this);
-        deviceManager.JoinInventory(int.Parse(Id));
+        GetData();
 
         // Base.
         base.OnParametersSet();
     }
+
 
 
     /// <summary>
@@ -76,7 +65,7 @@ public partial class Products : IInventoryModelObserver, IDisposable
     {
 
         // Validación.
-        if ((!force && (Response != null)) || IsLoading)
+        if (!force && Response != null || IsLoading)
             return;
 
         // Cambiar el estado.
@@ -84,17 +73,15 @@ public partial class Products : IInventoryModelObserver, IDisposable
         StateHasChanged();
 
         // Obtiene los dispositivos
-        var result = await Access.Inventory.Controllers.Product.ReadAll(Contexto?.Inventory?.Id ?? 0, Session.Instance.Token);
+        var result = await Access.Inventory.Controllers.OpenStore.Payments(Session.Instance.Token, Contexto?.Inventory.Id ?? 0);
 
         // Nuevos estados.
         IsLoading = false;
         Response = result;
 
-        if (Contexto != null)
-            Contexto.Products = Response;
-
         StateHasChanged();
     }
+
 
 
     /// <summary>
@@ -104,20 +91,10 @@ public partial class Products : IInventoryModelObserver, IDisposable
     {
         InvokeAsync(() =>
         {
-            Response = Contexto?.Products;
-            Response?.Models.RemoveAll(t => t.Statement == Types.Inventory.Enumerations.ProductBaseStatements.Deleted);
             StateHasChanged();
         });
     }
 
-
-    /// <summary>
-    /// Evento Dispose.
-    /// </summary>
-    public void Dispose()
-    {
-        ProductObserver.Remove(this);
-    }
 
 
     /// <summary>
@@ -136,60 +113,55 @@ public partial class Products : IInventoryModelObserver, IDisposable
     }
 
 
+
     /// <summary>
     /// Abrir el producto.
     /// </summary>
-    /// <param name="e">Modelo.</param>
-    private void Go(ProductModel e)
+    /// <param name="e">Model.</param>
+    void Go(ProductModel e)
     {
         Selected = e;
         nav.NavigateTo("/product");
     }
 
 
+
     /// <summary>
     /// Abrir la entradas.
     /// </summary>
-    private void GoEntradas()
+    void GoEntradas()
     {
-        nav.NavigateTo($"/inflows/{Contexto?.Inventory?.Id}");
+        nav.NavigateTo($"/inflows/{Contexto?.Inventory.Id}");
     }
+
 
 
     /// <summary>
     /// Abrir integrantes.
     /// </summary>
-    private void GoMembers()
+    void GoMembers()
     {
-        nav.NavigateTo($"/members/{Contexto?.Inventory?.Id}");
+        nav.NavigateTo($"/members/{Contexto?.Inventory.Id}");
     }
+
 
 
     /// <summary>
     /// Abrir las salidas.
     /// </summary>
-    private void GoSalidas()
+    void GoSalidas()
     {
-        nav.NavigateTo($"/outflows/{Contexto?.Inventory?.Id}");
+        nav.NavigateTo($"/outflows/{Contexto?.Inventory.Id}");
     }
 
-
-
-    /// <summary>
-    /// Abrir los reportes.
-    /// </summary>
-    private void GoReports()
-    {
-        nav.NavigateTo($"/reports/{Contexto?.Inventory?.Id}");
-    }
 
 
     /// <summary>
     /// Abrir crear.
     /// </summary>
-    private void GoCreate()
+    void GoCreate()
     {
-        nav.NavigateTo($"/new/product/{Contexto?.Inventory?.Id}");
+        nav.NavigateTo($"/new/product/{Contexto?.Inventory.Id}");
     }
 
     /// <summary>
@@ -200,9 +172,5 @@ public partial class Products : IInventoryModelObserver, IDisposable
         nav.NavigateTo($"/openStore/{Contexto?.Inventory.Id}");
     }
 
-    void GoPyments()
-    {
-        nav.NavigateTo($"/payments/{Contexto?.Inventory.Id}");
-    }
 
 }
