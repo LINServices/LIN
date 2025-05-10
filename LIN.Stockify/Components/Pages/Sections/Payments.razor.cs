@@ -96,7 +96,7 @@ public partial class Payments
         StateHasChanged();
 
         // Obtiene los dispositivos
-        var result = await Access.Inventory.Controllers.OpenStore.Payments(Session.Instance.Token, Contexto?.Inventory.Id ?? 0);
+        var result = await Access.Inventory.Controllers.Payments.ReadAll(Session.Instance.Token, Contexto?.Inventory.Id ?? 0);
 
         // Nuevos estados.
         IsLoading = false;

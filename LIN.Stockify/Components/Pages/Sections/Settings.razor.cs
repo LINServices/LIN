@@ -19,15 +19,10 @@ public partial class Settings
     /// </summary>
     OpenStoreSettings SettingsA { get; set; } = new();
 
-
-
-
     /// <summary>
     /// Drawer de integrantes.
     /// </summary>
     private DrawerPeople Drawer = null!;
-
-
 
     /// <summary>
     /// Popup del integrante.
@@ -143,7 +138,7 @@ public partial class Settings
 
 
         // Obtener la información de OpenStore.
-        var ss = await Access.Inventory.Controllers.OpenStore.ReadSettings(Session.Instance.Token, int.Parse(Id));
+        var ss = await Access.Inventory.Controllers.OpenStore.Read(Session.Instance.Token, int.Parse(Id));
 
         InventoryContext.Inventory.OpenStoreSettings = ss.Model;
 
@@ -227,12 +222,29 @@ public partial class Settings
     }
 
 
+    CreateResponse? ResponseToken;
+
+
     async Task Create()
     {
 
-        var create = await LIN.Access.Inventory.Controllers.OpenStore.CreateSettings(Session.Instance.Token, tokenMercado, int.Parse(Id), user, password);
+        ResponseToken = new(Responses.IsLoading);
+        StateHasChanged();
+        var create = await LIN.Access.Inventory.Controllers.OpenStore.Create(Session.Instance.Token, tokenMercado, int.Parse(Id), user, password);
 
+        if (create.Response == Responses.Success)
+        {
+            await RetrieveData(true);
+            return;
+        }
+        ResponseToken = create;
+        StateHasChanged();
     }
 
+    void BackCreate()
+    {
+        ResponseToken = null;
+        StateHasChanged();
+    }
 
 }
