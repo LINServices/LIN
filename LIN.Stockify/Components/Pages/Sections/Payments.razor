@@ -25,8 +25,8 @@
         </button>
 
            <button @onclick="GoHolds" type="button" class="h-9 w-9 rounded-full p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="h-full w-full fill-zinc-800 hover:fill-zinc-600 dark:fill-zinc-200" viewBox="0 0 16 16">
-                <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.37 2.37 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5M4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full fill-zinc-800 hover:fill-zinc-600 dark:fill-zinc-200" viewBox="0 0 24 24">
+                <path d="m10.311,10.987l-.5-3h6.583l.5,3h-6.583Zm.833,5h6.583l-.5-3h-6.583l.5,3Zm-5.997-5.853l-1.565,8.866h1.119l.5,3H.007L3.026,4.892c.295-1.675,1.745-2.892,3.446-2.892h11.029c1.701,0,3.15,1.216,3.447,2.891l3.02,17.109H7.242l-2.094-11.866Zm2.141-5.134l2.47,14h10.633l-2.397-13.587c-.042-.239-.25-.413-.493-.413H7.288Z" />
             </svg>
         </button>
 
@@ -93,7 +93,7 @@
                         @if (Response.Models.Count <= 0)
                         {
                             <div class="mt-3 flex w-full items-center justify-center rounded-lg border-2 border-dashed border-zinc-300 py-7 dark:border-gray-400">
-                                <label class="text-zinc-400 dark:text-gray-200">No tienes ningún producto</label>
+                                <label class="text-zinc-400 dark:text-gray-200">No tienes ningún pago</label>
                             </div>
                         }
 
