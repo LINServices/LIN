@@ -114,6 +114,12 @@ public partial class Holds
             Response?.Models.RemoveAll(t => t.GroupId == id);
             StateHasChanged();
         }
+        else
+        {
+            if (response.Errors == null || !response.Errors.Any())
+                return;
+            MainLayout.ShowError(response.Errors.FirstOrDefault()!.Description);
+        }
     }
 
 

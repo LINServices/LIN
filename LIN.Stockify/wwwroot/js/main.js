@@ -7,6 +7,18 @@ function forceClick(id) {
     control.click();
 }
 
+function showToast(id) {
+    const toastEl = document.getElementById(id);
+    toastEl.classList.remove('hidden');
+    toastEl.classList.add('flex');
+
+    setTimeout(() => {
+        toastEl.classList.add('hidden');
+        toastEl.classList.remove('flex');
+    }, 5000);
+}
+
+
 function loadChart(dates, numbers) {
     let options = {
         chart: {

@@ -46,6 +46,12 @@ public partial class MainLayout
 
 
     /// <summary>
+    /// Errores.
+    /// </summary>
+    public ErrorToast ErrorManager { get; set; } = null!;
+
+
+    /// <summary>
     /// Nuevo.
     /// </summary>
     public MainLayout()
@@ -99,6 +105,11 @@ public partial class MainLayout
     {
         Settings = settings;
         MainLayout.Update();
+    }
+
+    public static void ShowError(string message)
+    {
+        Instance.ErrorManager.ShowErrorToast(message);
     }
 
 }
