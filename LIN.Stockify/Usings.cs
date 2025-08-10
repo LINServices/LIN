@@ -8,6 +8,7 @@ global using LIN.Inventory.Shared.Popup;
 global using LIN.Inventory.Shared.Utilities;
 global using LIN.Types.Cloud.Identity.Enumerations;
 global using LIN.Types.Cloud.Identity.Models;
+global using LIN.Types.Cloud.Identity.Models.Identities;
 global using LIN.Types.Contacts.Models;
 global using LIN.Types.Inventory.Models;
 global using LIN.Types.Inventory.Transient;

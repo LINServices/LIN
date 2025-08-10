@@ -49,7 +49,6 @@ public partial class Salida
                                      ? "./img/user.png"
                                      : Cashier.Profile;
 
-
     /// <summary>
     /// Evento al establecer los parámetros.
     /// </summary>
