@@ -35,7 +35,7 @@ public class NoteDB
 
 
     /// <summary>
-    /// Guarda un usuario
+    /// Guarda una nota
     /// </summary>
     public async Task Save(Models.Note modelo)
     {
@@ -46,7 +46,7 @@ public class NoteDB
 
 
     /// <summary>
-    /// Guarda un usuario
+    /// Guarda una nota
     /// </summary>
     public async Task Append(Models.Note modelo)
     {
@@ -56,7 +56,7 @@ public class NoteDB
 
 
     /// <summary>
-    /// Guarda un usuario
+    /// Guarda una nota
     /// </summary>
     public async Task Save(List<Models.Note> modelos)
     {
@@ -67,7 +67,7 @@ public class NoteDB
 
 
     /// <summary>
-    /// Obtiene todos los usuarios
+    /// Obtiene todas las notas
     /// </summary>
     public async Task<List<Models.Note>> Get()
     {
@@ -77,7 +77,7 @@ public class NoteDB
 
 
     /// <summary>
-    /// Obtiene todos los usuarios
+    /// Obtiene todas las notas
     /// </summary>
     public async Task<List<Models.Note>> GetUntrack()
     {
@@ -87,45 +87,43 @@ public class NoteDB
 
 
     /// <summary>
-    /// Elimina todos los usuarios
+    /// Elimina todas las notas
     /// </summary>
     public async Task Delete()
     {
         await Init();
 
-        // Elimina todos los usuarios
+        // Elimina todas las notas
         await Database!.Table<Models.Note>().DeleteAsync(T => 1 == 1);
     }
 
 
     /// <summary>
-    /// Elimina todos los usuarios
+    /// Elimina una nota
     /// </summary>
     public async Task Remove(int id)
     {
         await Init();
 
-        // Elimina todos los usuarios
+        // Elimina la nota
         await Database!.Table<Models.Note>().DeleteAsync(T => T.Id == id);
     }
 
 
-    // <summary>
-    /// Elimina todos los usuarios
+    /// <summary>
+    /// Marca una nota como eliminada y actualiza su estado de confirmación.
     /// </summary>
     public async Task DeleteOne(int id, bool isConfirmed)
     {
         await Init();
 
-        // Elimina todos los usuarios
-
+        // Marca la nota como eliminada
         await Database.QueryAsync<Models.Note>("UPDATE [Note] SET [IsDeleted] = ?, [IsConfirmed] = ? WHERE [Id] = ?", true, isConfirmed, id);
-
     }
 
 
     /// <summary>
-    /// Elimina todos los usuarios
+    /// Actualiza una nota
     /// </summary>
     public async Task Update(Models.Note note)
     {
