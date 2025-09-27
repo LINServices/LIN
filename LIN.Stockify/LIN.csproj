@@ -62,7 +62,4 @@
 		<ProjectReference Include="..\..\..\Components\LIN.Inventory.Shared\LIN.Inventory.Shared.csproj" />
 		<ProjectReference Include="D:\LIN/LIN Services\Clientes\LIN\LIN.LocalDataBase\LIN.LocalDataBase.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
-	</ItemGroup>
 </Project>
