@@ -6,72 +6,82 @@ namespace LIN.Components.Pages.Sections.New;
 
 public partial class NewOutflow
 {
-
     /// <summary>
-    /// Id.
+    /// Id del inventario.
     /// </summary>
     [Parameter]
     public string Id { get; set; } = string.Empty;
 
-    public ClientsDrawer ClientDrawer { get; set; }
-
-
+    /// <summary>
+    /// Incluir la información del cliente.
+    /// </summary>
+    private bool _includeClientInformation = false;
 
     /// <summary>
-    /// Categoría.
+    /// Alerta roja (Mensajes de error)
     /// </summary>
-    private int Category { get; set; }
-
-
+    private RedAlert Alert { get; set; } = default!;
 
     /// <summary>
-    /// Sección actual.
+    /// Cajon de buscar cliente.
     /// </summary>
-    int section = 0;
-
-
-
-    /// <summary>
-    /// Fecha.
-    /// </summary>
-    private DateTime Date { get; set; } = DateTime.Now;
-
-
-
-    /// <summary>
-    /// Productos seleccionados.
-    /// </summary>
-    private List<ProductModel> Selected { get; set; } = [];
-
-
-
-    /// <summary>
-    /// Valores
-    /// </summary>
-    private Dictionary<int, int> Values = [];
-
-
+    private ClientsDrawer ClientDrawer { get; set; } = default!;
 
     /// <summary>
     /// Drawer de productos.
     /// </summary>
     private DrawerProducts DrawerProducts { get; set; } = null!;
 
+    /// <summary>
+    /// Categoría.
+    /// </summary>
+    private int Category { get; set; }
 
+    /// <summary>
+    /// Nombre del cliente.
+    /// </summary>
+    private string OutsiderName = string.Empty;
+
+    /// <summary>
+    /// Correo electronico del cliente.
+    /// </summary>
+    private string OutsiderMail = string.Empty;
+
+    /// <summary>
+    /// Documento del cliente.
+    /// </summary>
+    private string OutsiderDoc = string.Empty;
+
+    /// <summary>
+    /// Sección actual.
+    /// </summary>
+    private int section = 0;
+
+    /// <summary>
+    /// Fecha.
+    /// </summary>
+    private DateTime Date { get; set; } = DateTime.Now;
+
+    /// <summary>
+    /// Productos seleccionados.
+    /// </summary>
+    private List<ProductModel> Selected { get; set; } = [];
+
+    /// <summary>
+    /// Valores
+    /// </summary>
+    private readonly Dictionary<int, int> Values = [];
 
     /// <summary>
     /// Contexto del inventario.
     /// </summary>
     private InventoryContext? Contexto { get; set; }
 
-
-
     /// <summary>
     /// Evento al establecer los parámetros.
     /// </summary>
     protected override void OnParametersSet()
     {
-
         // Obtener el contexto.
         Contexto = InventoryManager.Get(int.Parse(Id));
 
@@ -79,29 +89,27 @@ public partial class NewOutflow
         base.OnParametersSet();
     }
 
-
-
     /// <summary>
     /// Obtener valor.
     /// </summary>
-    int GetValue(int product)
+    private int GetValue(int product)
     {
         Values.TryGetValue(product, out var value);
         return value;
     }
 
 
-    string ErrorMessage = "";
+    private string ErrorMessage = "";
 
-    string qr = "";
-    string qrText = "";
+    private string qr = "";
+    private string qrText = "";
+
     /// <summary>
     /// Crear.
     /// </summary>
     private async void Create(bool isOnline = false)
     {
-
-        // Preparar la vista.
+        // Establecer la pantalla de carga.
         section = 3;
         StateHasChanged();
 
@@ -111,22 +119,17 @@ public partial class NewOutflow
         // No tiene tipo.
         if (type == OutflowsTypes.None)
         {
-            section = 0;
-            StateHasChanged();
+            ShowMessage("Debe seleccionar un tipo de movimiento.");
             return;
         }
 
-
-
         // Variables
-        List<OutflowDetailsDataModel> details = new();
+        List<OutflowDetailsDataModel> details = [];
         OutflowDataModel entry;
 
-
-        // Rellena los detalles
+        // Rellena los detalles.
         foreach (var control in Selected ?? [])
         {
-
             Values.TryGetValue(control.Id, out int quantity);
             OutflowDetailsDataModel model = new()
             {
@@ -140,16 +143,14 @@ public partial class NewOutflow
             details.Add(model);
         }
 
-
-        // Si no hay detalles
+        // Si no hay detalles.
         if (details.Count <= 0)
         {
-
+            ShowMessage("Para realizar un movimiento, debe haber minimo un producto.");
             return;
         }
 
-
-        // Model de salida
+        // Modelo de salida.
         entry = new()
         {
             Details = details,
@@ -157,22 +158,20 @@ public partial class NewOutflow
             Type = type,
             Inventory = new()
             {
-                Id = Contexto?.Inventory.Id ?? 0
+                Id = Contexto?.Inventory?.Id ?? 0
             },
-            InventoryId = Contexto?.Inventory.Id ?? 0,
+            InventoryId = Contexto?.Inventory?.Id ?? 0,
             ProfileId = Session.Instance.Information.Id
         };
 
-        if (IsFormClient)
+        // Si se debe incluir información del cliente.
+        if (_includeClientInformation)
         {
-
             if (string.IsNullOrWhiteSpace(OutsiderDoc))
             {
-                section = 2;
-                ErrorMessage = "El cliente debe tener un documento valido.";
-                StateHasChanged();
+                ShowMessage("El cliente debe tener un documento valido.");
+                return;
             }
-
             entry.Outsider = new()
             {
                 Document = OutsiderDoc,
@@ -185,13 +184,14 @@ public partial class NewOutflow
             entry.Outsider = null;
         }
 
+        // Crear respuesta.
         CreateResponse response;
 
-        // Envía al servidor
+        // Si es una venta online.
         if (isOnline)
         {
             response = await Access.Inventory.Controllers.OpenStore.CreateOnline(entry, Access.Inventory.Session.Instance.Token);
-            qr = GetQr(response.LastUnique);
+            qr = NewOutflow.GetQr(response.LastUnique);
             qrText = response.LastUnique;
         }
         else
@@ -207,7 +207,8 @@ public partial class NewOutflow
 
             case Responses.Success:
                 {
-                    if (isOnline) backSection = 4;
+                    if (isOnline)
+                        backSection = 4;
                 }
                 break;
 
@@ -224,9 +225,6 @@ public partial class NewOutflow
                 return;
         }
 
-
-
-
         section = 1;
         StateHasChanged();
 
@@ -236,12 +234,10 @@ public partial class NewOutflow
 
     }
 
-
-
     /// <summary>
     /// Cambio del valor.
     /// </summary>
-    void ValueChange(int product, int q)
+    private void ValueChange(int product, int q)
     {
         try
         {
@@ -251,45 +247,29 @@ public partial class NewOutflow
         {
             Values.Add(product, q);
         }
-
     }
 
-
-    string OutsiderName = string.Empty;
-    string OutsiderMail = string.Empty;
-    string OutsiderDoc = string.Empty;
-
-
-    bool IsFormClient = false;
-    void SelectClient(bool value)
-    {
-        IsFormClient = value;
-        StateHasChanged();
-    }
-
-    void GoNormal()
+    /// <summary>
+    /// Ir a la sección principal.
+    /// </summary>
+    private void GoNormal()
     {
         section = 0;
         StateHasChanged();
     }
 
-
-    void CategorizeChange()
-    {
-        OutflowsTypes type = (OutflowsTypes)Category;
-
-
-
-
-
-    }
-
-    void ShowClient()
+    /// <summary>
+    /// Mostrar el cajon de cliente.
+    /// </summary>
+    private void ShowClient()
     {
         ClientDrawer.Show();
     }
 
-    void SelectClient()
+    /// <summary>
+    /// Seleccionar un cliente.
+    /// </summary>
+    private void SelectClient()
     {
         var client = ClientDrawer.Selected;
 
@@ -301,7 +281,10 @@ public partial class NewOutflow
         StateHasChanged();
     }
 
-    string GetQr(string text)
+    /// <summary>
+    /// Obtener la imagen QR.
+    /// </summary>
+    private static string GetQr(string text)
     {
         using QRCodeGenerator qrGenerator = new();
         using QRCodeData qrCodeData = qrGenerator.CreateQrCode(text, QRCodeGenerator.ECCLevel.Q);
@@ -310,5 +293,15 @@ public partial class NewOutflow
 
         string base64Qr = Convert.ToBase64String(qrCodeBytes);
         return $"data:image/png;base64,{base64Qr}";
+    }
+
+    /// <summary>
+    /// Mostrar un mensaje de alerta.
+    /// </summary>
+    private void ShowMessage(string text)
+    {
+        Alert.Show(text);
+        section = 0;
+        StateHasChanged();
     }
 }
