@@ -123,7 +123,7 @@ internal class Scripts
         if (context.Inflows != null && context.Inflows.Response == Responses.Success)
             context.Inflows.Models.Insert(0, inflow.Model);
 
-        if (inflow.Model.IsAccepted)
+        if (inflow.Model.Status == Types.Inventory.Enumerations.MovementStatus.Approved)
         {
             // Actualizar la cantidad.
             foreach (var item in inflow.Model.Details)
